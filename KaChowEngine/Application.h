@@ -7,7 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-//#include "ModuleEditor.h"
+#include "ModuleEditor.h"
 
 #include<vector>
 
@@ -25,7 +25,7 @@ public:
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	//ModuleEditor* editor;
+	ModuleEditor* editor;
 
 private:
 
