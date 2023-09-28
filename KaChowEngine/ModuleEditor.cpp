@@ -29,7 +29,8 @@ bool ModuleEditor::Init()
 
     // "pilota"
 
-    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    // "pilota"
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
     // Setup Dear ImGui style
@@ -41,6 +42,8 @@ bool ModuleEditor::Init()
     // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
     ImGui_ImplOpenGL3_Init();
+
+    mFPSLog.reserve(30);
 
     return true;
 }
@@ -63,16 +66,71 @@ void ModuleEditor::DrawEditor()
             ImGui::Text("Hello world!");
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Assets"))
+        {
+            ImGui::Text("Hello world!");
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Objects"))
+        {
+            ImGui::Text("Hello world!");
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("About"))
+        {
+            ImGui::Text("Hello world!");
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
     }
 
     // "pilota"
-    //if (ImGui::Begin("Configuration"))
-    //{
-    //    ImGui::PlotHistogram("FPS", &mFPSLog[0], mFPSLog.size());
-    //    ImGui::End();
-    //}
+    if (ImGui::Begin("Configuration"))
+    {
+        ImGuiIO& io = ImGui::GetIO();
 
+        static float volumeLevel = 0.0f;
+
+        // Pilota borrar quan es tingui variable vsync
+        static bool* vsyncBoolTest = false;
+
+        ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size());
+
+        ImGui::End();
+
+        // Window
+        ImGui::SeparatorText("WINDOW");
+        ImGui::Text("Window Size: %d x %d", SCREEN_WIDTH, SCREEN_HEIGHT);
+        /*ImGui::Text("Brightness: %d", BARIABLE);*/
+
+        // Render
+        ImGui::SeparatorText("RENDER");
+        //ImGui::Checkbox("vSync", vsyncBoolTest);
+
+        // Input
+        ImGui::SeparatorText("INPUT");
+
+        // MOUSE
+        ImGui::Text("Mouse");
+        if (ImGui::IsMousePosValid())
+            ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+        else
+            ImGui::Text("Mouse pos: <INVALID>");
+        ImGui::Text("Mouse delta: (%g, %g)", io.MouseDelta.x, io.MouseDelta.y);
+        ImGui::Text("Mouse down:");
+        for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseDown(i)) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, io.MouseDownDuration[i]); }
+        ImGui::Text("Mouse wheel: %.1f", io.MouseWheel);
+        // KEYBOARD
+        ImGui::Text("Keyboard");
+
+        // Audio
+        ImGui::SeparatorText("AUDIO");
+        ImGui::SliderFloat("Volume", &volumeLevel, 0.0f, 100.0f);
+
+    }
+
+    // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+    ImGui::ShowDemoWindow();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -96,11 +154,15 @@ void ModuleEditor::AddFPS(const float aFPS)
     }
     else
     {
-        std::vector<float> mTempFPS;
-        mTempFPS.reserve(30);
-        memcpy(&mTempFPS, &mFPSLog[1], 27);
-        mTempFPS.push_back(aFPS);
-        mFPSLog = mTempFPS;
+        for (unsigned int i = 0; i < mFPSLog.size(); i++)
+        {
+            if (i + 1 < mFPSLog.size())
+            {
+                float iCopy = mFPSLog[i + 1];
+                mFPSLog[i] = iCopy;
+            }
+        }
+        mFPSLog[mFPSLog.capacity() - 1] = aFPS;
     }
 }
 
