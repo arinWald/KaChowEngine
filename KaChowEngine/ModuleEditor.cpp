@@ -96,7 +96,6 @@ void ModuleEditor::DrawEditor()
 
         ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size());
 
-        ImGui::End();
 
         // Window
         ImGui::SeparatorText("WINDOW");
@@ -126,6 +125,7 @@ void ModuleEditor::DrawEditor()
         // Audio
         ImGui::SeparatorText("AUDIO");
         ImGui::SliderFloat("Volume", &volumeLevel, 0.0f, 100.0f);
+        ImGui::End();
 
     }
 

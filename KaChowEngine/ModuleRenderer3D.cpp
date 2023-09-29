@@ -122,20 +122,20 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	//// Setup Dear ImGui context
+	//IMGUI_CHECKVERSION();
+	//ImGui::CreateContext();
+	//ImGuiIO& io = ImGui::GetIO(); (void)io;
+	////io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	////io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
+	//// Setup Dear ImGui style
+	//ImGui::StyleColorsDark();
+	////ImGui::StyleColorsClassic();
 
-	// Setup Platform/Renderer backends
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, context);
-	ImGui_ImplOpenGL3_Init("#version 130");
+	//// Setup Platform/Renderer backends
+	//ImGui_ImplSDL2_InitForOpenGL(App->window->window, context);
+	//ImGui_ImplOpenGL3_Init("#version 130");
 
 	// Delete? "pilota"
 	Grid.axis = true;
@@ -167,21 +167,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	// Start the Dear ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-
-	// Rendering
-	ImGui::Render();
-	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	//glClearColor(1.0, 1.0, 1.0, 0.0);
-	//glClear(GL_COLOR_BUFFER_BIT);
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	// Delete? "pilota"
 	Grid.Render();
@@ -196,11 +181,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
-
-	// Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
 
 	SDL_GL_DeleteContext(context);
 

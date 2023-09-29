@@ -247,5 +247,8 @@
     <Filter Include="Sources\Tools">
       <UniqueIdentifier>{f507fcd8-4ef9-4ffe-bce8-6219b41c6bbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{0c58f5ef-0e18-44f6-a724-8695bb211a86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

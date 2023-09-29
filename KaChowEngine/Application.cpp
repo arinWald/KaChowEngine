@@ -16,10 +16,10 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(editor);
 
 	// Renderer last!
 	AddModule(renderer3D);
+	AddModule(editor);
 }
 
 Application::~Application()
