@@ -89,6 +89,9 @@
     <ClCompile Include="ImGui\backends\imgui_impl_sdl2.cpp">
       <Filter>Sources\ImGui\Backends</Filter>
     </ClCompile>
+    <ClCompile Include="Parser\json.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="ImGui\backends\imgui_impl_sdl2.h">
       <Filter>Sources\ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\json.h">
+      <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
