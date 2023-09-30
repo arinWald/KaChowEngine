@@ -22,6 +22,9 @@ public:
 	void AddFPS(const float aFPS);
 
 	std::vector<float> mFPSLog;
+
+private:
+	int cvCounter;
 };
 
 #endif
