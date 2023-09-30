@@ -59,6 +59,8 @@ void ModuleEditor::DrawEditor()
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
+    App->editor->AddFPS(App->GetDT());
+
     // HERE ALL WINDOW RENDERS
     // Always EndMenu when Begin Menu
     if (ImGui::BeginMainMenuBar())
@@ -82,42 +84,54 @@ void ModuleEditor::DrawEditor()
         {
             ImGuiIO& io = ImGui::GetIO();
 
-            static float volumeLevel = 0.0f;
+            static int volumeLevel = 0;
 
             // Pilota borrar quan es tingui variable vsync
             static bool* vsyncBoolTest = false;
 
-            ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size());
+            if (ImGui::CollapsingHeader("FPS Histogram"))
+            {
+                ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size());
+            }
 
 
             // Window
-            ImGui::SeparatorText("WINDOW");
-            ImGui::Text("Window Size: %d x %d", SCREEN_WIDTH, SCREEN_HEIGHT);
-            /*ImGui::Text("Brightness: %d", BARIABLE);*/
+            if (ImGui::CollapsingHeader("Window"))
+            {
+                ImGui::Text("Window Size: %d x %d", SCREEN_WIDTH, SCREEN_HEIGHT);
+                    /*ImGui::Text("Brightness: %d", BARIABLE);*/
+            }
+           
 
             // Render
-            ImGui::SeparatorText("RENDER");
-            //ImGui::Checkbox("vSync", vsyncBoolTest);
+            if (ImGui::CollapsingHeader("Render"))
+            {
+                //ImGui::Checkbox("vSync", vsyncBoolTest);
+
+            }
 
             // Input
-            ImGui::SeparatorText("INPUT");
+            if (ImGui::CollapsingHeader("Input"))
+            {
+                // MOUSE
+                ImGui::Text("Mouse");
+                if (ImGui::IsMousePosValid())
+                    ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+                else
+                    ImGui::Text("Mouse pos: <INVALID>");
+                ImGui::Text("Mouse delta: (%g, %g)", io.MouseDelta.x, io.MouseDelta.y);
+                ImGui::Text("Mouse down:");
+                for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseDown(i)) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, io.MouseDownDuration[i]); }
+                ImGui::Text("Mouse wheel: %.1f", io.MouseWheel);
+                // KEYBOARD
+                ImGui::Text("Keyboard");
+            }
 
-            // MOUSE
-            ImGui::Text("Mouse");
-            if (ImGui::IsMousePosValid())
-                ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-            else
-                ImGui::Text("Mouse pos: <INVALID>");
-            ImGui::Text("Mouse delta: (%g, %g)", io.MouseDelta.x, io.MouseDelta.y);
-            ImGui::Text("Mouse down:");
-            for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseDown(i)) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, io.MouseDownDuration[i]); }
-            ImGui::Text("Mouse wheel: %.1f", io.MouseWheel);
-            // KEYBOARD
-            ImGui::Text("Keyboard");
-
-            // Audio
-            ImGui::SeparatorText("AUDIO");
-            ImGui::SliderFloat("Volume", &volumeLevel, 0.0f, 100.0f);
+            if (ImGui::CollapsingHeader("Audio"))
+            {
+                // Audio
+                ImGui::SliderInt("Volume", &volumeLevel, 0, 100);
+            }
 
             ImGui::End();
         }
@@ -159,7 +173,6 @@ void ModuleEditor::DrawEditor()
 
             ImGui::End();
         }
-
 
         ImGui::EndMainMenuBar();
     }
