@@ -7,6 +7,8 @@
 #include "Globals.h"
 #include <vector>
 
+#include "Glew/include/glew.h"
+
 
 class ModuleEditor : public Module
 {
@@ -25,6 +27,16 @@ public:
 
 private:
 	int cvCounter;
+
+	// Config render opengl
+	bool lightning;
+	bool isCullFace;
+	bool depthTest;
+	bool colorMat;
+	bool texture2D;
+	bool vSync;
+	float bright;
+	float bright_aux;
 };
 
 #endif

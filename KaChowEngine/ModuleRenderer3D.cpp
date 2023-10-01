@@ -4,6 +4,9 @@
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+//// Pilota
+//#include "Glew/include/glew.h"
+
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
@@ -50,6 +53,22 @@ bool ModuleRenderer3D::Init()
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+	//GLEW
+	GLenum err = glewInit();
+
+	if (GLEW_OK != err) {
+		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+		LOG("Error: %a\n", glewGetErrorString(err));
+	}
+	else {
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	}
+
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	
 	if(ret == true)
 	{
@@ -58,7 +77,7 @@ bool ModuleRenderer3D::Init()
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
-		glMatrixMode(GL_PROJECTION);
+		glMatrixMode(GL_PROJECTION);	
 		glLoadIdentity();
 
 		//Check for error
@@ -85,9 +104,12 @@ bool ModuleRenderer3D::Init()
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
+
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+
+		// Pilota
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Check for error
 		error = glGetError();
@@ -117,25 +139,13 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		
+		// Pilota
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	//// Setup Dear ImGui context
-	//IMGUI_CHECKVERSION();
-	//ImGui::CreateContext();
-	//ImGuiIO& io = ImGui::GetIO(); (void)io;
-	////io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	////io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-	//// Setup Dear ImGui style
-	//ImGui::StyleColorsDark();
-	////ImGui::StyleColorsClassic();
-
-	//// Setup Platform/Renderer backends
-	//ImGui_ImplSDL2_InitForOpenGL(App->window->window, context);
-	//ImGui_ImplOpenGL3_Init("#version 130");
 
 	// Delete? "pilota"
 	Grid.axis = true;
@@ -148,6 +158,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+
+	// Pilota
+	//Color c = cam->background;
+	//glClearColor(c.r, c.g, c.b, c.a);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -168,12 +182,24 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
+	// Pilota
+	//App->level->Draw();
+
+	/*if (debug_draw == true)
+	{
+		BeginDebugDraw();
+		App->DebugDraw();
+		EndDebugDraw();
+	}*/
+
+
 	// Delete? "pilota"
 	Grid.Render();
 
 	App->editor->DrawEditor();
 
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 

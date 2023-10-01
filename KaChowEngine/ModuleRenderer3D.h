@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "Light.h"
 
+#include "Glew/include/glew.h"
+
 #include "MathGeoLib/include/Math/float3x3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "Primitive.h"

@@ -5,7 +5,6 @@
 
 #include "ImGui/imgui.h"
 #include "ImGui/backends/imgui_impl_opengl3.h"
-// "pilota" Hauria de ser imgui_impl_sdl2
 #include "ImGui/backends/imgui_impl_sdl2.h"
 
 ModuleEditor::ModuleEditor(Application * app, bool start_enabled) : Module(app, start_enabled)
@@ -47,6 +46,16 @@ bool ModuleEditor::Init()
 
     cvCounter = 0;
 
+    // Config opengl vars init
+   depthTest = false;
+   isCullFace = false;
+   lightning = false;
+   colorMat = false;
+   texture2D = false;
+   vSync = false;
+   bright = 0.0f;
+   bright_aux = 0.0f;
+
     return true;
 }
 
@@ -57,6 +66,11 @@ void ModuleEditor::DrawEditor()
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
+
+    // OpenGL Stuff
+
+    // ImGui Stuff
+
     ImGui::NewFrame();
 
     App->editor->AddFPS(App->GetDT());
@@ -107,6 +121,103 @@ void ModuleEditor::DrawEditor()
             if (ImGui::CollapsingHeader("Render"))
             {
                 //ImGui::Checkbox("vSync", vsyncBoolTest);
+                if (ImGui::TreeNode("OpenGL"))
+                {
+
+                    if (ImGui::Checkbox("Depth Test", &lightning))
+                    {
+                        if (lightning)
+                        {
+                            glEnable(GL_LIGHTING);
+                            LOG("Lights On");
+                        }
+                        else
+                        {
+                            glDisable(GL_LIGHTING);
+                            LOG("Lights Off");
+                        }
+                    }
+
+                    if (ImGui::Checkbox("Cull Face", &isCullFace))
+                    {
+                        if (isCullFace)
+                        {
+                            glEnable(GL_CULL_FACE);
+                            LOG("Cull Face On");
+                        }
+                        else
+                        {
+                            glDisable(GL_CULL_FACE);
+                            LOG("Cull Face Off");
+                        }
+                    }
+
+                    if (ImGui::Checkbox("Depth Test", &depthTest))
+                    {
+                        if (depthTest)
+                        {
+                            glEnable(GL_DEPTH_TEST);
+                            LOG("Depth Test On");
+                        }
+                        else
+                        {
+                            glDisable(GL_DEPTH_TEST);
+                            LOG("Depth Test Off");
+                        }
+                    }
+
+                    if (ImGui::Checkbox("Color Material", &colorMat))
+                    {
+                        if (colorMat)
+                        {
+                            glEnable(GL_COLOR_MATERIAL);
+                            LOG("Color Material On");
+                        }
+                        else
+                        {
+                            glDisable(GL_COLOR_MATERIAL);
+                            LOG("Color Material Off");
+                        }
+                    }
+
+                    if (ImGui::Checkbox("Texture 2D", &texture2D))
+                    {
+                        if (texture2D)
+                        {
+                            glEnable(GL_TEXTURE_2D);
+                            LOG("Texture 2D On");
+                        }
+                        else
+                        {
+                            glDisable(GL_TEXTURE_2D);
+                            LOG("Texture 2D Off");
+                        }
+                    }
+
+                    if (ImGui::Checkbox("Vsync", &vSync))
+                    {
+                        if (vSync)
+                        {
+                            SDL_GL_SetSwapInterval(1);
+                            LOG("Vsync On");
+                        }
+                        else
+                        {
+                            SDL_GL_SetSwapInterval(0);
+                            LOG("Vsync Off");
+                        }
+                    }
+
+                    ImGui::Text("Min");
+                    ImGui::SameLine();
+                    if (ImGui::SliderFloat(" Max", &bright, 0.100f, 1.000f))
+                    {
+                        SDL_SetWindowBrightness(App->window->window, bright);
+                        bright_aux = bright * 100;
+                    }
+
+                    ImGui::TreePop();
+                }
 
             }
 
@@ -150,7 +261,7 @@ void ModuleEditor::DrawEditor()
             ImGui::BulletText("Glew 20.0");
             ImGui::BulletText("ImGui 1.51");
             ImGui::BulletText("MathGeoLib 1.5");
-            ImGui::BulletText("OpenGL 3.1");
+            ImGui::BulletText("OpenGL %s", glewGetString(GLEW_VERSION));
 
             ImGui::SeparatorText("LICENSE");
             ImGui::BulletText("MIT License");
