@@ -53,6 +53,7 @@ bool ModuleEditor::Init()
    colorMat = false;
    texture2D = false;
    vSync = false;
+   isWireframe = false;
    bright = 0.0f;
    bright_aux = 0.0f;
 
@@ -124,7 +125,7 @@ void ModuleEditor::DrawEditor()
                 if (ImGui::TreeNode("OpenGL"))
                 {
 
-                    if (ImGui::Checkbox("Depth Test", &lightning))
+                    if (ImGui::Checkbox("Lightning", &lightning))
                     {
                         if (lightning)
                         {
@@ -179,6 +180,21 @@ void ModuleEditor::DrawEditor()
                             LOG("Color Material Off");
                         }
                     }
+
+                    //Wireframe option
+                    if (ImGui::Checkbox("Wireframe", &isWireframe))
+                    {
+                        if (isWireframe)
+                        {
+                            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                            LOG("Wireframe Mode On");
+                        }
+                        else
+                        {
+                            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                            LOG("Wireframe Mode Off");
+                        }
+                    }                    
 
                     if (ImGui::Checkbox("Texture 2D", &texture2D))
                     {

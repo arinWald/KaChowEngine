@@ -35,6 +35,7 @@ private:
 	bool colorMat;
 	bool texture2D;
 	bool vSync;
+	bool isWireframe;
 	float bright;
 	float bright_aux;
 };

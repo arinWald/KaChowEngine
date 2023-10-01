@@ -142,6 +142,8 @@ bool ModuleRenderer3D::Init()
 		
 		// Pilota
 		glEnable(GL_TEXTURE_2D);
+
+		hola = CCylinder(3, 5);
 	}
 
 	// Projection matrix for
@@ -181,6 +183,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	//GLUquadric* qobj = gluNewQuadric();  // Crear un objeto cuádrico
+	//gluSphere(qobj, 5, 10, 10);
+	
+	hola.Render();
 
 	// Pilota
 	//App->level->Draw();
