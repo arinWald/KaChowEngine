@@ -46,6 +46,10 @@ bool ModuleEditor::Init()
 
     cvCounter = 0;
 
+    // Config window
+    fullscreen = false;
+    screenWidth = SCREEN_WIDTH;
+
     // Config opengl vars init
    depthTest = false;
    isCullFace = false;
@@ -116,6 +120,17 @@ void ModuleEditor::DrawEditor()
             {
                 ImGui::Text("Window Size: %d x %d", SCREEN_WIDTH, SCREEN_HEIGHT);
                     /*ImGui::Text("Brightness: %d", BARIABLE);*/
+                if(ImGui::Checkbox("Fullscreen", &fullscreen))
+                {
+                    if (fullscreen)
+                    {
+                        App->window->SetFullscreen();
+                    }
+                    else
+                    {
+                        App->window->SetResizable();
+                    }
+                }
             }
            
 

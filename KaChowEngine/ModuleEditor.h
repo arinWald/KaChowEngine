@@ -28,6 +28,10 @@ public:
 private:
 	int cvCounter;
 
+	// Config window 
+	bool fullscreen;
+	float screenWidth;
+
 	// Config render opengl
 	bool lightning;
 	bool isCullFace;
