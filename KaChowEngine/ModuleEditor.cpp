@@ -74,7 +74,7 @@ void ModuleEditor::DrawEditor()
 
     ImGui::NewFrame();
 
-    App->editor->AddFPS(App->GetDT());
+    App->editor->AddFPS(1/App->GetDT());
 
     // HERE ALL WINDOW RENDERS
     // Always EndMenu when Begin Menu
