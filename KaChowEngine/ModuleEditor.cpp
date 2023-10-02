@@ -107,6 +107,7 @@ void ModuleEditor::DrawEditor()
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
                 ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size());
+                //ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, 0, FLT_MAX, FLT_MAX, (5, 5));
             }
 
 
