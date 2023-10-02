@@ -31,6 +31,29 @@
 #pragma comment (lib, "MathGeoLib/libx86/Release2/MathGeoLib.lib") /* link Microsoft OpenGL lib   */
 #endif // _DEBUG
 
+static const GLfloat CubeVertices[]
+= {  0.500000, - 0.500000, - 0.500000,
+ 0.500000, - 0.500000, 0.500000,
+ - 0.500000, - 0.500000, 0.500000,
+ - 0.500000, - 0.500000, - 0.500000,
+ 0.500000, 0.500000, - 0.500000,
+ 0.500000, 0.500000, 0.500000,
+ - 0.500000, 0.500000, 0.500000,
+ - 0.500000, 0.500000, - 0.500000 };
+
+static const GLuint Cubeindices[]
+= { 2 , 1 , 1 , 3 , 2 , 1, 4 , 3 , 1,
+ 5 , 3 , 2 ,8 , 4 , 2, 7 , 1 , 2,
+ 5 , 3 , 3 ,6 , 4 , 3 ,2 , 1 , 3,
+ 2 , 2 , 4 ,6 , 3 , 4 ,7 , 4 , 4,
+ 7 , 3 , 5 ,8 , 4 , 5 ,4 , 1 , 5,
+ 5 , 4 , 6 ,1 , 1 , 6 ,4 , 2 , 6,
+ 1 , 4 , 1 ,2 , 1 , 1 ,4 , 3 , 1,
+ 6 , 2 , 2 ,5 , 3 , 2 ,7 , 1 , 2,
+ 1 , 2 , 7 ,5 , 3 , 7 ,2 , 1 , 7,
+ 3 , 1 , 4 ,2 , 2 , 4 ,7 , 4 , 4,
+ 3 , 2 , 5 ,7 , 3 , 5 ,4 , 1 , 5,
+ 8 , 3 , 6 ,5 , 4 , 6 ,4 , 2 , 6 };
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -149,8 +172,45 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	// Delete? "pilota"
 	Grid.axis = true;
+
+	//VBO = 0;
+	//// Assigna id a buffer
+	//glGenBuffers(1, &VBO);
+	//// A quin buffer volem treballar
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//// 
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	//// Al acabar, reset id del buffer
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	VBO = 0;
+	EBO = 0;
+	VAO = 0;
+
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+	glGenVertexArrays(1, &VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Cubeindices), Cubeindices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VAO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
 
 	return ret;
 }
@@ -186,7 +246,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//GLUquadric* qobj = gluNewQuadric();  // Crear un objeto cuádrico
 	//gluSphere(qobj, 5, 10, 10);
 	
-	hola.Render();
+	//hola.Render();
 
 	// Pilota
 	//App->level->Draw();
@@ -198,8 +258,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		EndDebugDraw();
 	}*/
 
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	// Pilota aquesta linia s'ha de treure un cop els buffers  de update estiguin ben fets
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	// … bind and use other buffers
+	glDrawArrays(GL_TRIANGLES, 0, (sizeof(CubeVertices) / sizeof(float)) / 3);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
-	// Delete? "pilota"
 	Grid.Render();
 
 	App->editor->DrawEditor();
@@ -215,6 +281,12 @@ bool ModuleRenderer3D::CleanUp()
 	LOG("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);
+
+	if (VBO != 0)
+	{
+		glDeleteBuffers(1, &VBO);
+		VBO = 0;
+	}
 
 	return true;
 }
