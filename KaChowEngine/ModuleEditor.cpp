@@ -111,7 +111,9 @@ void ModuleEditor::DrawEditor()
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
                 //ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, 0, FLT_MAX, FLT_MAX, {( 1.0f, 2.0f )}, 4);
-                ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, NULL, FLT_MAX,  FLT_MAX, ImVec2(0, 80.0f));
+                char title[25];
+                sprintf_s(title, 25, "Framerate %.1f", mFPSLog[mFPSLog.size() - 1]);
+                ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 80));
             }
 
 
