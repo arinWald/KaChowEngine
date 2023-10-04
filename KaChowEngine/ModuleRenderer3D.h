@@ -40,4 +40,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix;
 
 	CCylinder hola;
+
+	GLuint VBO, EBO, VAO;
+	
 };
