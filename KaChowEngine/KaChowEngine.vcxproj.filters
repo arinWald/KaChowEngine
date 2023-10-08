@@ -92,6 +92,9 @@
     <ClCompile Include="Parser\json.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleGeometry.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="Parser\json.h">
       <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGeometry.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

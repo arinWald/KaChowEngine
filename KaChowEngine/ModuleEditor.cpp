@@ -241,7 +241,7 @@ void ModuleEditor::DrawEditor()
                             LOG("Vsync Off");
                         }
                     }
-
+                    ImGui::Text("Brightness");
                     ImGui::Text("Min");
                     ImGui::SameLine();
                     if (ImGui::SliderFloat(" Max", &bright, 0.100f, 1.000f))
