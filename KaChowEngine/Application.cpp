@@ -6,6 +6,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
+	geoLoader = new ModuleGeometry(this);
 	editor = new ModuleEditor(this);
 
 	// The order of calls is very important!
@@ -16,6 +17,8 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+
+	AddModule(geoLoader);
 
 	// Renderer last!
 	AddModule(renderer3D);

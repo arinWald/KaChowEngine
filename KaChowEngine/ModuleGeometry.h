@@ -7,6 +7,26 @@
 #include "Globals.h"
 #include <vector>
 
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/postprocess.h"
+#pragma comment (lib, "Assimp/libx86/assimp.lib")
+
+#define VERTICES 5
+
+struct Mesh
+{
+	uint id_index = 0; // index in VRAM
+	uint num_index = 0;
+	uint* index = nullptr;
+	uint id_vertex = 0; // unique vertex in VRAM
+	uint num_vertex = 0;
+	float* vertex = nullptr;
+
+
+};
+
+
 class ModuleGeometry : public Module
 {
 public:
@@ -15,10 +35,19 @@ public:
 	~ModuleGeometry();
 
 	bool Init() override;
+	bool Start() override;
 	bool CleanUp() override;
+	void LoadFile();
+	void ImportMesh(aiMesh* aiMesh);
+	void BufferMesh(Mesh* mesh);
 
 private:
 
+public:
+	
+	std::vector<Mesh*> meshes;
+	const char* file_path = "";
+	Mesh* ourMesh;
 };
 
 #endif

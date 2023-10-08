@@ -198,12 +198,18 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 
-
+	Draw(App->geoLoader->ourMesh);
 
 	App->editor->DrawEditor();
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
+}
+
+void ModuleRenderer3D::Draw(Mesh* mesh)
+{
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 }
 
 // Called before quitting

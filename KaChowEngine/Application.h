@@ -8,6 +8,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
+#include "ModuleGeometry.h"
 
 #include<vector>
 
@@ -17,6 +18,7 @@ class ModuleInput;
 class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModuleEditor;
+class ModuleGeometry;
 
 class Application
 {
@@ -25,6 +27,7 @@ public:
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
+	ModuleGeometry* geoLoader;
 	ModuleEditor* editor;
 
 private:
