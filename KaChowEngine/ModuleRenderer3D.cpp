@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Primitive.h"
 #include "SDL\include\SDL_opengl.h"
 
 
@@ -126,6 +127,8 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	pilota = cubePrimi->CreateCube();
+
 	Grid.axis = true;
 
 	VBO = 0;
@@ -198,18 +201,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 
-	Draw(App->geoLoader->ourMesh);
+	// Pilota
+	/*pilota->Render();*/
+	App->geoLoader->RenderScene();
 
 	App->editor->DrawEditor();
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
-}
-
-void ModuleRenderer3D::Draw(Mesh* mesh)
-{
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 }
 
 // Called before quitting
@@ -242,3 +241,5 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+

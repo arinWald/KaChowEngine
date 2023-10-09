@@ -15,6 +15,8 @@ enum PrimitiveTypes
 	Primitive_Cylinder
 };
 
+class Mesh;
+
 class Primitive
 {
 public:
@@ -27,6 +29,7 @@ public:
 	void			SetRotation(float angle, const float3& u);
 	void			Scale(float x, float y, float z);
 	PrimitiveTypes	GetType() const;
+	static Mesh* CreateCube();
 
 public:
 	

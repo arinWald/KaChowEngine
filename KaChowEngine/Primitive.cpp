@@ -1,6 +1,7 @@
 
 #include "Primitive.h"
 #include "Globals.h"
+#include "ModuleGeometry.h"
 
 #include <gl/GL.h>
 
@@ -106,6 +107,68 @@ Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+}
+
+Mesh* Primitive::CreateCube()
+{
+	float s = 0.5f;
+
+	Mesh* mesh = new Mesh();
+
+	//VERTICES
+	mesh->num_vertex = 8;
+	mesh->vertex = new float[mesh->num_vertex * VERTEX_ARGUMENTS]; //3 floats per vertex
+
+		//generate all vertices
+	for (int i = 0; i < (mesh->num_vertex * VERTEX_ARGUMENTS); i++) {
+		int p = 1;	//positivity(sign)
+		int count = i / VERTEX_ARGUMENTS;
+		switch (i % VERTEX_ARGUMENTS) {
+			//x
+		case 0:
+			if (count == 0 || count == 3 || count == 4 || count == 7) p = -1;
+			break;
+			//y
+		case 1:
+			if (count == 2 || count == 3 || count == 6 || count == 7) p = -1;
+			break;
+			//z
+		case 2:
+			if (count <= 3) p = -1;
+			break;
+		}
+
+		if ((i % VERTEX_ARGUMENTS) >= 3) {
+			mesh->vertex[i] = 0;
+		}
+		else {
+			mesh->vertex[i] = s * p;
+		}
+	}
+
+	//INDICES
+	mesh->num_index = 36;	//6*2 triangle faces, 3 index per triangle face
+	mesh->index = new uint[mesh->num_index];
+
+	uint index[36] =
+	{ 1,3,0,
+	1,2,3,
+	5,2,1,
+	5,6,2,
+	4,6,5,
+	4,7,6,
+	0,7,4,
+	0,3,7,
+	5,0,4,
+	5,1,0,
+	2,7,3,
+	2,6,7 };
+
+	for (int i = 0; i < mesh->num_index; i++) {
+		mesh->index[i] = index[i];
+	}
+
+	return mesh;
 }
 
 void Cube::InnerRender() const

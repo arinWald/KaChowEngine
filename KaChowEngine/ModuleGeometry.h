@@ -12,7 +12,7 @@
 #include "Assimp/include/postprocess.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-#define VERTICES 5
+#define VERTEX_ARGUMENTS 3
 
 struct Mesh
 {
@@ -23,7 +23,7 @@ struct Mesh
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
-
+	void Render();
 };
 
 
@@ -38,8 +38,9 @@ public:
 	bool Start() override;
 	bool CleanUp() override;
 	void LoadFile();
-	void ImportMesh(aiMesh* aiMesh);
+	Mesh* ImportMesh(aiMesh* aiMesh);
 	void BufferMesh(Mesh* mesh);
+	void RenderScene();
 
 private:
 
@@ -47,7 +48,6 @@ public:
 	
 	std::vector<Mesh*> meshes;
 	const char* file_path = "";
-	Mesh* ourMesh;
 };
 
 #endif

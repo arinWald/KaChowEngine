@@ -47,12 +47,14 @@ void ModuleGeometry::LoadFile()
         LOG("Error loading scene % s", file_path);
 }
 
-void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
+Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 {
-    ourMesh = new Mesh();
+    Mesh* ourMesh = new Mesh();
     // copy vertices
     ourMesh->num_vertex = aiMesh->mNumVertices;
-    ourMesh->vertex = new float[ourMesh->num_vertex * 3];
+    // *3 pk ara el vertex té només xyz. Pilota
+    ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
+    
     memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
     LOG("New mesh with %d vertices", ourMesh->num_vertex);
 
@@ -63,11 +65,27 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
     //memcpy(ourMesh->indices, aiMesh->mIndices, sizeof(float) * ourMesh->num_indices);
     //LOG("New mesh with %d indices", m->num_indices);
 
-    // copy faces
+    // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
+    // Quan fem UV's, tambe caldra les x i y de les UV
+    for (int v = 0; v < ourMesh->num_vertex; v++) {
+        //vertices
+        ourMesh->vertex[v * VERTEX_ARGUMENTS] = aiMesh->mVertices[v].x;
+        ourMesh->vertex[v * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[v].y;
+        ourMesh->vertex[v * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[v].z;
+
+        ////uvs
+        //if (aiMesh->mTextureCoords[0] == nullptr) continue;
+        //ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
+        //ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
+    }
+
+    // Load faces
     if (aiMesh->HasFaces())
     {
         ourMesh->num_index = aiMesh->mNumFaces * 3;
         ourMesh->index = new uint[ourMesh->num_index]; // assume each face is a triangle
+
+        
         for (uint i = 0; i < aiMesh->mNumFaces; ++i)
         {
             if (aiMesh->mFaces[i].mNumIndices != 3)
@@ -81,24 +99,45 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
         }
 
         BufferMesh(ourMesh);
+
+        return(ourMesh);
     }
     else
     {
         delete ourMesh;
-        /*return nullptr;*/
+        return nullptr;
     }
+}
+
+void Mesh::Render()
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    // Binding buffers
+    glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+
+    // Draw
+    glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
+
+    // Unbind buffers
+    glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void ModuleGeometry::BufferMesh(Mesh* mesh)
 {
     //Fill buffers with vertex
     glEnableClientState(GL_VERTEX_ARRAY);
+
+    // Dos buffers, vertex i index
     glGenBuffers(1, (GLuint*)&(mesh->id_vertex));
+    glGenBuffers(1, (GLuint*)&(mesh->id_index));
+
+    // Bind and fill buffers
     glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * VERTICES, mesh->vertex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * VERTEX_ARGUMENTS, mesh->vertex, GL_STATIC_DRAW);
 
     //Fill buffers with indices
-    glGenBuffers(1, (GLuint*)&(mesh->id_index));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_index, mesh->index, GL_STATIC_DRAW);
 
@@ -108,10 +147,17 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
     meshes.push_back(mesh);
 }
 
+void ModuleGeometry::RenderScene()
+{
+    //Render the scene
+    for (int i = 0; i < meshes.size(); i++) {
+        meshes[i]->Render();
+    }
+}
+
 
 bool ModuleGeometry::CleanUp()
 {
-
 
     // detach log stream
     aiDetachAllLogStreams();
