@@ -4,13 +4,13 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
+	geoLoader = new ModuleGeometry(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	geoLoader = new ModuleGeometry(this);
 	editor = new ModuleEditor(this);
 
 	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
+	// Modules will Init() Start() and Update() in this order
 	// They will CleanUp() in reverse order
 
 	// Main Modules

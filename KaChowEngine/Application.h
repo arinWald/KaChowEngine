@@ -25,9 +25,9 @@ class Application
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
+	ModuleGeometry* geoLoader;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModuleGeometry* geoLoader;
 	ModuleEditor* editor;
 
 private:

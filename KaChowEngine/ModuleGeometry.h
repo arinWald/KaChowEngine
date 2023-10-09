@@ -38,7 +38,7 @@ public:
 	bool Start() override;
 	bool CleanUp() override;
 	void LoadFile();
-	Mesh* ImportMesh(aiMesh* aiMesh);
+	void ImportMesh(aiMesh* aiMesh);
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
 
@@ -47,7 +47,7 @@ private:
 public:
 	
 	std::vector<Mesh*> meshes;
-	const char* file_path = "";
+	const char* file_path;
 };
 
 #endif

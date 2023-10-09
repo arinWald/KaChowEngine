@@ -15,7 +15,7 @@ ModuleGeometry::~ModuleGeometry()
 
 bool ModuleGeometry::Init()
 {
-    
+    file_path = "D:/warrior.FBX";
     return true;
 }
 
@@ -28,8 +28,6 @@ bool ModuleGeometry::Start()
     stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
     aiAttachLogStream(&stream);
 
-    file_path = "D:/warrior.FBX";
-
     return ret;
 }
 
@@ -40,14 +38,23 @@ void ModuleGeometry::LoadFile()
     // Si la escena té meshes
     if (scene != nullptr && scene->HasMeshes())
     {
+
+        // ProcessNode here?
+        for (int i = 0; i < scene->mNumMeshes; i++)
+        {
+            ImportMesh(scene->mMeshes[i]);
+        }
+
         // Use scene->mNumMeshes to iterate on scene->mMeshes array
         aiReleaseImport(scene);
     }
     else
-        LOG("Error loading scene % s", file_path);
+    {
+        LOG("Error loading scene: %s", file_path);
+    }
 }
 
-Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
+void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 {
     Mesh* ourMesh = new Mesh();
     // copy vertices
@@ -55,15 +62,8 @@ Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
     // *3 pk ara el vertex té només xyz. Pilota
     ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
     
-    memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
-    LOG("New mesh with %d vertices", ourMesh->num_vertex);
-
-    // Pilota
-    //// Same for index
-    //ourMesh->num_indices = aiMesh->mNumindices;
-    //ourMesh->indices = new float[ourMesh->num_indices];
-    //memcpy(ourMesh->indices, aiMesh->mIndices, sizeof(float) * ourMesh->num_indices);
-    //LOG("New mesh with %d indices", m->num_indices);
+    /*memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
+    LOG("New mesh with %d vertices", ourMesh->num_vertex);*/
 
     // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
     // Quan fem UV's, tambe caldra les x i y de les UV
@@ -100,12 +100,12 @@ Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
         BufferMesh(ourMesh);
 
-        return(ourMesh);
+        //return(ourMesh);
     }
     else
     {
         delete ourMesh;
-        return nullptr;
+        //return nullptr;
     }
 }
 
