@@ -316,6 +316,12 @@ void ModuleEditor::DrawEditor()
             }
             ImGui::Text("Horse Power: %d", cvCounter);
 
+
+            ImGui::End();
+        }
+
+        if (ImGui::BeginMenu("Console Log"))
+        {
             ImGui::NewLine();
 
             int size = logVector->size();
@@ -324,20 +330,8 @@ void ModuleEditor::DrawEditor()
                 ImGui::Text((*logVector)[i].c_str());
             }
 
-
             ImGui::End();
         }
-
-        /*if (ImGui::BeginMenu("Console Log"))
-        {
-            int size = logVector->size();
-            for (int i = 0; i < size; i++)
-            {
-                ImGui::Text("%s", logVector[i]);
-            }
-
-            ImGui::End();
-        }*/
 
         ImGui::EndMainMenuBar();
     }
