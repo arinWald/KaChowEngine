@@ -105,9 +105,6 @@ void ModuleEditor::DrawEditor()
 
             static int volumeLevel = 0;
 
-            // Pilota borrar quan es tingui variable vsync
-            static bool* vsyncBoolTest = false;
-
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
                 //ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, 0, FLT_MAX, FLT_MAX, {( 1.0f, 2.0f )}, 4);
