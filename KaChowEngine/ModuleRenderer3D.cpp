@@ -128,7 +128,6 @@ bool ModuleRenderer3D::Init()
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	//pilota = cubePrimi->CreateCube();
-	App->geoLoader->BufferMesh(pilota);
 
 	Grid.axis = true;
 
@@ -160,7 +159,7 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	App->geoLoader->LoadFile();
+	App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 
 	return false;
 }
@@ -203,13 +202,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glEnd();
 	//glLineWidth(1.0f);
 
-	// CUBE TEST
-	////glBindVertexArray(VAO);
-	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
+	 //CUBE TEST
+	/*glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);*/
 
 	// Pilota
 

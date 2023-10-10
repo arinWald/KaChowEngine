@@ -15,7 +15,7 @@ ModuleGeometry::~ModuleGeometry()
 
 bool ModuleGeometry::Init()
 {
-    file_path = "D:/warrior.FBX";
+    //file_path = "D:/warrior.FBX";
     return true;
 }
 
@@ -31,7 +31,7 @@ bool ModuleGeometry::Start()
     return ret;
 }
 
-void ModuleGeometry::LoadFile()
+void ModuleGeometry::LoadFile(const char* file_path)
 {
     const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -58,26 +58,31 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 {
     Mesh* ourMesh = new Mesh();
     // copy vertices
-    ourMesh->num_vertex = aiMesh->mNumVertices;
+    //ourMesh->num_vertex = aiMesh->mNumVertices;
     // *3 pk ara el vertex té només xyz. Pilota
-    ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
+    //ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
     
     /*memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
     LOG("New mesh with %d vertices", ourMesh->num_vertex);*/
 
+    //TEST
+    ourMesh->num_vertex = aiMesh->mNumVertices;
+    ourMesh->vertex = new float[ourMesh->num_vertex * 3];
+    memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
+
     // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
     // Quan fem UV's, tambe caldra les x i y de les UV
-    for (int v = 0; v < ourMesh->num_vertex; v++) {
-        //vertices
-        ourMesh->vertex[v * VERTEX_ARGUMENTS] = aiMesh->mVertices[v].x;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[v].y;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[v].z;
+    //for (int v = 0; v < ourMesh->num_vertex; v++) {
+    //    //vertices
+    //    ourMesh->vertex[v * VERTEX_ARGUMENTS] = aiMesh->mVertices[v].x;
+    //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[v].y;
+    //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[v].z;
 
-        ////uvs
-        //if (aiMesh->mTextureCoords[0] == nullptr) continue;
-        //ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
-        //ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
-    }
+    //    ////uvs
+    //    //if (aiMesh->mTextureCoords[0] == nullptr) continue;
+    //    //ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
+    //    //ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
+    //}
 
     // Load faces
     if (aiMesh->HasFaces())
@@ -85,7 +90,6 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
         ourMesh->num_index = aiMesh->mNumFaces * 3;
         ourMesh->index = new uint[ourMesh->num_index]; // assume each face is a triangle
 
-        
         for (uint i = 0; i < aiMesh->mNumFaces; ++i)
         {
             if (aiMesh->mFaces[i].mNumIndices != 3)
@@ -98,7 +102,22 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
             }
         }
 
-        BufferMesh(ourMesh);
+        ourMesh->VBO = 0;
+        ourMesh->EBO = 0;
+
+        // Dos buffers, vertex i index
+        glGenBuffers(1, (GLuint*)&(ourMesh->VBO));
+        glGenBuffers(1, (GLuint*)&(ourMesh->EBO));
+
+        // Bind and fill buffers
+        glBindBuffer(GL_ARRAY_BUFFER, ourMesh->VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS, ourMesh->vertex, GL_STATIC_DRAW);
+
+        //Fill buffers with indices
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ourMesh->EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * ourMesh->num_index, ourMesh->index, GL_STATIC_DRAW);
+
+        //BufferMesh(ourMesh);
 
         //Add mesh to meshes vector
         meshes.push_back(ourMesh);
@@ -117,10 +136,12 @@ void Mesh::Render()
     glEnableClientState(GL_VERTEX_ARRAY);
 
     // Binding buffers
-    glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
 
     // Draw
+    glVertexPointer(3, GL_FLOAT, 0, NULL);
     glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
 
     // Unbind buffers
@@ -131,9 +152,6 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 {
     //Fill buffers with vertex
     /*glEnableClientState(GL_VERTEX_ARRAY);*/
-
-   mesh->VBO = 0;
-   mesh->EBO = 0;
 
     // Dos buffers, vertex i index
     glGenBuffers(1, (GLuint*)&(mesh->VBO));

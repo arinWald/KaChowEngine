@@ -23,8 +23,8 @@ struct Mesh
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
-	uint VBO = 0;
-	uint EBO = 0;
+	uint VBO;
+	uint EBO;
 
 	void Render();
 };
@@ -40,7 +40,7 @@ public:
 	bool Init() override;
 	bool Start() override;
 	bool CleanUp() override;
-	void LoadFile();
+	void LoadFile(const char* file_path);
 	void ImportMesh(aiMesh* aiMesh);
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
