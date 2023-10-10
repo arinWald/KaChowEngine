@@ -6,6 +6,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include <vector>
+#include <string>
 
 #include "Glew/include/glew.h"
 
@@ -22,6 +23,8 @@ public:
 	bool CleanUp() override;
 
 	void AddFPS(const float aFPS);
+
+	void ConsoleLog(const char* tmp_string);
 
 	std::vector<float> mFPSLog;
 
@@ -42,6 +45,9 @@ private:
 	bool isWireframe;
 	float bright;
 	float bright_aux;
+
+public:
+	std::vector<std::string>* logVector;
 };
 
 #endif

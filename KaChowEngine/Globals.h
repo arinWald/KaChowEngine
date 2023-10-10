@@ -17,25 +17,25 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define PI 3.14159265358979323846264338327950288
 
-//// Deletes a buffer
-//#define RELEASE( x )\
-//    {\
-//       if( x != nullptr )\
-//       {\
-//         delete x;\
-//	     x = nullptr;\
-//       }\
-//    }
-//
-//// Deletes an array of buffers
-//#define RELEASE_ARRAY( x )\
-//	{\
-//       if( x != nullptr )\
-//       {\
-//           delete[] x;\
-//	       x = nullptr;\
-//		 }\
-//	 }
+// Deletes a buffer
+#define RELEASE( x )\
+    {\
+       if( x != nullptr )\
+       {\
+         delete x;\
+	     x = nullptr;\
+       }\
+    }
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
 
 typedef unsigned int uint;
 
@@ -55,4 +55,4 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "3D Physics Playground"
+#define TITLE "KaChowEngine 3D"

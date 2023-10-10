@@ -9,7 +9,7 @@
 
 ModuleEditor::ModuleEditor(Application * app, bool start_enabled) : Module(app, start_enabled)
 {
-
+    logVector = new std::vector<std::string>();
 }
 
 ModuleEditor::~ModuleEditor()
@@ -316,13 +316,33 @@ void ModuleEditor::DrawEditor()
             }
             ImGui::Text("Horse Power: %d", cvCounter);
 
+            ImGui::NewLine();
+
+            int size = logVector->size();
+            for (int i = 0; i < size; i++)
+            {
+                ImGui::Text((*logVector)[i].c_str());
+            }
+
+
             ImGui::End();
         }
+
+        /*if (ImGui::BeginMenu("Console Log"))
+        {
+            int size = logVector->size();
+            for (int i = 0; i < size; i++)
+            {
+                ImGui::Text("%s", logVector[i]);
+            }
+
+            ImGui::End();
+        }*/
 
         ImGui::EndMainMenuBar();
     }
 
-    // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+    
     ImGui::ShowDemoWindow();
 
     ImGui::Render();
@@ -335,6 +355,8 @@ bool ModuleEditor::CleanUp()
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
+
+    RELEASE(logVector);
 
     return true;
 }
@@ -359,10 +381,8 @@ void ModuleEditor::AddFPS(const float aFPS)
     }
 }
 
-/*
-    ImGui::Render();
-    glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-*/
+void ModuleEditor::ConsoleLog(const char* tmp_string)
+{
+    if (logVector == nullptr) return;
+    logVector->push_back(tmp_string);
+}

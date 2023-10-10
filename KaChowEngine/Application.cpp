@@ -111,3 +111,8 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
+
+void Application::LOGToEditor(const char* tmp_string)
+{
+	editor->ConsoleLog(tmp_string);
+}

@@ -45,6 +45,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	float GetDT();
+	void LOGToEditor(const char* tmp_string);
 
 private:
 
@@ -52,3 +53,5 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+extern Application* App;
