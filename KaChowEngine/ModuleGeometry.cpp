@@ -15,7 +15,6 @@ ModuleGeometry::~ModuleGeometry()
 
 bool ModuleGeometry::Init()
 {
-    //file_path = "D:/warrior.FBX";
     return true;
 }
 
@@ -112,11 +111,12 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
         // Bind and fill buffers
         glBindBuffer(GL_ARRAY_BUFFER, ourMesh->VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS, ourMesh->vertex, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         //Fill buffers with indices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ourMesh->EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * ourMesh->num_index, ourMesh->index, GL_STATIC_DRAW);
-
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         //BufferMesh(ourMesh);
 
         //Add mesh to meshes vector
@@ -138,7 +138,6 @@ void Mesh::Render()
     // Binding buffers
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
 
     // Draw
     glVertexPointer(3, GL_FLOAT, 0, NULL);
