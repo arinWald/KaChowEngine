@@ -23,6 +23,9 @@ struct Mesh
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
+	uint VBO = 0;
+	uint EBO = 0;
+
 	void Render();
 };
 

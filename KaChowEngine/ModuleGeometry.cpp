@@ -100,6 +100,9 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
         BufferMesh(ourMesh);
 
+        //Add mesh to meshes vector
+        meshes.push_back(ourMesh);
+
         //return(ourMesh);
     }
     else
@@ -127,24 +130,24 @@ void Mesh::Render()
 void ModuleGeometry::BufferMesh(Mesh* mesh)
 {
     //Fill buffers with vertex
-    glEnableClientState(GL_VERTEX_ARRAY);
+    /*glEnableClientState(GL_VERTEX_ARRAY);*/
+
+   mesh->VBO = 0;
+   mesh->EBO = 0;
 
     // Dos buffers, vertex i index
-    glGenBuffers(1, (GLuint*)&(mesh->id_vertex));
-    glGenBuffers(1, (GLuint*)&(mesh->id_index));
+    glGenBuffers(1, (GLuint*)&(mesh->VBO));
+    glGenBuffers(1, (GLuint*)&(mesh->EBO));
 
     // Bind and fill buffers
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * VERTEX_ARGUMENTS, mesh->vertex, GL_STATIC_DRAW);
 
     //Fill buffers with indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_index, mesh->index, GL_STATIC_DRAW);
 
-    glDisableClientState(GL_VERTEX_ARRAY);
-
-    //Add mesh to meshes vector
-    meshes.push_back(mesh);
+    //glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void ModuleGeometry::RenderScene()
