@@ -9,6 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "ModuleGeometry.h"
+#include "ModuleTextures.h"
 
 #include<vector>
 
@@ -19,6 +20,7 @@ class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModuleEditor;
 class ModuleGeometry;
+class ModuleTextures;
 
 class Application
 {
@@ -27,6 +29,7 @@ public:
 	ModuleInput* input;
 	ModuleGeometry* geoLoader;
 	ModuleRenderer3D* renderer3D;
+	ModuleTextures* texture2D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 

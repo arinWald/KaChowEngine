@@ -66,8 +66,8 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
     //TEST
     ourMesh->num_vertex = aiMesh->mNumVertices;
-    ourMesh->vertex = new float[ourMesh->num_vertex * 3];
-    memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
+    ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
+    memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS);
 
     // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
     // Quan fem UV's, tambe caldra les x i y de les UV
@@ -77,10 +77,10 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
     //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[v].y;
     //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[v].z;
 
-    //    ////uvs
-    //    //if (aiMesh->mTextureCoords[0] == nullptr) continue;
-    //    //ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
-    //    //ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
+    //    //uvs
+    //    if (aiMesh->mTextureCoords[0] == nullptr) continue;
+    //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
+    //    ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
     //}
 
     // Load faces
@@ -133,6 +133,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
 void Mesh::Render()
 {
+    glEnable(GL_TEXTURE_2D);
     glEnableClientState(GL_VERTEX_ARRAY);
 
     // Binding buffers

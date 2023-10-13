@@ -12,7 +12,7 @@
 #include "Assimp/include/postprocess.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-#define VERTEX_ARGUMENTS 3
+#define VERTEX_ARGUMENTS 5
 
 struct Mesh
 {

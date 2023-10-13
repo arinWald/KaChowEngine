@@ -95,6 +95,9 @@
     <ClCompile Include="ModuleGeometry.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -223,6 +226,9 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="ModuleGeometry.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>

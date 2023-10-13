@@ -6,6 +6,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	geoLoader = new ModuleGeometry(this);
 	renderer3D = new ModuleRenderer3D(this);
+	texture2D = new ModuleTextures(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
 
@@ -17,6 +18,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(texture2D);
 
 	AddModule(geoLoader);
 
