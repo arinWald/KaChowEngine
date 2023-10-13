@@ -12,6 +12,8 @@
 #include "Assimp/include/postprocess.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
+#include "glmath.h"
+
 #define VERTEX_ARGUMENTS 5
 
 struct Mesh
@@ -27,6 +29,8 @@ struct Mesh
 	uint EBO;
 
 	void Render();
+	vec3 GetVectorFromIndex(float* startValue);
+	void RenderMeshDebug(/*bool* vertexNormals, */bool* faceNormals);
 };
 
 

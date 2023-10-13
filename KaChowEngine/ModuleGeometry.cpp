@@ -170,9 +170,11 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 
 void ModuleGeometry::RenderScene()
 {
+    bool trueE = true;
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
         meshes[i]->Render();
+        meshes[i]->RenderMeshDebug(&trueE);
     }
 }
 
@@ -184,3 +186,69 @@ bool ModuleGeometry::CleanUp()
     aiDetachAllLogStreams();
     return true;
 }
+
+vec3 Mesh::GetVectorFromIndex(float* startValue)
+{
+    float x = *startValue;
+    ++startValue;
+    float y = *startValue;
+    ++startValue;
+    float z = *startValue;
+
+    return vec3(x, y, z);
+}
+
+void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
+{
+    //if (*vertexNormals == true)
+    //{
+    //    float normalLenght = 0.05f;
+    //    glPointSize(3.0f);
+    //    glColor3f(1, 0, 0);
+    //    glBegin(GL_POINTS);
+    //    for (unsigned int i = 0; i < vertices_count * 3; i += 3)
+    //    {
+    //        glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+    //    }
+    //    glEnd();
+    //    glColor3f(0, 1, 0);
+    //    glPointSize(1.0f);
+
+    //    //Vertex normals
+    //    glColor3f(0, 1, 0);
+    //    glBegin(GL_LINES);
+    //    for (unsigned int i = 0; i < normals_count * 3; i += 3)
+    //    {
+    //        glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+    //        glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
+    //    }
+    //    glEnd();
+    //    glColor3f(1, 1, 1);
+    //}
+
+    if (*faceNormals == true)
+    {
+        float normalLenght = 0.5f;
+        //Face normals
+        glColor3f(0, 1, 0);
+        glBegin(GL_LINES);
+        for (int i = 0; i < num_index; i += 3)
+        {
+            vec3 A = GetVectorFromIndex(&vertex[index[i] * 3]);
+            vec3 B = GetVectorFromIndex(&vertex[index[i + 1] * 3]);
+            vec3 C = GetVectorFromIndex(&vertex[index[i + 2] * 3]);
+
+            vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
+
+            vec3 crossVec = cross((B - A), (C - A));
+            vec3 normalDirection = normalize(crossVec);
+
+            glVertex3f(middle.x, middle.y, middle.z);
+            glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
+        }
+        glEnd();
+        glPointSize(1.f);
+        glColor3f(1, 1, 1);
+    }
+}
+
