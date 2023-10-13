@@ -102,7 +102,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
                 //memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS);
             }
         }
-        //ourMesh->id_texture = App->texture2D->textureID;
+        ourMesh->id_texture = App->texture2D->textureID;
 
         BufferMesh(ourMesh);
 
@@ -164,7 +164,7 @@ void Mesh::Render()
     glTexCoordPointer(2, GL_FLOAT, sizeof(float) * VERTEX_ARGUMENTS, (void*)(sizeof(float) * 3));
     // … bind and use other buffers
 
-    //glBindTexture(GL_TEXTURE_2D, id_texture);
+    glBindTexture(GL_TEXTURE_2D, id_texture);
 
     //Indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);

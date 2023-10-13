@@ -8,6 +8,8 @@
 #include "glmath.h"
 #include <vector>
 
+#include "Glew/include/glew.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
