@@ -159,7 +159,6 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 
 	return false;
 }

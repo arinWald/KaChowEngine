@@ -31,6 +31,8 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+
 	return ret;
 }
 
@@ -110,10 +112,19 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_WINDOWEVENT:
-			{
-				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
-					App->renderer3D->OnResize(e.window.data1, e.window.data2);
-			}
+			if (e.window.event == SDL_WINDOWEVENT_RESIZED)
+				App->renderer3D->OnResize(e.window.data1, e.window.data2);
+			break;
+
+			case SDL_DROPFILE:
+				dropped_filedir = e.drop.file;
+				// Shows directory of dropped file
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped", dropped_filedir, App->window->window);
+
+				App->geoLoader->LoadFile(dropped_filedir);
+
+				SDL_free(dropped_filedir);
+				break;
 		}
 	}
 
