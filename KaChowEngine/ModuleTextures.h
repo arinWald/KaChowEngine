@@ -4,6 +4,7 @@
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilu.h"
 #include "DevIL/include/ilut.h"
+#include "SDL/include/SDL_opengl.h"
 
 #define CHECKERS_WIDTH 64
 #define CHECKERS_HEIGHT 64

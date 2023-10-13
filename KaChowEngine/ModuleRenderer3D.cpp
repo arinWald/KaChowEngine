@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "SDL\include\SDL_opengl.h"
 
+#include "ModuleTextures.h"
+
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glu32.lib") /* link Microsoft OpenGL lib   */
@@ -159,7 +161,7 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	/*App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");*/
+	App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 
 	return false;
 }

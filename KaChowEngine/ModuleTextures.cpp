@@ -4,9 +4,11 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+//#include "SDL/include/SDL_opengl.h"
+
 ModuleTextures::ModuleTextures(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	textureID = 0;
+	//textureID = 0;
 }
 
 bool ModuleTextures::Init()
