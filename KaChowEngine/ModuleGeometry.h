@@ -5,14 +5,15 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "glmath.h"
 #include <vector>
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 
-#include "glmath.h"
 
 #define VERTEX_ARGUMENTS 5
 
@@ -25,8 +26,11 @@ struct Mesh
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
-	uint VBO;
-	uint EBO;
+	GLuint id_texture;
+
+	/*uint VBO;
+	uint EBO;*/
+
 
 	void Render();
 	vec3 GetVectorFromIndex(float* startValue);

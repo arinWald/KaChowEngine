@@ -50,6 +50,7 @@ bool ModuleTextures::Start()
 	//Create Texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	//unbind texture
@@ -61,6 +62,6 @@ bool ModuleTextures::Start()
 
 bool ModuleTextures::CleanUp()
 {
-	glDeleteBuffers(1, &textureID);
+	//glDeleteBuffers(1, &textureID);
 	return true;
 }

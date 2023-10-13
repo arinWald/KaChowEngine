@@ -16,15 +16,14 @@ public:
 	ModuleTextures(Application* app, bool start_enabled = true);
 	~ModuleTextures() {}
 
-private:
+
 	bool Init();
 	bool Start();
 	bool CleanUp();
 
-public:
-
-private:
 	GLuint textureID;
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4]; // height width rgba
+
+	
 };

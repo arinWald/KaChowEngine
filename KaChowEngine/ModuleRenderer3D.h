@@ -2,7 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
-#include "ModuleGeometry.h"
+#include "glmath.h"
+
 
 #include "Glew/include/glew.h"
 
@@ -11,7 +12,7 @@
 #include "Primitive.h"
 
 //todo: REMOVE this before 1st delivery!!
-#include "glmath.h"
+
 
 #define MAX_LIGHTS 8
 
