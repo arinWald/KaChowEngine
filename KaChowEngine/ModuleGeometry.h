@@ -30,6 +30,8 @@ struct Mesh
 
 	GLuint id_texture;
 
+	GLuint texture_width = 0, texture_height = 0;
+
 	/*uint VBO;
 	uint EBO;*/
 
