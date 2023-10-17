@@ -23,14 +23,7 @@ public:
 		//}
 	}
 
-	//AddComponent(type)
-	//{
-	//	//Mirar si exite
-	//	// Switch con el type
-	//	C_Tranform* Temp = new C_Transform();
-	//	mTransform = Temp;
-	//	mComponents.push_back(mTransform);
-	//}
+	void AddComponent(int type);
 
 	bool Init();
 	bool Start();
@@ -42,11 +35,11 @@ public:
 
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;
-	//std::vector<Component*> mComponents;
+	std::vector<Component*> mComponents;
 
 
 
-	/*Component_Transform* mTransform;*/
+	Component_Transform* mTransform;
 };
 
 class GameObject;
@@ -55,9 +48,13 @@ class Component : GameObject
 	Component();
 	~Component();
 
+	void OnEditor();
+
 	enum Type
 	{
-
+		TRANSFORM,
+		MESH,
+		MATERIAL,
 	};
 
 	bool active;
@@ -65,18 +62,18 @@ class Component : GameObject
 	GameObject* mParent;
 };
 
-//class C_Transform : public Component
-//{
-//	void OnEditor() override;
-//
-//	virtual Enable();
-//	virtual Update();
-//	virtual Disable();
-//
-//	float3 mPosition;
-//	float3 mScale;
-//	Quat mRotation;
-//
-//	float4x4 mGlobalMatrix:
-//	float4x4 mLocalMatrix;
-//};
+class C_Transform : public Component
+{
+	void OnEditor() override;
+
+	virtual Enable();
+	virtual Update();
+	virtual Disable();
+
+	float3 mPosition;
+	float3 mScale;
+	Quat mRotation;
+
+	float4x4 mGlobalMatrix:
+	float4x4 mLocalMatrix;
+};

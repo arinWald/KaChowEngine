@@ -30,3 +30,12 @@ bool GameObject::CleanUp()
 {
 	return true;
 }
+
+void AddComponent(int type)
+{
+	//Mirar si exite
+	// Switch con el type
+	C_Tranform* Temp = new C_Transform();
+	mTransform = Temp;
+	mComponents.push_back(mTransform);
+}
