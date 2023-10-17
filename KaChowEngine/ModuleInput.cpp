@@ -121,6 +121,7 @@ update_status ModuleInput::PreUpdate(float dt)
 				// Shows directory of dropped file
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped", dropped_filedir, App->window->window);
 
+				// pilota
 				App->geoLoader->LoadFile(dropped_filedir);
 				App->texture2D->LoadTexture(dropped_filedir);
 

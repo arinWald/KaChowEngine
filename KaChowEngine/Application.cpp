@@ -9,6 +9,7 @@ Application::Application()
 	texture2D = new ModuleTextures(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
+	scene = new ModuleScene(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update() in this order
@@ -18,6 +19,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(scene);
 	AddModule(texture2D);
 
 	AddModule(geoLoader);

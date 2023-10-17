@@ -164,7 +164,6 @@ void Mesh::Render()
 
     glVertexPointer(3, GL_FLOAT, sizeof(float) * VERTEX_ARGUMENTS, NULL);
     glTexCoordPointer(2, GL_FLOAT, sizeof(float) * VERTEX_ARGUMENTS, (void*)(sizeof(float) * 3));
-    // … bind and use other buffers
 
     glBindTexture(GL_TEXTURE_2D, id_texture);
 

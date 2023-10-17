@@ -10,6 +10,7 @@
 #include "ModuleEditor.h"
 #include "ModuleGeometry.h"
 #include "ModuleTextures.h"
+#include "ModuleScene.h"
 
 #include<vector>
 
@@ -21,6 +22,7 @@ class ModuleCamera3D;
 class ModuleEditor;
 class ModuleGeometry;
 class ModuleTextures;
+class ModuleScene;
 
 class Application
 {
@@ -32,6 +34,7 @@ public:
 	ModuleTextures* texture2D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
+	ModuleScene* scene;
 
 private:
 
