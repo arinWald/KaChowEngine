@@ -2,7 +2,7 @@
 #include "Module.h"
 #include <vector>
 
-class GameObject : public Module
+class GameObject
 {
 public:
 
@@ -24,10 +24,6 @@ public:
 	}
 
 	void AddComponent(int type);
-
-	bool Init();
-	bool Start();
-	bool CleanUp();
 	bool Update();
 
 	std::string name;
@@ -39,7 +35,7 @@ public:
 
 
 
-	Component_Transform* mTransform;
+	/*Component_Transform* mTransform;*/
 };
 
 class GameObject;

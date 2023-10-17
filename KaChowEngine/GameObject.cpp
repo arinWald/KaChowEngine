@@ -8,25 +8,7 @@ GameObject::GameObject(Application* app, bool start_enabled) : Module(app, start
 
 }
 
-bool GameObject::Init()
-{
-
-	return true;
-}
-
-bool GameObject::Start()
-{
-
-	return true;
-}
-
 bool GameObject::Update()
-{
-	return true;
-}
-
-
-bool GameObject::CleanUp()
 {
 	return true;
 }
