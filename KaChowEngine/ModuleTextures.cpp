@@ -67,8 +67,8 @@ bool ModuleTextures::Start()
 	glDisable(GL_TEXTURE_2D);
 
 	ilInit();
-	ilEnable(IL_ORIGIN_SET);
-	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+	//ilEnable(IL_ORIGIN_SET);
+	//ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
 	/*texPath = "Assets/Textures/Baker_house.png";
 
