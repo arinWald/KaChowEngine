@@ -110,6 +110,12 @@
     <ClCompile Include="C_Transform.cpp">
       <Filter>Sources\Modules\Gameobject</Filter>
     </ClCompile>
+    <ClCompile Include="C_Mesh.cpp">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Material.cpp">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -253,6 +259,12 @@
       <Filter>Sources\Modules\Gameobject</Filter>
     </ClInclude>
     <ClInclude Include="C_Transform.h">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Mesh.h">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Material.h">
       <Filter>Sources\Modules\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>
