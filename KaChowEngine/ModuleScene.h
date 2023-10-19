@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "GameObject.h"
+#include "Glew/include/glew.h"
 #include <vector>
 
 class GameObject;
@@ -11,14 +12,12 @@ public:
 	ModuleScene(Application* app, bool start_enabled = true);
 	~ModuleScene() {}
 
-
 	bool Init();
 	bool Start();
 	bool CleanUp();
 
-	GameObject* CreateGameObject();
+	// Pilota
+	//GameObject* CreateGameObject();
 
-	
-
-
+	GameObject* rootGameObject;
 };

@@ -102,7 +102,13 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Transform.cpp">
+      <Filter>Sources\Modules\Gameobject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,7 +247,13 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Modules\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Transform.h">
+      <Filter>Sources\Modules\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +291,9 @@
     </Filter>
     <Filter Include="External">
       <UniqueIdentifier>{0c58f5ef-0e18-44f6-a724-8695bb211a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Gameobject">
+      <UniqueIdentifier>{047afb33-9ed8-4ecb-91af-99fe1b765231}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

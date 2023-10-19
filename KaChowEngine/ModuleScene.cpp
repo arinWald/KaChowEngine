@@ -25,7 +25,7 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
-//GameObject* CreateGameObject()
-//{
-//	
-//}
+GameObject* CreateGameObject()
+{
+	
+}
