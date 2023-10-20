@@ -20,11 +20,10 @@ public:
 	virtual void Disable();
 	/*virtual Update();*/
 
-	void SetTransfoMatrix(float3 position, float3 rotation, float3 scale);
+	void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
 
 	float3 mPosition;
 	float3 mScale;
-	float3 mRotation;
 	Quat mRotation;
 
 	float4x4 mGlobalMatrix;

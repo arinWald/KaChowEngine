@@ -34,7 +34,10 @@ void C_Transform::Disable()
 	active = false;
 }
 
-void C_Transform::SetTransfoMatrix(float3 position, float3 rotation, float3 scale)
+void C_Transform::SetTransfoMatrix(float3 position, Quat rotation, float3 scale)
 {
 	// Pilota
+	mPosition = position;
+	mRotation = rotation;
+	mScale = scale;
 }
