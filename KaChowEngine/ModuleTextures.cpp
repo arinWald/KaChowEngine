@@ -26,6 +26,7 @@ bool ModuleTextures::Start()
 {
 	texPath = "";
 	textureID = 0;
+	//checkerID = 0;
 	textureWidth = 0;
 	textureHeight = 0;
 
@@ -79,7 +80,7 @@ bool ModuleTextures::Start()
 
 bool ModuleTextures::CleanUp()
 {
-	//glDeleteBuffers(1, &textureID);
+	//glDeleteBuffers(1, &checkerID);
 	return true;
 }
 
@@ -172,5 +173,16 @@ void ModuleTextures::FreeTexture()
 
 	textureWidth = 0;
 	textureHeight = 0;
+
+}
+
+void ModuleTextures::FreeTexture(GLuint texId)
+{
+	//Delete texture
+	if (texId != 0)
+	{
+		glDeleteTextures(1, &texId);
+		texId = 0;
+	}
 
 }

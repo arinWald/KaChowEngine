@@ -27,5 +27,5 @@ bool ModuleScene::CleanUp()
 
 GameObject* CreateGameObject()
 {
-	
+	return nullptr;
 }

@@ -4,10 +4,12 @@
 #include <string>
 #include "Component.h"
 #include "C_Transform.h"
+#include "C_Mesh.h"
 
 enum class ComponentType;
 class Component;
 class C_Transform;
+class C_Mesh;
 class GameObject
 {
 public:
@@ -18,6 +20,7 @@ public:
 
 	void AddComponent(ComponentType type);
 	void Update();
+	C_Mesh* GetMeshComponent();
 
 	std::string name;
 
@@ -26,6 +29,5 @@ public:
 	std::vector<Component*> mComponents;
 
 	C_Transform* mTransform;
-
 
 };

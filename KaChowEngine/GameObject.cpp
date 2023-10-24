@@ -73,3 +73,15 @@ void GameObject::Update()
 		mComponents[i]->Update();
 	}
 }
+
+C_Mesh* GameObject::GetMeshComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::MESH)
+		{
+			return (C_Mesh*)mComponents[i];
+		}
+	}
+	return nullptr;
+}

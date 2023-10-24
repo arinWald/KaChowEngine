@@ -28,8 +28,10 @@ public:
 	bool LoadTexture(std::string path);
 
 	void FreeTexture();
+	void FreeTexture(GLuint texID);
 
 	GLuint textureID;
+	//GLuint checkerID;
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4]; // height width rgba
 

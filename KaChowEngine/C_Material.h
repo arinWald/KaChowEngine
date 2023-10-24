@@ -17,6 +17,11 @@ public:
 	GLuint textureID;
 
 	void OnEditor() override;
+	void SetTexture(const char* file_path);
+	void ResetTexture();
+	void UpdateMeshTexture();
+
+	int currentTexture;
 
 	virtual void Enable();
 	virtual void Disable();
