@@ -52,6 +52,7 @@ public:
 	bool Init() override;
 	bool Start() override;
 	bool CleanUp() override;
+	void DestroyMesh(Mesh* mesh);
 	void LoadFile(const char* file_path);
 	void ImportMesh(aiMesh* aiMesh);
 	void BufferMesh(Mesh* mesh);

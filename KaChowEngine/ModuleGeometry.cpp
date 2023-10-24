@@ -286,3 +286,15 @@ void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
     }
 }
 
+void ModuleGeometry::DestroyMesh(Mesh* mesh)
+{
+    for (size_t i = 0; i < meshes.size(); i++)
+    {
+        if (meshes[i] == mesh) {
+            meshes.erase(meshes.begin() + i);
+            delete mesh;
+            mesh = nullptr;
+            return;
+        }
+    }
+}
