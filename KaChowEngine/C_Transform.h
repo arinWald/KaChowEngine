@@ -20,12 +20,28 @@ public:
 	virtual void Disable();
 	/*virtual Update();*/
 
-	void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
+	float4x4 getGlobalMatrix();
+	float4x4 getLocalMatrix();
+
+	void resetMatrix();
+
+	float3 getPosition(bool globalPosition = false);
+	void setPosition(float3 pos);
+	float3 getRotation();
+	void setRotation(float3 rotation);
+	float3 getScale();
+	void setScale(float3 scale);
+
+	//// Pilota
+	//void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
+
+	void calculateMatrix();
 
 	float3 mPosition;
 	float3 mScale;
-	Quat mRotation;
+	float3 mRotation;
 
+	// Posarli matriux local del parent
 	float4x4 mGlobalMatrix;
 	float4x4 mLocalMatrix;
 };

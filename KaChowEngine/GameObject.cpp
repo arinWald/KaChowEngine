@@ -19,14 +19,14 @@ GameObject::~GameObject()
 	// pilota (delete del reves?)
 	for (size_t i = mComponents.size(); i >= 0; --i)
 	{
-		delete mComponents[i];
-		mComponents[i] = nullptr;
+		delete mComponents[i-1];
+		mComponents[i-1] = nullptr;
 	}
 
 	for (size_t i = mChildren.size(); i >= 0; --i)
 	{
-		delete mChildren[i];
-		mChildren[i] = nullptr;
+		delete mChildren[i-1];
+		mChildren[i-1] = nullptr;
 	}
 
 	mComponents.clear();
