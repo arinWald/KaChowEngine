@@ -19,11 +19,11 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(scene);
 	AddModule(texture2D);
 
 	AddModule(geoLoader);
 
+	AddModule(scene);
 	// Renderer last!
 	AddModule(renderer3D);
 	AddModule(editor);

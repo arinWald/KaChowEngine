@@ -20,7 +20,14 @@ public:
 
 	void AddComponent(ComponentType type);
 	void Update();
+	GameObject* GetParent();
+	bool SetNewParent(GameObject* newParent);
+	bool CheckChildOf(GameObject* parent);
+	void DeleteChild(GameObject* child);
+
+
 	C_Mesh* GetMeshComponent();
+
 
 	std::string name;
 

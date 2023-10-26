@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
-#include "GameObject.h"
-#include "Glew/include/glew.h"
+#include "Globals.h"
 #include <vector>
 
 class GameObject;
@@ -14,10 +13,16 @@ public:
 
 	bool Init();
 	bool Start();
+	update_status Update(float dt);
 	bool CleanUp();
 
+	void PrintHierarchy(GameObject* GO, int index);
+
 	// Pilota
-	//GameObject* CreateGameObject();
+	GameObject* CreateGameObject(GameObject* parent);
 
 	GameObject* rootGameObject;
+	GameObject* selectedGameObj;
+	GameObject* hoveredGameObj;
+	GameObject* draggedGameObject;
 };

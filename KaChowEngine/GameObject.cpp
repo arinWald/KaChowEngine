@@ -17,17 +17,29 @@ GameObject::~GameObject()
 	mTransform = nullptr;
 
 	// pilota (delete del reves?)
-	for (size_t i = mComponents.size(); i >= 0; --i)
+
+	for (size_t i = 0; i < mComponents.size(); ++i)
 	{
-		delete mComponents[i-1];
-		mComponents[i-1] = nullptr;
+		delete mComponents[i];
+		mComponents[i] = nullptr;
+	}
+
+	for (size_t i = 0; i < mChildren.size(); ++i)
+	{
+		delete mChildren[i];
+		mChildren[i] = nullptr;
+	}
+	/*for (size_t i = mComponents.size(); i >= 0; --i)
+	{
+		delete mComponents[i];
+		mComponents[i] = nullptr;
 	}
 
 	for (size_t i = mChildren.size(); i >= 0; --i)
 	{
-		delete mChildren[i-1];
-		mChildren[i-1] = nullptr;
-	}
+		delete mChildren[i];
+		mChildren[i] = nullptr;
+	}*/
 
 	mComponents.clear();
 }
@@ -74,6 +86,11 @@ void GameObject::Update()
 	}
 }
 
+GameObject* GameObject::GetParent()
+{
+	return mParent;
+}
+
 C_Mesh* GameObject::GetMeshComponent()
 {
 	for (size_t i = 0; i < mComponents.size(); i++)
@@ -84,4 +101,40 @@ C_Mesh* GameObject::GetMeshComponent()
 		}
 	}
 	return nullptr;
+}
+
+bool GameObject::CheckChildOf(GameObject* parent)
+{
+	if (parent->mChildren.empty()) return false;
+
+	for (int i = 0; i < parent->mChildren.size(); i++) {
+
+		if (mChildren[i] == this) return true;
+
+	}
+	return false;
+}
+
+void GameObject::DeleteChild(GameObject* child)
+{
+	for (int i = 0; i < mChildren.size(); i++) {
+		if (mChildren[i] == child) {
+			mChildren.erase(mChildren.begin() + i);
+			child->mParent = nullptr;
+		}
+	}
+}
+
+bool GameObject::SetNewParent(GameObject* newParent)
+{
+	if (mParent != nullptr) {
+		if (newParent->CheckChildOf(this)) return false;
+
+		mParent->DeleteChild(this);
+	}
+
+	mParent = newParent;
+	newParent->mChildren.push_back(this);
+
+	return true;
 }
