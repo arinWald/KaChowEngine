@@ -275,7 +275,7 @@ void ModuleEditor::DrawEditor()
                 ImGui::SliderInt("Volume", &volumeLevel, 0, 100);
             }
 
-            ImGui::End();
+            ImGui::EndMenu();
         }
 
         if (ImGui::BeginMenu("About"))
@@ -314,7 +314,7 @@ void ModuleEditor::DrawEditor()
             ImGui::Text("Horse Power: %d", cvCounter);
 
 
-            ImGui::End();
+            ImGui::EndMenu();
         }
 
         if (ImGui::BeginMenu("Console Log"))
@@ -327,7 +327,7 @@ void ModuleEditor::DrawEditor()
                 ImGui::Text((*logVector)[i].c_str());
             }
 
-            ImGui::End();
+            ImGui::EndMenu();
         }
 
         ImGui::EndMainMenuBar();
