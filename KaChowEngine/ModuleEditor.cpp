@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "OurPrimitive.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/backends/imgui_impl_opengl3.h"
@@ -120,7 +121,25 @@ void ModuleEditor::DrawEditor()
         }
         if (ImGui::BeginMenu("Objects"))
         {
-            ImGui::Text("Hello world!");
+            if (ImGui::MenuItem(" Empty Object  ")) {
+                OurPrimitive::CreatePrimitive(ShapeType::EMPTY);
+            }
+
+            //if (ImGui::MenuItem(" Plane  "))
+            //{
+            //    Primitives::CreatePrimitive(Shapes::PLANE);
+            //}
+
+            //if (ImGui::MenuItem(" Cube  "))
+            //{
+            //    Primitives::CreatePrimitive(Shapes::CUBE);
+            //}
+
+            //if (ImGui::MenuItem(" Sphere  "))
+            //{
+            //    Primitives::CreatePrimitive(Shapes::SPHERE);
+            //}
+
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Configuration"))

@@ -116,6 +116,9 @@
     <ClCompile Include="C_Material.cpp">
       <Filter>Sources\Modules\Gameobject</Filter>
     </ClCompile>
+    <ClCompile Include="OurPrimitive.cpp">
+      <Filter>Sources\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -266,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="C_Material.h">
       <Filter>Sources\Modules\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="OurPrimitive.h">
+      <Filter>Sources\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

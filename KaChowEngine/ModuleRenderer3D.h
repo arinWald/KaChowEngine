@@ -34,15 +34,13 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	CPlane Grid;
 	
 	//You won't need this after using Frustum
 	mat4x4 ProjectionMatrix;
+	CPlane Grid;
 
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix;
-
-	CCylinder hola;
 
 	GLuint VBO;
 	GLuint EBO;
