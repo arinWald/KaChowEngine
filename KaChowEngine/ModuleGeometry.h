@@ -10,6 +10,8 @@
 
 #include "Glew/include/glew.h"
 
+#include "GameObject.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -32,6 +34,8 @@ struct Mesh
 
 	GLuint texture_width = 0, texture_height = 0;
 
+	GameObject* owner;
+
 	/*uint VBO;
 	uint EBO;*/
 
@@ -53,13 +57,13 @@ public:
 	bool Start() override;
 	bool CleanUp() override;
 	void DestroyMesh(Mesh* mesh);
-	void LoadFile(const char* file_path);
-	void ImportMesh(aiMesh* aiMesh);
+	GameObject* LoadFile(const char* file_path);
+	void ImportMesh(aiMesh* aiMesh, GameObject* gameObject);
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
 
 private:
-
+	GameObject* newGameObject;
 public:
 	
 	std::vector<Mesh*> meshes;

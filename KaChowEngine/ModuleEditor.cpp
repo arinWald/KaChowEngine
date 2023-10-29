@@ -121,24 +121,42 @@ void ModuleEditor::DrawEditor()
         }
         if (ImGui::BeginMenu("Objects"))
         {
-            if (ImGui::MenuItem(" Empty Object  ")) {
+            if (ImGui::MenuItem("Empty Object")) {
                 OurPrimitive::CreatePrimitive(ShapeType::EMPTY);
             }
 
-            //if (ImGui::MenuItem(" Plane  "))
-            //{
-            //    Primitives::CreatePrimitive(Shapes::PLANE);
-            //}
+            if (ImGui::MenuItem("Plane")) {
+                OurPrimitive::CreatePrimitive(ShapeType::PLANE);
+            }
 
-            //if (ImGui::MenuItem(" Cube  "))
-            //{
-            //    Primitives::CreatePrimitive(Shapes::CUBE);
-            //}
+            if (ImGui::MenuItem("Cube")) {
+                OurPrimitive::CreatePrimitive(ShapeType::CUBE);
+            }
 
-            //if (ImGui::MenuItem(" Sphere  "))
-            //{
-            //    Primitives::CreatePrimitive(Shapes::SPHERE);
-            //}
+            if (ImGui::MenuItem("Sphere")) {
+                OurPrimitive::CreatePrimitive(ShapeType::SPHERE);
+            }
+
+            if (ImGui::MenuItem("Cylinder")) {
+                OurPrimitive::CreatePrimitive(ShapeType::CYLINDER);
+            }
+
+            if (ImGui::MenuItem("Monkey")) {
+                OurPrimitive::CreatePrimitive(ShapeType::MONKEY);
+            }
+
+            if (ImGui::MenuItem("Icosphere")) {
+                OurPrimitive::CreatePrimitive(ShapeType::ICOSHPERE);
+            }
+
+            if (ImGui::MenuItem("Cone")) {
+                OurPrimitive::CreatePrimitive(ShapeType::CONE);
+            }
+
+            if (ImGui::MenuItem("Torus")) {
+                OurPrimitive::CreatePrimitive(ShapeType::TORUS);
+            }
+
 
             ImGui::EndMenu();
         }

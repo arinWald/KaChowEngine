@@ -1,6 +1,7 @@
 #include "ModuleGeometry.h"
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "GameObject.h"
 
 #include "Glew/include/glew.h"
 
@@ -31,22 +32,25 @@ bool ModuleGeometry::Start()
     return ret;
 }
 
-void ModuleGeometry::LoadFile(const char* file_path)
+GameObject* ModuleGeometry::LoadFile(const char* file_path)
 {
     const aiScene* scene = aiImportFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     // Si la escena té meshes
     if (scene != nullptr && scene->HasMeshes())
     {
-
+        GameObject* newGameObject = new GameObject(App->scene->rootGameObject);
+        
         // ProcessNode here?
         for (int i = 0; i < scene->mNumMeshes; i++)
         {
-            ImportMesh(scene->mMeshes[i]);
+            ImportMesh(scene->mMeshes[i], newGameObject);
         }
 
         // Use scene->mNumMeshes to iterate on scene->mMeshes array
         aiReleaseImport(scene);
+
+        return newGameObject;
     }
     else
     {
@@ -54,21 +58,14 @@ void ModuleGeometry::LoadFile(const char* file_path)
     }
 }
 
-void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
+void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* gameObject)
 {
     Mesh* ourMesh = new Mesh();
-    // copy vertices
-    //ourMesh->num_vertex = aiMesh->mNumVertices;
-    // *3 pk ara el vertex té només xyz. Pilota
-    //ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
-    
-    /*memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
-    LOG("New mesh with %d vertices", ourMesh->num_vertex);*/
 
     //TEST
     ourMesh->num_vertex = aiMesh->mNumVertices;
     ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
-    //memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS);
+    
 
     // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
     // Quan fem UV's, tambe caldra les x i y de les UV
@@ -99,7 +96,6 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
             else
             {
                 memcpy(&ourMesh->index[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
-                //memcpy(ourMesh->vertex, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS);
             }
         }
         ourMesh->id_texture = App->texture2D->textureID;
@@ -108,33 +104,15 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
         BufferMesh(ourMesh);
 
-        //ourMesh->VBO = 0;
-        //ourMesh->EBO = 0;
-
-        //// Dos buffers, vertex i index
-        //glGenBuffers(1, (GLuint*)&(ourMesh->VBO));
-        //glGenBuffers(1, (GLuint*)&(ourMesh->EBO));
-
-        //// Bind and fill buffers
-        //glBindBuffer(GL_ARRAY_BUFFER, ourMesh->VBO);
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ourMesh->num_vertex * VERTEX_ARGUMENTS, ourMesh->vertex, GL_STATIC_DRAW);
-        //glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        ////Fill buffers with indices
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ourMesh->EBO);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * ourMesh->num_index, ourMesh->index, GL_STATIC_DRAW);
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        ////BufferMesh(ourMesh);
-
-        ////Add mesh to meshes vector
-        //meshes.push_back(ourMesh);
-
-        //return(ourMesh);
+        C_Mesh* component = new C_Mesh();
+        ourMesh->owner = gameObject;
+        component->mesh = ourMesh;
+        if (gameObject->mComponents.size() == 1)
+            gameObject->mComponents.push_back(component);
     }
     else
     {
         delete ourMesh;
-        //return nullptr;
     }
 }
 
