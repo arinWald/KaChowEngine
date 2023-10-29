@@ -26,4 +26,11 @@ public:
 	GameObject* selectedGameObj;
 	GameObject* hoveredGameObj;
 	GameObject* draggedGameObject;
+
+	GameObject* prova1;
+	GameObject* prova2;
+	GameObject* prova3;
+	GameObject* prova4;
+	GameObject* prova5;
+	GameObject* prova6;
 };

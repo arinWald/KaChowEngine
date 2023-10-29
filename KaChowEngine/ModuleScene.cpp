@@ -28,6 +28,13 @@ bool ModuleScene::Start()
 	App->camera->Position = float3(1.0f, 1.0f, 1.0f);
 	App->camera->LookAt(float3(0, 0, 0));
 
+	prova1 = new GameObject(rootGameObject);
+	prova2 = new GameObject(prova1);
+	prova3 = new GameObject(prova1);
+	prova4 = new GameObject(rootGameObject);
+	prova5 = new GameObject(prova4);
+	prova6 = new GameObject(prova4);
+
 	return true;
 }
 
@@ -35,11 +42,7 @@ update_status ModuleScene::Update(float dt)
 {
 	bool ret = UPDATE_CONTINUE;
 
-	if (ImGui::Begin("Hierarchy"))
-	{
-		PrintHierarchy(rootGameObject, 0);
-	}		
-	ImGui::End();
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -57,41 +60,49 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 
 	bool isNodeOpen;
 
-	if (gameObject->GetParent() == nullptr) {
+	if (gameObject->GetParent() == nullptr)
+	{
 		flag_TNode |= ImGuiTreeNodeFlags_DefaultOpen;
 	}
-	else {
+	else
+	{
 		flag_TNode |= ImGuiTreeNodeFlags_OpenOnArrow;
 	}
 
-	if (gameObject == selectedGameObj) {
+	if (gameObject == selectedGameObj) 
+	{
 		flag_TNode |= ImGuiTreeNodeFlags_Selected;
 	}
 
 	if (gameObject->mChildren.size() != 0)
 		isNodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)index, flag_TNode, gameObject->name.c_str(), index);
 
-	else {
+	else 
+	{
 		flag_TNode |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		ImGui::TreeNodeEx((void*)(intptr_t)index, flag_TNode, gameObject->name.c_str(), index);
 		isNodeOpen = false;
 	}
 
-	if (ImGui::BeginDragDropSource())
-	{
-		ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
 
-		draggedGameObject = gameObject;
-		ImGui::Text("Changing...");
-		ImGui::EndDragDropSource();
-	}
-
-	if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+	if (gameObject->GetParent() != nullptr)
 	{
-		hoveredGameObj = gameObject;
-		if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
+		if (ImGui::BeginDragDropSource())
 		{
-			selectedGameObj = gameObject;
+			ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
+
+			draggedGameObject = gameObject;
+			ImGui::Text("Drag to");
+			ImGui::EndDragDropSource();
+		}
+
+		if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+		{
+			hoveredGameObj = gameObject;
+			if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
+			{
+				selectedGameObj = gameObject;
+			}
 		}
 	}
 

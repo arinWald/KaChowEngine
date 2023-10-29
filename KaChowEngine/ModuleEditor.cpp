@@ -333,6 +333,12 @@ void ModuleEditor::DrawEditor()
         ImGui::EndMainMenuBar();
     }
 
+    if (ImGui::Begin("Hierarchy"))
+    {
+        App->scene->PrintHierarchy(App->scene->rootGameObject, 0);
+    }
+    ImGui::End();
+
     
     ImGui::ShowDemoWindow();
 
