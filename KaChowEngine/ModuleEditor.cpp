@@ -80,6 +80,30 @@ void ModuleEditor::DrawEditor()
 
     App->editor->AddFPS(1/App->GetDT());
 
+    // Docking for all windows
+    ImGuiWindowFlags flags = ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoNavFocus;
+
+    const ImGuiViewport* main_viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(main_viewport->WorkPos);
+    ImGui::SetNextWindowSize(main_viewport->Size);
+    ImGui::SetNextWindowViewport(main_viewport->ID);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    ImGui::Begin(" ", nullptr, flags);
+
+    ImGui::PopStyleVar(3);
+
+    ImGuiID dockID = ImGui::GetID("MainDockZone");
+    ImGui::DockSpace(dockID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+    ImGui::End();
+    // Finish docking for all windows
+
+
     // HERE ALL WINDOW RENDERS
     // Always EndMenu when Begin Menu
     if (ImGui::BeginMainMenuBar())

@@ -145,5 +145,5 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 GameObject* ModuleScene::CreateGameObject(GameObject* parent)
 {
 	GameObject* newGameObject = new GameObject(parent);
-	return nullptr;
+	return newGameObject;
 }

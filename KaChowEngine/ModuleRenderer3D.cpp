@@ -183,6 +183,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	App->editor->AddFPS(App->GetDT());
 
+
 	return UPDATE_CONTINUE;
 }
 
