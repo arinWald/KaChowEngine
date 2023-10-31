@@ -58,7 +58,7 @@ public:
 	bool CleanUp() override;
 	void DestroyMesh(Mesh* mesh);
 	GameObject* LoadFile(const char* file_path);
-	void ImportMesh(aiMesh* aiMesh, GameObject* gameObject);
+	void ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObject* CgameObject, const aiScene* scene, int index);
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
 

@@ -59,16 +59,10 @@ GameObject::GameObject(GameObject* parent)
 	mComponents.push_back(mTransform);
 }
 
-void GameObject::AddComponent(ComponentType type)
+void GameObject::AddComponent(Component* component)
 {
-	Component* newComponent = new Component(this);
-
-	newComponent->type = type;
-	newComponent->active = true;
-
-	mComponents.push_back(newComponent);
-
-	delete newComponent;
+	mComponents.push_back(component);
+	component->mParent = this;
 }
 
 
@@ -103,14 +97,19 @@ C_Mesh* GameObject::GetMeshComponent()
 	return nullptr;
 }
 
-bool GameObject::CheckChildOf(GameObject* parent)
+bool GameObject::IsChildOf(GameObject* gameObject)
 {
-	if (parent->mChildren.empty()) return false;
-
-	for (int i = 0; i < parent->mChildren.size(); i++) {
-
-		if (mChildren[i] == this) return true;
-
+	if (gameObject == this)
+	{
+		return true;
+	}
+	if (gameObject->mChildren.empty())
+	{
+		return false;
+	}
+	for (size_t i = 0; i < gameObject->mChildren.size(); i++)
+	{
+		if (IsChildOf(gameObject->mChildren[i])) return true;
 	}
 	return false;
 }
@@ -128,7 +127,7 @@ void GameObject::DeleteChild(GameObject* child)
 bool GameObject::SetNewParent(GameObject* newParent)
 {
 	if (mParent != nullptr) {
-		if (newParent->CheckChildOf(this)) return false;
+		if (newParent->IsChildOf(this)) return false;
 
 		mParent->DeleteChild(this);
 	}
@@ -136,5 +135,16 @@ bool GameObject::SetNewParent(GameObject* newParent)
 	mParent = newParent;
 	newParent->mChildren.push_back(this);
 
+	return true;
+}
+
+bool GameObject::SetAsChildOf(GameObject* gameObject)
+{
+	if (IsChildOf(gameObject))
+	{
+		return false;
+	}
+	gameObject->mParent = this;
+	mChildren.push_back(gameObject);
 	return true;
 }

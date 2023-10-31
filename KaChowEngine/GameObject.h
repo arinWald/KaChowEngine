@@ -18,11 +18,12 @@ public:
 	GameObject(GameObject* parent);
 	~GameObject();
 
-	void AddComponent(ComponentType type);
+	void AddComponent(Component* component);
 	void Update();
 	GameObject* GetParent();
 	bool SetNewParent(GameObject* newParent);
-	bool CheckChildOf(GameObject* parent);
+	bool SetAsChildOf(GameObject* gameObject);
+	bool IsChildOf(GameObject* parent);
 	void DeleteChild(GameObject* child);
 
 

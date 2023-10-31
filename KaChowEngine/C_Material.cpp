@@ -32,7 +32,7 @@ void C_Material::SetTexture(const char* file_path)
 		textureID = 0;
 	}
 	textureID = App->texture2D->LoadTexture(file_path);
-	//UpdateMeshTexture();
+	UpdateMeshTexture();
 }
 
 void C_Material::ResetTexture()
@@ -55,10 +55,10 @@ void C_Material::UpdateMeshTexture()
 		return;
 	}
 
-	//if (currentTexture == 2) {
-	//	cm->mesh->id_texture = App->texture2D->checkerID;
-	//	return;
-	//}
+	/*if (currentTexture == 2) {
+		cm->mesh->id_texture = App->texture2D->checkerID;
+		return;
+	}*/
 
 	cm->mesh->id_texture = 0;
 }

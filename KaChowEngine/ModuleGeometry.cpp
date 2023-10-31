@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "GameObject.h"
+#include "C_Material.h"
 
 #include "Glew/include/glew.h"
 
@@ -39,18 +40,23 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
     // Si la escena té meshes
     if (scene != nullptr && scene->HasMeshes())
     {
-        GameObject* newGameObject = new GameObject(App->scene->rootGameObject);
+        GameObject* parentGameObject = new GameObject(App->scene->rootGameObject);
         
         // ProcessNode here?
         for (int i = 0; i < scene->mNumMeshes; i++)
         {
-            ImportMesh(scene->mMeshes[i], newGameObject);
+            //Create object to store mesh
+            GameObject* childGameObject = new GameObject();
+            parentGameObject->SetAsChildOf(childGameObject);
+            childGameObject->name = "Mesh_" + std::to_string(i);
+
+            ImportMesh(scene->mMeshes[i], parentGameObject, childGameObject, scene, i);
         }
 
         // Use scene->mNumMeshes to iterate on scene->mMeshes array
         aiReleaseImport(scene);
 
-        return newGameObject;
+        return parentGameObject;
     }
     else
     {
@@ -58,8 +64,9 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
     }
 }
 
-void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* gameObject)
+void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObject* CgameObject, const aiScene* scene, int index)
 {
+
     Mesh* ourMesh = new Mesh();
 
     //TEST
@@ -104,11 +111,28 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* gameObject)
 
         BufferMesh(ourMesh);
 
-        C_Mesh* component = new C_Mesh();
-        ourMesh->owner = gameObject;
-        component->mesh = ourMesh;
-        if (gameObject->mComponents.size() == 1)
-            gameObject->mComponents.push_back(component);
+        C_Mesh* meshComp = new C_Mesh();
+        ourMesh->owner = CgameObject;
+        meshComp->mesh = ourMesh;
+        CgameObject->AddComponent(meshComp);
+
+        //Has a texture
+        if (scene->HasMaterials()) {
+            if (scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+                //Get texture path
+                aiString texture_path;
+                scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+                aiString new_path;
+                new_path.Set("Assets/Textures/");
+                new_path.Append(texture_path.C_Str());
+
+                //Build component
+                C_Material* matComp = new C_Material();
+                matComp->mParent = CgameObject;
+                matComp->SetTexture(new_path.C_Str());
+                CgameObject->AddComponent(matComp);
+            }
+        }
     }
     else
     {
