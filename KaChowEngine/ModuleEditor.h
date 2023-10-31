@@ -46,6 +46,11 @@ private:
 	float bright;
 	float bright_aux;
 
+	bool isActivatedInspector;
+	bool isActivatedHierarchy;
+	bool isActivatedConsole;
+	bool isActivatedDemo;
+
 public:
 	std::vector<std::string>* logVector;
 };

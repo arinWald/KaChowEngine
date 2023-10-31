@@ -62,6 +62,11 @@ bool ModuleEditor::Init()
    bright = 0.0f;
    bright_aux = 0.0f;
 
+   isActivatedHierarchy = true;
+   isActivatedDemo = false;
+   isActivatedInspector = true;
+   isActivatedConsole = true;
+
     return true;
 }
 
@@ -190,6 +195,23 @@ void ModuleEditor::DrawEditor()
                     {
                         App->window->SetResizable();
                     }
+                }
+                ImGui::Text("View");
+                if (ImGui::Checkbox("DemoWindow", &isActivatedDemo))
+                {
+                    isActivatedDemo != isActivatedDemo;
+                }
+                if (ImGui::Checkbox("Hierarchy", &isActivatedHierarchy))
+                {
+                    isActivatedHierarchy != isActivatedHierarchy;
+                }
+                if (ImGui::Checkbox("Inspector", &isActivatedInspector))
+                {
+                    isActivatedInspector != isActivatedInspector;
+                }
+                if (ImGui::Checkbox("Console", &isActivatedConsole))
+                {
+                    isActivatedConsole != isActivatedConsole;
                 }
             }
            
@@ -393,15 +415,19 @@ void ModuleEditor::DrawEditor()
 
         ImGui::EndMainMenuBar();
     }
-
-    if (ImGui::Begin("Hierarchy"))
-    {
-        App->scene->PrintHierarchy(App->scene->rootGameObject, 0);
+    if (isActivatedHierarchy) {
+        if (ImGui::Begin("Hierarchy"))
+        {
+            App->scene->PrintHierarchy(App->scene->rootGameObject, 0);
+        }
+        ImGui::End();
     }
-    ImGui::End();
-
     
-    ImGui::ShowDemoWindow();
+
+    if (isActivatedDemo) {
+        ImGui::ShowDemoWindow();
+    }
+    
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
