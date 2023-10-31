@@ -22,7 +22,7 @@ public:
 	void Update();
 	GameObject* GetParent();
 	bool SetNewParent(GameObject* newParent);
-	bool SetAsChildOf(GameObject* gameObject);
+	bool AddThisChild(GameObject* gameObject);
 	bool IsChildOf(GameObject* parent);
 	void DeleteChild(GameObject* child);
 

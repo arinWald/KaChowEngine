@@ -138,7 +138,7 @@ bool GameObject::SetNewParent(GameObject* newParent)
 	return true;
 }
 
-bool GameObject::SetAsChildOf(GameObject* gameObject)
+bool GameObject::AddThisChild(GameObject* gameObject)
 {
 	if (IsChildOf(gameObject))
 	{

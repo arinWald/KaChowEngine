@@ -47,7 +47,7 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
         {
             //Create object to store mesh
             GameObject* childGameObject = new GameObject();
-            parentGameObject->SetAsChildOf(childGameObject);
+            parentGameObject->AddThisChild(childGameObject);
             childGameObject->name = "Mesh_" + std::to_string(i);
 
             ImportMesh(scene->mMeshes[i], parentGameObject, childGameObject, scene, i);
