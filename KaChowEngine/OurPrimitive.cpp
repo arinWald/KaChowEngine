@@ -33,37 +33,37 @@ GameObject* OurPrimitive::CreatePrimitive(ShapeType type)
         gameObject = App->geoLoader->LoadFile("Assets/Models/sphere.fbx");
         gameObject->name = "Sphere";
         return gameObject;
-
+        break;
     case ShapeType::CYLINDER:
         gameObject = App->geoLoader->LoadFile("Assets/Models/cylinder.fbx");
         gameObject->name = "Cylinder";
         return gameObject;
-
+        break;
     case ShapeType::MONKEY:
         gameObject = App->geoLoader->LoadFile("Assets/Models/monkey.fbx");
         gameObject->name = "Monkey";
         return gameObject;
-
+        break;
     case ShapeType::ICOSHPERE:
         gameObject = App->geoLoader->LoadFile("Assets/Models/icosphere.fbx");
         gameObject->name = "Icosphere";
         return gameObject;
-
+        break;
     case ShapeType::CONE:
         gameObject = App->geoLoader->LoadFile("Assets/Models/cone.fbx");
         gameObject->name = "Cone";
         return gameObject;
-
+        break;
     case ShapeType::TORUS:
         gameObject = App->geoLoader->LoadFile("Assets/Models/torus.fbx");
         gameObject->name = "Torus";
         return gameObject;
-
+        break;
     default:
         // Handle the case when an unsupported shape type is provided.
         // You can throw an exception, log an error, or return a default object.
         // Here, we'll return nullptr to indicate an error.
         return nullptr;
-
+        break;
 	}
 }
