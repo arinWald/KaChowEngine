@@ -45,7 +45,4 @@ public:
 	GLuint VBO;
 	GLuint EBO;
 	GLuint VAO;
-
-	Mesh* pilota;
-	Primitive* cubePrimi;
 };	

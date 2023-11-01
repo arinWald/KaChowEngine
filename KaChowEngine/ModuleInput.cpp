@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ImGui/backends/imgui_impl_sdl2.h"
+#include "C_Material.h"
 
 #define MAX_KEYS 300
 
@@ -118,12 +119,25 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case SDL_DROPFILE:
 				dropped_filedir = e.drop.file;
+				dropped_filedir_s = e.drop.file;
 				// Shows directory of dropped file
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped", dropped_filedir, App->window->window);
 
-				// pilota comprovar tipus de fitxer
-				App->geoLoader->LoadFile(dropped_filedir);
-				App->texture2D->LoadTexture(dropped_filedir);
+				std::string extension = dropped_filedir_s.substr(dropped_filedir_s.find_last_of(".") + 1);
+				if (extension == "fbx" || extension == "FBX")
+				{
+					LOG("Loading FBX");
+					App->geoLoader->LoadFile(dropped_filedir);
+				}
+				if (extension == "png" || extension == "dds" || extension == "PNG" || extension == "DDS")
+				{
+					LOG("Loading Textures");
+					App->texture2D->LoadTexture(dropped_filedir);
+				}
+				else
+				{
+					LOG("Error: this file extension not supported")
+				}
 
 				SDL_free(dropped_filedir);
 				break;

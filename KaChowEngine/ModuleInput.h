@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include <iostream>
 
 #define MAX_MOUSE_BUTTONS 5
 
@@ -70,4 +71,5 @@ private:
 
 	// Pointer for directory of dropped file
 	char* dropped_filedir;
+	std::string dropped_filedir_s;
 };

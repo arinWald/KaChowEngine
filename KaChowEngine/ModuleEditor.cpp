@@ -27,7 +27,6 @@ bool ModuleEditor::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-    // "pilota"
 
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     // "pilota"

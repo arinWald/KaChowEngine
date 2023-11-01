@@ -129,8 +129,6 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	//pilota = cubePrimi->CreateCube();
-
 	Grid.axis = true;
 
 
@@ -192,30 +190,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
 
-	////Draw test here
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-
-	//glVertex3d(0,0,0); glVertex3d(1,1,0); glVertex3d(1,0,0);
-	//glVertex3d(0,0,0); glVertex3d(0,1,0); glVertex3d(1,1,0);
-
-	//glVertex3d(0, 0, 0); glVertex3d(0, 1, 1); glVertex3d(0, 1, 0);
-	//glVertex3d(0, 0, 1); glVertex3d(0, 1, 1); glVertex3d(0, 0, 0);
-
-	//glEnd();
-	//glLineWidth(1.0f);
-
-	 //CUBE TEST
-	/*glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);*/
-
-	// Pilota
-
-	//pilota->Render();
 	App->geoLoader->RenderScene();
 
 	App->editor->DrawEditor();

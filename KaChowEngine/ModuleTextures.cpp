@@ -184,5 +184,4 @@ void ModuleTextures::FreeTexture(GLuint texId)
 		glDeleteTextures(1, &texId);
 		texId = 0;
 	}
-
 }
