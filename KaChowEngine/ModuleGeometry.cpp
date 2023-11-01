@@ -41,6 +41,10 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
     if (scene != nullptr && scene->HasMeshes())
     {
         GameObject* parentGameObject = new GameObject(App->scene->rootGameObject);
+
+        // Set the gameobject the name of the original file
+        parentGameObject->name = std::string(file_path).substr(std::string(file_path).find_last_of(char(92)) + 1);
+        parentGameObject->name = parentGameObject->name.substr(std::string(file_path).find_last_of("/") + 1);
         
         // ProcessNode here?
         for (int i = 0; i < scene->mNumMeshes; i++)
