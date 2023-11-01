@@ -64,6 +64,9 @@ bool ModuleWindow::Init()
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
+		e_width = width;
+		e_height = height;
+
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -108,4 +111,16 @@ void ModuleWindow::SetFullscreen()
 void ModuleWindow::SetResizable()
 {
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_BORDERLESS);
+}
+
+void ModuleWindow::ChangeWidth()
+{
+	SDL_SetWindowSize(window, e_width, e_height);
+	App->renderer3D->OnResize(e_width, e_height);
+}
+
+void ModuleWindow::ChangeHeight()
+{
+	SDL_SetWindowSize(window, e_width, e_height);
+	App->renderer3D->OnResize(e_width, e_height);
 }

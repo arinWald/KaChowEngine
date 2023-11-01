@@ -21,10 +21,13 @@ public:
 	void SetTitle(const char* title);
 	void SetFullscreen();
 	void SetResizable();
+	void ChangeWidth();
+	void ChangeHeight();
 
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
+	int e_width, e_height;
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;

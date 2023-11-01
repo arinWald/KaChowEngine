@@ -183,7 +183,7 @@ void ModuleEditor::DrawEditor()
             // Window
             if (ImGui::CollapsingHeader("Window"))
             {
-                ImGui::Text("Window Size: %d x %d", SCREEN_WIDTH, SCREEN_HEIGHT);
+                ImGui::Text("Window Size: %d x %d", App->window->e_width, App->window->e_height);
                     /*ImGui::Text("Brightness: %d", BARIABLE);*/
                 if(ImGui::Checkbox("Fullscreen", &fullscreen))
                 {
@@ -196,6 +196,23 @@ void ModuleEditor::DrawEditor()
                         App->window->SetResizable();
                     }
                 }
+
+                int preWidth = App->window->e_width;
+                int preHeight = App->window->e_height;
+
+                ImGui::SliderInt("Window Width", &App->window->e_width, 320, 2560);
+                if (preWidth != App->window->e_width)
+                {
+                    App->window->ChangeWidth();
+                }
+
+                ImGui::SliderInt("Window Height", &App->window->e_height, 256, 2048);
+                if (preHeight != App->window->e_height)
+                {
+                    App->window->ChangeHeight();
+                }
+               
+
                 ImGui::Text("View");
                 if (ImGui::Checkbox("DemoWindow", &isActivatedDemo))
                 {
