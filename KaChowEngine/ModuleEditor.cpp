@@ -68,12 +68,14 @@ bool ModuleEditor::Init()
    isActivatedInspector = true;
    isActivatedConsole = true;
 
+   GetHardwareInfo();
+
     return true;
 }
 
 
 // Tot lo de ImGui ha de passar per aqui
-void ModuleEditor::DrawEditor()
+update_status ModuleEditor::DrawEditor()
 {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -111,14 +113,16 @@ void ModuleEditor::DrawEditor()
     ImGui::End();
     // Finish docking for all windows
 
-
+    // For Quit button on file
+    update_status ret = update_status::UPDATE_CONTINUE;
     // HERE ALL WINDOW RENDERS
     // Always EndMenu when Begin Menu
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
-            ImGui::Text("Hello world!");
+            if (ImGui::MenuItem("Quit", "ESC"))
+                ret = UPDATE_STOP;
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Assets"))
@@ -377,6 +381,19 @@ void ModuleEditor::DrawEditor()
 
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Hardware Info"))
+        {
+            ImGui::Text("GLSL: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+            ImGui::Text("Vendor: %s", glGetString(GL_VENDOR));
+            ImGui::Text("Renderer: %s", glGetString(GL_RENDERER));
+
+            ImGui::Separator();
+            ImGui::Text("CPUs: %d (Cache: %dkb)", CPUCount, CPUCache);
+            ImGui::Text("System RAM: %.1fGb", systemRAM);
+            ImGui::Text("Caps: %s", caps.c_str());
+
+            ImGui::EndMenu();
+        }
 
         if (ImGui::BeginMenu("About"))
         {
@@ -388,11 +405,56 @@ void ModuleEditor::DrawEditor()
             ImGui::NewLine();
 
             ImGui::Text("By Arnau Gonzalez & Pau Argiz");
-            ImGui::SeparatorText("3rd Party Libraries used");
-            ImGui::BulletText("Glew 20.0");
-            ImGui::BulletText("ImGui 1.51");
-            ImGui::BulletText("MathGeoLib 1.5");
-            ImGui::BulletText("OpenGL %s", glewGetString(GLEW_VERSION));
+            if (ImGui::Button("Github Repository"))
+            {
+                ShellExecute(0, 0, "https://github.com/arinWald/KaChowEngine", 0, 0, SW_SHOW);
+            }
+
+            ImGui::SeparatorText("3rd Party Libraries used"); 
+
+            if (ImGui::Button("SDL"))
+            {
+                ShellExecute(0, 0, "https://libsdl.org/index.php", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::Text("Version: %s", SDLVersion.c_str());
+            if (ImGui::Button("OpenGL"))
+            {
+                ShellExecute(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::Text("Version: %s", glGetString(GL_VERSION));
+            
+            if(ImGui::Button("Glew"))
+            {
+                ShellExecute(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::Text("Version: %s", glewGetString(GLEW_VERSION));
+            
+            if(ImGui::Button("ImGui"))
+            {
+                ShellExecute(0, 0, "https://github.com/ocornut/imgui/", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::Text("Version: ");
+            ImGui::SameLine();
+            ImGui::Text(ImGui::GetVersion());
+
+            if (ImGui::Button("MathGeoLib"))
+            {
+                ShellExecute(0, 0, "https://github.com/juj/MathGeoLib", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::Text("Version 1.5");
+
+            if (ImGui::Button("DevIL"))
+            {
+                ShellExecute(0, 0, "http://openil.sourceforge.net/", 0, 0, SW_SHOW);
+            }
+            ImGui::SameLine();
+            ImGui::SameLine();
+            ImGui::Text("Version v1.8.0");
 
             ImGui::SeparatorText("LICENSE");
             ImGui::BulletText("MIT License");
@@ -463,6 +525,8 @@ void ModuleEditor::DrawEditor()
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    return ret;
 }
 
 bool ModuleEditor::CleanUp()
@@ -504,4 +568,35 @@ void ModuleEditor::ConsoleLog(const char* tmp_string)
 {
     if (logVector == nullptr) return;
     logVector->push_back(tmp_string);
+}
+
+void ModuleEditor::GetHardwareInfo()
+{
+    caps += (SDL_HasRDTSC()) ? "RDTSC," : "";
+    caps += (SDL_HasMMX()) ? "MMX, " : "";
+    caps += (SDL_HasSSE()) ? "SSE, " : "";
+    caps += (SDL_HasSSE2()) ? "SSE2, " : "";
+    caps += (SDL_HasSSE3()) ? "SSE3, " : "";
+    caps += "\n";
+    caps += (SDL_HasSSE41()) ? "SSE41, " : "";
+    caps += (SDL_HasSSE42()) ? "SSE42, " : "";
+    caps += (SDL_HasAVX()) ? "AVX, " : "";
+    caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
+    caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+
+    SDL_version version;
+    SDL_GetVersion(&version);
+    SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
+    CPUCount = SDL_GetCPUCount();
+    CPUCache = SDL_GetCPUCacheLineSize();
+    systemRAM = SDL_GetSystemRAM() / 1024.f;
+
+    uint vendor, deviceId;
+    std::wstring brand;
+    unsigned __int64 videoMemBudget;
+    unsigned __int64 videoMemUsage;
+    unsigned __int64 videoMemAvailable;
+    unsigned __int64 videoMemReserved;
+
+    // GPU INFO TOO COMPLICATED
 }
