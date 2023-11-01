@@ -108,9 +108,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
                 memcpy(&ourMesh->index[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
             }
         }
-        ourMesh->id_texture = App->texture2D->textureID;
-        ourMesh->texture_height = App->texture2D->textureHeight;
-        ourMesh->texture_width = App->texture2D->textureWidth;
+        
 
         BufferMesh(ourMesh);
 
@@ -136,6 +134,10 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
                 CgameObject->AddComponent(matComp);
             }
         }
+
+        ourMesh->id_texture = App->texture2D->textureID;
+        ourMesh->texture_height = App->texture2D->textureHeight;
+        ourMesh->texture_width = App->texture2D->textureWidth;
     }
     else
     {
