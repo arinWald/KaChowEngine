@@ -29,8 +29,10 @@ void C_Mesh::OnEditor()
         ImGui::SameLine();
         ImGui::Text("%d", mesh->num_vertex);
         ImGui::LabelText("##%f", "Number of index:");
-        ImGui::SameLine();
-        ImGui::Text("%d", mesh->num_index);
+
+        // Not printing the proper number (should be a third of vertex?)
+        //ImGui::SameLine();
+        //ImGui::Text("%d", mesh->num_index);
         ImGui::Checkbox("Face Normals", &showNormals);
     }
 }
