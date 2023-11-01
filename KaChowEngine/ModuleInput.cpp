@@ -132,7 +132,16 @@ update_status ModuleInput::PreUpdate(float dt)
 				if (extension == "png" || extension == "dds" || extension == "PNG" || extension == "DDS")
 				{
 					LOG("Loading Textures");
-					App->texture2D->LoadTexture(dropped_filedir);
+					if (App->scene->selectedGameObj != nullptr)
+					{
+						App->scene->selectedGameObj->GetMaterialComponent()->SetTexture(dropped_filedir);
+					}
+					else
+					{
+						LOG("There's no GameObject selected");
+					}
+					
+					
 				}
 				else
 				{

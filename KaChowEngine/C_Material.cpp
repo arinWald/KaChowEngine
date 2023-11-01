@@ -27,10 +27,10 @@ void C_Material::OnEditor()
 
 void C_Material::SetTexture(const char* file_path)
 {
-	if (textureID != 0) {
-		App->texture2D->FreeTexture(textureID);
-		textureID = 0;
-	}
+	//if (textureID != 0) {
+	//	App->texture2D->FreeTexture(textureID);
+	//	textureID = 0;
+	//}
 	textureID = App->texture2D->LoadTexture(file_path);
 	UpdateMeshTexture();
 }
@@ -46,6 +46,8 @@ void C_Material::ResetTexture()
 
 void C_Material::UpdateMeshTexture()
 {
+	if (mParent == nullptr) return;
+
 	C_Mesh* cm = mParent->GetMeshComponent();
 	if (cm == nullptr || cm->mesh == nullptr) return;
 

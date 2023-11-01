@@ -117,6 +117,10 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
         meshComp->mesh = ourMesh;
         CgameObject->AddComponent(meshComp);
 
+        ourMesh->id_texture = App->texture2D->checkerID;
+        ourMesh->texture_height = App->texture2D->textureHeight;
+        ourMesh->texture_width = App->texture2D->textureWidth;
+
         //Has a texture
         if (scene->HasMaterials()) {
             if (scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
@@ -135,9 +139,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
             }
         }
 
-        ourMesh->id_texture = App->texture2D->textureID;
-        ourMesh->texture_height = App->texture2D->textureHeight;
-        ourMesh->texture_width = App->texture2D->textureWidth;
+        
     }
     else
     {
@@ -256,7 +258,6 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 
 void ModuleGeometry::RenderScene()
 {
-    bool trueE = true;
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
         // Reset to default

@@ -5,11 +5,13 @@
 #include "Component.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
+#include "C_Material.h"
 
 enum class ComponentType;
 class Component;
 class C_Transform;
 class C_Mesh;
+class C_Material;
 class GameObject
 {
 public:
@@ -28,6 +30,7 @@ public:
 
 
 	C_Mesh* GetMeshComponent();
+	C_Material* GetMaterialComponent();
 
 
 	std::string name;

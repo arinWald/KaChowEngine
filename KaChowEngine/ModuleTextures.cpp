@@ -26,7 +26,7 @@ bool ModuleTextures::Start()
 {
 	texPath = "";
 	textureID = 0;
-	//checkerID = 0;
+	checkerID = 0;
 	textureWidth = 0;
 	textureHeight = 0;
 
@@ -46,8 +46,8 @@ bool ModuleTextures::Start()
 
 	//Generate and bind texture
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGenTextures(1, &checkerID);
+	glBindTexture(GL_TEXTURE_2D, checkerID);
 
 	//How texture behaves outside 0,1 range (S->x, T->y)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); //GL_CLAMP
@@ -85,96 +85,52 @@ bool ModuleTextures::CleanUp()
 }
 
 
-bool ModuleTextures::GenTexture(GLuint* imgData, GLuint width, GLuint height)
+uint ModuleTextures::LoadTexture(const char* file_path)
 {
-	//Clean textures if there is another
-	FreeTexture();
+	uint devilImageId;
+	ilGenImages(1, &devilImageId);
+	ilBindImage(devilImageId);
 
-	textureWidth = width;
-	textureHeight = height;
+	bool success = ilLoadImage(file_path);
 
-	glEnable(GL_TEXTURE_2D);
+	/*if (!success) {
+		LOG ERROR LOADING TEXTURE
+		return 0;
+	}*/
 
-	//Generate and bind a texture buffer
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
-	//Pick your texture settings with glTexParameter()
+	//if (!success) {
+	//	LOG converting texture
+	//	return 0;
+	//}
 
-	//GL_TEXTURE_WRAP_S/T: How the texture behaves outside 0,1 range (s = x ; t = y)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//Extract loaded image data
+	BYTE* data = ilGetData();
+	ILuint imgWidth, imgHeight;
+	imgWidth = ilGetInteger(IL_IMAGE_WIDTH);
+	imgHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+	int const type = ilGetInteger(IL_IMAGE_TYPE);
+	int const format = ilGetInteger(IL_IMAGE_FORMAT);
 
-	//Resize the texture (MIN->make it smaller ; MAG->make it bigger)
-	//Nearest -> pixelat / Linear -> borros
+	uint imageId = ilutGLBindTexImage();
+	glBindTexture(GL_TEXTURE_2D, imageId);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	//Generate the texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, imgData);
-
-	//Mipmap can be added or not
+	glTexImage2D(GL_TEXTURE_2D, 0, format, imgWidth, imgHeight, 0, format, type, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
+	ilDeleteImages(1, &devilImageId);
 
-	//cleaning texture
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
 
-
-	return true;
+	return imageId;
 }
 
-GLuint ModuleTextures::LoadTexture(std::string path)
-{
-	//Texture loading success
-	bool textureLoaded = false;
-
-	//Generate and set current image ID
-	ILuint imgID = 0;
-	ilGenImages(1, &imgID);
-	ilBindImage(imgID);
-
-	//Load image
-	ILboolean success = ilLoadImage(path.c_str());
-
-	//Image loaded successfully
-	if (success == IL_TRUE)
-	{
-		//Convert image to RGBA
-		success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-		if (success == IL_TRUE)
-		{
-			//Create texture from file pixels
-			textureLoaded = GenTexture((GLuint*)ilGetData(), (GLuint)ilGetInteger(IL_IMAGE_WIDTH), (GLuint)ilGetInteger(IL_IMAGE_HEIGHT));
-		}
-
-		//Delete file from memory
-		ilDeleteImages(1, &imgID);
-
-		//Report error
-		if (!textureLoaded)
-		{
-			printf("Unable to load %s\n", path.c_str());
-		}
-	}
-	return imgID;
-}
-
-void ModuleTextures::FreeTexture()
-{
-	//Delete texture
-	if (textureID != 0)
-	{
-		glDeleteTextures(1, &textureID);
-		textureID = 0;
-	}
-
-	textureWidth = 0;
-	textureHeight = 0;
-
-}
 
 void ModuleTextures::FreeTexture(GLuint texId)
 {

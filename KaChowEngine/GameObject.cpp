@@ -97,6 +97,18 @@ C_Mesh* GameObject::GetMeshComponent()
 	return nullptr;
 }
 
+C_Material* GameObject::GetMaterialComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::MATERIAL)
+		{
+			return (C_Material*)mComponents[i];
+		}
+	}
+	return nullptr;
+}
+
 bool GameObject::IsChildOf(GameObject* gameObject)
 {
 	if (gameObject == this)

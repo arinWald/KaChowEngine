@@ -25,13 +25,13 @@ public:
 
 	bool GenTexture(GLuint* imgData, GLuint width, GLuint height);
 
-	GLuint LoadTexture(std::string path);
+	GLuint LoadTexture(const char* path);
 
-	void FreeTexture();
+	/*void FreeTexture();*/
 	void FreeTexture(GLuint texID);
 
 	GLuint textureID;
-	//GLuint checkerID;
+	GLuint checkerID;
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4]; // height width rgba
 
