@@ -5,15 +5,16 @@
 
 GameObject* OurPrimitive::CreatePrimitive(ShapeType type)
 {
-	GameObject* gameObject = new GameObject();
 	// Empty
 	if (type == ShapeType::EMPTY)
 	{
-		gameObject->name = "Empty Object";
-		return gameObject;
+        GameObject* emptyGameObject = new GameObject(App->scene->rootGameObject);
+        emptyGameObject->name = "Empty Object";
+		return emptyGameObject;
 	}
 
 	// Not Empty
+	GameObject* gameObject = new GameObject();
 	switch (type)
 	{
 	case ShapeType::PLANE:
