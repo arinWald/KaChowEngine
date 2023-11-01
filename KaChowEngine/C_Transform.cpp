@@ -23,7 +23,20 @@ C_Transform::~C_Transform()
 
 void C_Transform::OnEditor()
 {
+	if (ImGui::CollapsingHeader("Transform"))
+	{
+		ImGui::Text("X\t\t Y\t\t Z");
+		ImGui::InputFloat3("Position", mPosition.ptr());
 
+		ImGui::Text("X\t\t Y\t\t Z");
+		ImGui::InputFloat3("Rotation", mRotation.ptr());
+
+		ImGui::Text("X\t\t Y\t\t Z");
+		ImGui::InputFloat3("Scale", mScale.ptr());
+	}
+
+
+	calculateMatrix();
 }
 
 void C_Transform::Enable()

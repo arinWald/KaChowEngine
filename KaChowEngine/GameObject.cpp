@@ -1,6 +1,5 @@
 #include "GameObject.h"
 
-
 GameObject::GameObject()
 {
 	name = "GameObject";
@@ -133,6 +132,46 @@ void GameObject::DeleteChild(GameObject* child)
 			mChildren.erase(mChildren.begin() + i);
 			child->mParent = nullptr;
 		}
+	}
+}
+
+void GameObject::PrintOnInspector()
+{
+	char aux[255] = { ' ' };
+
+	if (mParent != nullptr)
+	{
+		strcpy(aux, this->name.c_str());
+
+		ImGui::BulletText("Name:");
+		ImGui::SameLine();
+
+		ImGui::InputText("##Name", aux, 255, ImGuiInputTextFlags_EnterReturnsTrue);
+
+		if (ImGui::IsKeyDown(ImGuiKey_Enter))
+			name = aux;
+
+		if (ImGui::Button("Delete")) {
+
+			isTimetoDelete = true;
+			delete App->scene->selectedGameObj;
+			App->scene->selectedGameObj = nullptr;
+		}
+
+		for (size_t i = 0; i < mComponents.size(); i++)
+		{
+			ImGui::Separator();
+
+			mComponents[i]->OnEditor();
+		}
+
+		ImGui::Separator();
+		ImGui::Text("");
+		ImGui::Text("");
+		ImGui::Text("");
+
+		ImGui::Text("");
+		ImGui::SameLine(ImGui::GetWindowWidth() / 6);
 	}
 }
 

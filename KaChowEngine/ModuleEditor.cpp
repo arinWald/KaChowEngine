@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "OurPrimitive.h"
+#include "GameObject.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/backends/imgui_impl_opengl3.h"
@@ -425,6 +426,18 @@ void ModuleEditor::DrawEditor()
             App->scene->PrintHierarchy(App->scene->rootGameObject, 0);
         }
         ImGui::End();
+    }
+
+    if (isActivatedInspector)
+    {
+        if (App->scene->selectedGameObj != nullptr)
+        {
+            if (ImGui::Begin("Inspector"))
+            {
+                App->scene->selectedGameObj->PrintOnInspector();
+            }
+            ImGui::End();
+        }
     }
     
     if(isActivatedConsole)

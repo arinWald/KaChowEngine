@@ -24,7 +24,6 @@ bool ModuleGeometry::Init()
 bool ModuleGeometry::Start()
 {
     bool ret = true;
-    showNormals = true;
 
     // Stream log messages to Debug window
     struct aiLogStream stream;
@@ -264,7 +263,7 @@ void ModuleGeometry::RenderScene()
         glColor3f(1.0f, 1.0f, 1.0f);
         meshes[i]->Render();    
         glColor3f(1.0f, 0.0f, 0.0f);
-        if (showNormals == true) {
+        if (meshes[i]->owner->GetMeshComponent()->showNormals) {
             meshes[i]->RenderFaceNormals();
         }
     }

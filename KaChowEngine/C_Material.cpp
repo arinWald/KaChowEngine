@@ -22,7 +22,18 @@ C_Material::~C_Material()
 
 void C_Material::OnEditor()
 {
+	const char* listTextures[]{ "Texture", "None", "Checkes" };
 
+	//Texture component inspector
+	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
+	{
+		ImGui::Text("Texture: ");
+		ImGui::SameLine();
+		ImGui::Combo("##ChoseTexture", &currentTexture, listTextures, IM_ARRAYSIZE(listTextures));
+
+	}
+
+	UpdateMeshTexture();
 }
 
 void C_Material::SetTexture(const char* file_path)

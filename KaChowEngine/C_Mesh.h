@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "ImGui/imgui.h"
 
 class GameObject;
 class Component;
@@ -20,5 +21,7 @@ public:
 	/*virtual Update();*/
 
 	Mesh* mesh;
+
+	bool showNormals;
 
 };

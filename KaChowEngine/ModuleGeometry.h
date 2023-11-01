@@ -71,7 +71,6 @@ public:
 	
 	std::vector<Mesh*> meshes;
 	const char* file_path;
-	bool showNormals;
 };
 
 #endif

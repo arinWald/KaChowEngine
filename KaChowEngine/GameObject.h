@@ -6,6 +6,7 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "Application.h"
 
 enum class ComponentType;
 class Component;
@@ -27,6 +28,7 @@ public:
 	bool AddThisChild(GameObject* gameObject);
 	bool IsChildOf(GameObject* parent);
 	void DeleteChild(GameObject* child);
+	void PrintOnInspector();
 
 
 	C_Mesh* GetMeshComponent();
@@ -40,5 +42,7 @@ public:
 	std::vector<Component*> mComponents;
 
 	C_Transform* mTransform;
+
+	bool isTimetoDelete;
 
 };

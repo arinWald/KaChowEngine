@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "Component.h"
+#include "ImGui/imgui.h"
 
 class GameObject;
 class Component;

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Glew/include/glew.h"
+#include "ImGui/imgui.h"
 
 class GameObject;
 class Component;
