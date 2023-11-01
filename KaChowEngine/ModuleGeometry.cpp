@@ -136,6 +136,13 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
                 matComp->SetTexture(new_path.C_Str());
                 CgameObject->AddComponent(matComp);
             }
+            else
+            {
+                // For primitives only (not empty primitive)
+                C_Material* matComp = new C_Material();
+                matComp->mParent = CgameObject;
+                CgameObject->AddComponent(matComp);
+            }
         }
 
         

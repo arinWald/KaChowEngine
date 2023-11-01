@@ -13,6 +13,7 @@ enum class ShapeType {
 	ICOSHPERE,
 	CONE,
 	TORUS,
+	NONE,
 };
 
 class OurPrimitive

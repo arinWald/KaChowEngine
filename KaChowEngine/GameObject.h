@@ -7,6 +7,7 @@
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "Application.h"
+#include "OurPrimitive.h"
 
 enum class ComponentType;
 class Component;
@@ -44,5 +45,7 @@ public:
 	C_Transform* mTransform;
 
 	bool deleteGameObject;
+
+	ShapeType type;
 
 };

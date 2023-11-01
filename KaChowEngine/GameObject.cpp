@@ -1,10 +1,12 @@
 #include "GameObject.h"
+#include "OurPrimitive.h"
 
 GameObject::GameObject()
 {
 	name = "GameObject";
 	mParent = nullptr;
 	mTransform = new C_Transform();
+	type = ShapeType::NONE;
 
 	mComponents.push_back(mTransform);
 }
@@ -57,6 +59,8 @@ GameObject::GameObject(GameObject* parent)
 	}
 
 	mTransform = new C_Transform();
+
+	type = ShapeType::NONE;
 
 	mComponents.push_back(mTransform);
 }

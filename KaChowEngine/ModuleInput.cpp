@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ImGui/backends/imgui_impl_sdl2.h"
 #include "C_Material.h"
+#include "OurPrimitive.h"
 
 #define MAX_KEYS 300
 
@@ -132,16 +133,14 @@ update_status ModuleInput::PreUpdate(float dt)
 				if (extension == "png" || extension == "dds" || extension == "PNG" || extension == "DDS")
 				{
 					LOG("Loading Textures");
-					if (App->scene->selectedGameObj != nullptr)
+					if (App->scene->selectedGameObj != nullptr && App->scene->selectedGameObj->type != ShapeType::EMPTY)
 					{
 						App->scene->selectedGameObj->GetMaterialComponent()->SetTexture(dropped_filedir);
 					}
 					else
 					{
-						LOG("There's no GameObject selected");
+						LOG("There's no GameObject selected or is Empty Primitive!");
 					}
-					
-					
 				}
 				else
 				{
