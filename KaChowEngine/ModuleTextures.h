@@ -25,7 +25,7 @@ public:
 
 	bool GenTexture(GLuint* imgData, GLuint width, GLuint height);
 
-	bool LoadTexture(std::string path);
+	GLuint LoadTexture(std::string path);
 
 	void FreeTexture();
 	void FreeTexture(GLuint texID);

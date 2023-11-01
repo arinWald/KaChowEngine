@@ -126,7 +126,7 @@ bool ModuleTextures::GenTexture(GLuint* imgData, GLuint width, GLuint height)
 	return true;
 }
 
-bool ModuleTextures::LoadTexture(std::string path)
+GLuint ModuleTextures::LoadTexture(std::string path)
 {
 	//Texture loading success
 	bool textureLoaded = false;
@@ -159,7 +159,7 @@ bool ModuleTextures::LoadTexture(std::string path)
 			printf("Unable to load %s\n", path.c_str());
 		}
 	}
-	return textureLoaded;
+	return imgID;
 }
 
 void ModuleTextures::FreeTexture()
