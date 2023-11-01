@@ -399,19 +399,7 @@ void ModuleEditor::DrawEditor()
 
             ImGui::EndMenu();
         }
-
-        if (ImGui::BeginMenu("Console Log"))
-        {
-            ImGui::NewLine();
-
-            int size = logVector->size();
-            for (int i = 0; i < size; i++)
-            {
-                ImGui::Text((*logVector)[i].c_str());
-            }
-
-            ImGui::EndMenu();
-        }
+       
 
         ImGui::EndMainMenuBar();
     }
@@ -423,6 +411,21 @@ void ModuleEditor::DrawEditor()
         ImGui::End();
     }
     
+    if(isActivatedConsole)
+    {
+        if (ImGui::Begin("Console Log"))
+        {
+            ImGui::NewLine();
+
+            int size = logVector->size();
+            for (int i = 0; i < size; i++)
+            {
+                ImGui::Text((*logVector)[i].c_str());
+            }
+
+            ImGui::End();
+        }
+    }
 
     if (isActivatedDemo) {
         ImGui::ShowDemoWindow();

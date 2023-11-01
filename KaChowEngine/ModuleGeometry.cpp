@@ -259,7 +259,7 @@ void ModuleGeometry::RenderScene()
     for (int i = 0; i < meshes.size(); i++) {
         // Reset to default
         glColor3f(1.0f, 1.0f, 1.0f);
-        meshes[i]->Render();
+        meshes[i]->Render();    
         glColor3f(1.0f, 0.0f, 0.0f);
         if (showNormals == true) {
             meshes[i]->RenderFaceNormals();
