@@ -39,7 +39,10 @@ struct Mesh
 	/*uint VBO;
 	uint EBO;*/
 
+	float* vertexFaceNormals = nullptr;
+	aiVector3D* vertexNormals = nullptr;
 
+	void RenderFaceNormals();
 	void Render();
 	vec3 GetVectorFromIndex(float* startValue);
 	void RenderMeshDebug(/*bool* vertexNormals, */bool* faceNormals);
@@ -68,6 +71,7 @@ public:
 	
 	std::vector<Mesh*> meshes;
 	const char* file_path;
+	bool showNormals;
 };
 
 #endif

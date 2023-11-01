@@ -24,6 +24,7 @@ bool ModuleGeometry::Init()
 bool ModuleGeometry::Start()
 {
     bool ret = true;
+    showNormals = true;
 
     // Stream log messages to Debug window
     struct aiLogStream stream;
@@ -72,6 +73,8 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
     //TEST
     ourMesh->num_vertex = aiMesh->mNumVertices;
     ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
+    ourMesh->vertexFaceNormals = new float[ourMesh->num_vertex * 3];
+    memcpy(ourMesh->vertexFaceNormals, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
     
 
     // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
@@ -138,6 +141,52 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
     {
         delete ourMesh;
     }
+}
+
+void Mesh::RenderFaceNormals()
+{
+    for (size_t i = 0; i < num_index; i += 3)
+    {
+        size_t index1 = index[i];
+        size_t index2 = index[i + 1];
+        size_t index3 = index[i + 2];
+
+        double halfX = (vertexFaceNormals[index1 * 3] + vertexFaceNormals[index2 * 3] + vertexFaceNormals[index3 * 3]) / 3.0;
+        double halfY = (vertexFaceNormals[index1 * 3 + 1] + vertexFaceNormals[index2 * 3 + 1] + vertexFaceNormals[index3 * 3 + 1]) / 3.0;
+        double halfZ = (vertexFaceNormals[index1 * 3 + 2] + vertexFaceNormals[index2 * 3 + 2] + vertexFaceNormals[index3 * 3 + 2]) / 3.0;
+
+        double edge1x = vertexFaceNormals[index2 * 3] - vertexFaceNormals[index1 * 3];
+        double edge1y = vertexFaceNormals[index2 * 3 + 1] - vertexFaceNormals[index1 * 3 + 1];
+        double edge1z = vertexFaceNormals[index2 * 3 + 2] - vertexFaceNormals[index1 * 3 + 2];
+
+        double edge2x = vertexFaceNormals[index3 * 3] - vertexFaceNormals[index1 * 3];
+        double edge2y = vertexFaceNormals[index3 * 3 + 1] - vertexFaceNormals[index1 * 3 + 1];
+        double edge2z = vertexFaceNormals[index3 * 3 + 2] - vertexFaceNormals[index1 * 3 + 2];
+
+        double normalx = edge1y * edge2z - edge1z * edge2y;
+        double normaly = edge1z * edge2x - edge1x * edge2z;
+        double normalz = edge1x * edge2y - edge1y * edge2x;
+
+        double length = sqrt(normalx * normalx + normaly * normaly + normalz * normalz);
+        normalx /= length;
+        normaly /= length;
+        normalz /= length;
+
+        double debugLineLength = 0.5;
+
+        double xFinal = halfX + normalx * debugLineLength;
+        double yFinal = halfY + normaly * debugLineLength;
+        double zFinal = halfZ + normalz * debugLineLength;
+
+        glLineWidth(0.5f);
+        glBegin(GL_LINES);
+        glVertex3d(halfX, halfY, halfZ);
+        glVertex3d(xFinal, yFinal, zFinal);
+        glEnd();
+        // Reset to default
+        glLineWidth(1.0f);
+    }
+
 }
 
 void Mesh::Render()
@@ -208,9 +257,13 @@ void ModuleGeometry::RenderScene()
     bool trueE = true;
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
+        // Reset to default
+        glColor3f(1.0f, 1.0f, 1.0f);
         meshes[i]->Render();
-        // Print normals (not working)
-        //meshes[i]->RenderMeshDebug(&trueE);
+        glColor3f(1.0f, 0.0f, 0.0f);
+        if (showNormals == true) {
+            meshes[i]->RenderFaceNormals();
+        }
     }
 }
 
