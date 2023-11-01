@@ -40,6 +40,8 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
+	uint    maxFPS;
+	float    lastMsFrame;
 	std::vector<Module*> list_modules;
 
 public:

@@ -181,7 +181,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	App->editor->AddFPS(App->GetDT());
+	/*App->editor->AddFPS(App->GetDT());*/
 
 
 	return UPDATE_CONTINUE;
@@ -254,5 +254,4 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
 

@@ -27,6 +27,8 @@ public:
 	GameObject* hoveredGameObj;
 	GameObject* draggedGameObject;
 
+	GameObject* bakerHouse;
+
 	GameObject* prova1;
 	GameObject* prova2;
 	GameObject* prova3;

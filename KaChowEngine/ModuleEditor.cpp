@@ -44,6 +44,7 @@ bool ModuleEditor::Init()
     ImGui_ImplOpenGL3_Init();
 
     mFPSLog.reserve(30);
+    mMsLog.reserve(30);
 
     cvCounter = 0;
 
@@ -84,7 +85,8 @@ void ModuleEditor::DrawEditor()
 
     ImGui::NewFrame();
 
-    App->editor->AddFPS(1/App->GetDT());
+    AddHistogramData(App->GetDT() * 1000.0f, mMsLog);
+    AddHistogramData(1 / App->GetDT(), mFPSLog);
 
     // Docking for all windows
     ImGuiWindowFlags flags = ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove |
@@ -173,10 +175,8 @@ void ModuleEditor::DrawEditor()
 
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
-                //ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, 0, FLT_MAX, FLT_MAX, {( 1.0f, 2.0f )}, 4);
-                char title[25];
-                sprintf_s(title, 25, "Framerate %.1f", mFPSLog[mFPSLog.size() - 1]);
-                ImGui::PlotHistogram("FPS", mFPSLog.data(), mFPSLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 80));
+                ImGui::PlotHistogram("FPS", &mFPSLog[0], mFPSLog.size(), 0, "FPS", 0.0f, 100.0f, ImVec2(450, 100));
+                ImGui::PlotHistogram("Ms.", &mMsLog[0], mMsLog.size(), 0, "Miliseconds", 0.0f, 100.0f, ImVec2(450, 100));
             }
 
 
@@ -445,25 +445,28 @@ bool ModuleEditor::CleanUp()
     return true;
 }
 
-void ModuleEditor::AddFPS(const float aFPS)
+void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)
 {
-    if (mFPSLog.size() < 30)
+    if (data_vector.size() == data_vector.capacity())
     {
-        mFPSLog.push_back(aFPS);
+
+        for (unsigned int i = 0; i < data_vector.size(); i++)
+        {
+            if (i + 1 < data_vector.size())
+            {
+                float iCopy = data_vector[i + 1];
+                data_vector[i] = iCopy;
+            }
+        }
+        data_vector[data_vector.capacity() - 1] = aFPS;
+
     }
     else
     {
-        for (unsigned int i = 0; i < mFPSLog.size(); i++)
-        {
-            if (i + 1 < mFPSLog.size())
-            {
-                float iCopy = mFPSLog[i + 1];
-                mFPSLog[i] = iCopy;
-            }
-        }
-        mFPSLog[mFPSLog.capacity() - 1] = aFPS;
+        data_vector.push_back(aFPS);
     }
 }
+
 
 void ModuleEditor::ConsoleLog(const char* tmp_string)
 {

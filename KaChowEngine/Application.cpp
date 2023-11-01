@@ -42,6 +42,8 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	maxFPS = 60;
+
 	// Call Init() in all modules
 	for (std::vector<Module*>::const_iterator it = list_modules.cbegin(); it != list_modules.cend() && ret; ++it)
 	{
@@ -69,6 +71,20 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (editor->vSync)
+	{
+		lastMsFrame = ms_timer.Read();
+
+		float timeToWait = 1000.0f / (float)maxFPS;
+
+		float result = timeToWait - lastMsFrame;
+
+		if (lastMsFrame < timeToWait)
+			SDL_Delay(static_cast<Uint32>(fabs(result)));
+
+		lastMsFrame = ms_timer.Read();
+
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

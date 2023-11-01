@@ -23,7 +23,8 @@ bool ModuleScene::Start()
 	rootGameObject->name = "Scene";
 
 
-	App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	bakerHouse->name = "BakerHouse";
 
 	App->camera->Position = float3(1.0f, 1.0f, 1.0f);
 	App->camera->LookAt(float3(0, 0, 0));

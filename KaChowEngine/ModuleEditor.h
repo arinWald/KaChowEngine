@@ -22,11 +22,12 @@ public:
 	void DrawEditor();
 	bool CleanUp() override;
 
-	void AddFPS(const float aFPS);
+	void AddHistogramData(const float aFPS, std::vector<float>& aMS);
 
 	void ConsoleLog(const char* tmp_string);
 
 	std::vector<float> mFPSLog;
+	std::vector<float> mMsLog;
 
 private:
 	int cvCounter;
@@ -41,7 +42,7 @@ private:
 	bool depthTest;
 	bool colorMat;
 	bool texture2D;
-	bool vSync;
+	
 	bool isWireframe;
 	float bright;
 	float bright_aux;
@@ -53,6 +54,7 @@ private:
 
 public:
 	std::vector<std::string>* logVector;
+	bool vSync;
 };
 
 #endif
