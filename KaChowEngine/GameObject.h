@@ -43,6 +43,6 @@ public:
 
 	C_Transform* mTransform;
 
-	bool isTimetoDelete;
+	bool deleteGameObject;
 
 };

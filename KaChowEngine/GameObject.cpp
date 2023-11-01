@@ -12,10 +12,13 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 	name = "";
-	mParent = nullptr;
 	mTransform = nullptr;
 
 	// pilota (delete del reves?)
+
+	if (deleteGameObject && mParent != nullptr) {
+		mParent->DeleteChild(this);
+	}
 
 	for (size_t i = 0; i < mComponents.size(); ++i)
 	{
@@ -153,7 +156,7 @@ void GameObject::PrintOnInspector()
 
 		if (ImGui::Button("Delete")) {
 
-			isTimetoDelete = true;
+			deleteGameObject = true;
 			delete App->scene->selectedGameObj;
 			App->scene->selectedGameObj = nullptr;
 		}

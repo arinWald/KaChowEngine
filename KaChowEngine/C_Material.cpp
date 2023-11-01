@@ -22,7 +22,7 @@ C_Material::~C_Material()
 
 void C_Material::OnEditor()
 {
-	const char* listTextures[]{ "Texture", "None", "Checkes" };
+	const char* listTextures[]{ "Texture", "None", "Checker" };
 
 	//Texture component inspector
 	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
@@ -68,10 +68,10 @@ void C_Material::UpdateMeshTexture()
 		return;
 	}
 
-	/*if (currentTexture == 2) {
+	if (currentTexture == 2) {
 		cm->mesh->id_texture = App->texture2D->checkerID;
 		return;
-	}*/
+	}
 
 	cm->mesh->id_texture = 0;
 }
