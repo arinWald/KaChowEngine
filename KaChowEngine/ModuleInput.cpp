@@ -135,7 +135,14 @@ update_status ModuleInput::PreUpdate(float dt)
 					LOG("Loading Textures");
 					if (App->scene->selectedGameObj != nullptr && App->scene->selectedGameObj->type != ShapeType::EMPTY)
 					{
-						App->scene->selectedGameObj->GetMaterialComponent()->SetTexture(dropped_filedir);
+						if (App->scene->selectedGameObj->GetMaterialComponent() != nullptr)
+						{
+							App->scene->selectedGameObj->GetMaterialComponent()->SetTexture(dropped_filedir);
+						}
+						else
+						{
+							LOG("The selected GameObject has no Material Component");
+						}
 					}
 					else
 					{

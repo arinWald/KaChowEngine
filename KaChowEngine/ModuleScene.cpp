@@ -29,13 +29,6 @@ bool ModuleScene::Start()
 	App->camera->Position = float3(1.0f, 1.0f, 1.0f);
 	App->camera->LookAt(float3(0, 0, 0));
 
-	prova1 = new GameObject(rootGameObject);
-	prova2 = new GameObject(prova1);
-	prova3 = new GameObject(prova1);
-	prova4 = new GameObject(rootGameObject);
-	prova5 = new GameObject(prova4);
-	prova6 = new GameObject(prova4);
-
 	return true;
 }
 
@@ -85,25 +78,21 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 		isNodeOpen = false;
 	}
 
-
-	if (gameObject->GetParent() != nullptr)
+	if (ImGui::BeginDragDropSource())
 	{
-		if (ImGui::BeginDragDropSource())
-		{
-			ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
+		ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
 
-			draggedGameObject = gameObject;
-			ImGui::Text("Drag to");
-			ImGui::EndDragDropSource();
-		}
+		draggedGameObject = gameObject;
+		ImGui::Text("Drag to");
+		ImGui::EndDragDropSource();
+	}
 
-		if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+	{
+		hoveredGameObj = gameObject;
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
 		{
-			hoveredGameObj = gameObject;
-			if (ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
-			{
-				selectedGameObj = gameObject;
-			}
+			selectedGameObj = gameObject;
 		}
 	}
 
