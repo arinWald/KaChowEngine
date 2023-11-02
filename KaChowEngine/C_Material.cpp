@@ -51,6 +51,7 @@ void C_Material::SetTexture(const char* file_path)
 	if (textureID != 0) {
 		App->texture2D->FreeTexture(textureID);
 		textureID = 0;
+		texture_path = file_path;
 	}
 	textureID = App->texture2D->LoadTexture(file_path);
 	UpdateMeshTexture();

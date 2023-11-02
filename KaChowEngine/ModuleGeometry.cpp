@@ -54,7 +54,8 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
             childGameObject->name = "Mesh_" + std::to_string(i);
 
             ImportMesh(scene->mMeshes[i], parentGameObject, childGameObject, scene, i);
-            childGameObject->GetMaterialComponent()->texture_path = file_path;
+
+            /*childGameObject->GetMaterialComponent()->texture_path = file_path;*/
 
         }
 

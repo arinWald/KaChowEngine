@@ -114,7 +114,7 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 	glTexImage2D(GL_TEXTURE_2D, 0, format, imgWidth, imgHeight, 0, format, type, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	// FOr inspector to print
+	// For inspector to print
 	if (App->scene->selectedGameObj != nullptr) {
 		if (App->scene->selectedGameObj->GetMeshComponent() != nullptr) {
 
