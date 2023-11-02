@@ -20,93 +20,109 @@ It has been made by: Arnau Gonzalez and Pau Argiz
 
 ### The engine
 
-**Camera**
+### Camera
 
-Right Click - FPS free rotation
-Mouse wheel UP/DOWN - Zoom OUT/IN
-LALT + Left Click - Orbit around Selected Object.
+The camera in KaChow Engine offers various controls for navigating your 3D scene:
 
-While mouse right clicking:
-(Holding Shift, movement speed boost)
-W - Move forward
-A - Move Left
-S - Move backwards
-D - Move Right
-Q - Move Up
-E - Move Down
+- **Right Click:** Enables FPS (First-Person Shooter) free rotation, allowing you to look around in your virtual world with ease.
+- **Mouse Wheel UP/DOWN:** Zooms the camera in and out, adjusting the view of your scene.
+- **Left Alt + Left Click:** Orbits the camera around the selected object, providing a different perspective.
 
-F - Focus object selected
+While right-clicking, the following controls are available to navigate the scene:
 
-**Inspector**
+- (Holding Shift, movement speed boost)
+- **W:** Move forward
+- **A:** Move Left
+- **S:** Move backward
+- **D:** Move Right
+- **Q:** Move Up
+- **E:** Move Down
+- **F:** Focus on the selected object, centering it in the view.
 
-Displays all different components of the selected GameObjects.
+### Inspector
 
-**Components**
+The 'Inspector' displays all the different components and their properties of the selected GameObjects.
 
-Component Transform - Rotate, position and scale.
-Component Mesh - Show all info about differents meshes vertex of selected object.
-Component Materials - Allow viewing textures.
+### Components
 
-**Drag&Drop**
+KaChow Engine supports various components to enhance your 3D objects and assets:
 
-The engine allows the user to Drag&Drop FBX files from anywhere in the hard drive and later, drag and drop files to put textures for the GameObjects.
+- **Component Transform:** Modify the rotation, position, and scale of the selected GameObject.
+- **Component Mesh:** Provides detailed information about different meshes and their vertices for the selected object.
+- **Component Materials:** Allows you to view and manage textures and materials applied to your GameObjects.
+
+### Drag & Drop
+
+KaChow Engine simplifies asset management through its Drag & Drop functionality:
+
+- The engine allows users to drag and drop FBX files from anywhere on the hard drive.
+- Users can also drag and drop files to assign textures to GameObjects.
+
+
 
 ### Windows
 
-**Configuration**
-FPS histogram
-Show FPS
+### Configuration
 
-MS Histogram
-Show DeltaTime
+In the 'Configuration' section, you can fine-tune various settings to optimize your development and user experience:
 
-Window
-Window resolution
-Display winfdown resolution and two slider to change it
-Checkbow with fullscreen option
+**FPS Histogram:**
+- This option provides a real-time histogram that displays the frames per second (FPS) of your application. Monitoring the FPS is essential for ensuring smooth and responsive gameplay.
 
-View
-Activate and deactivate windows
+**MS Histogram:**
+- The MS Histogram shows a histogram of the frame time or DeltaTime. It's a valuable tool for identifying performance bottlenecks and ensuring consistent frame pacing.
 
-Render
-Checkbox:
-Lightning
-Cullface
-DepthTest
-Color Material
-Wireframe
-Textures 2D
-VSync
-Slider brightness
+**Window:**
+- In the 'Window' section, you can manage the display settings:
 
-Input:
-Display mouse and keyboard inputs
+  - **Window Resolution:** Control the resolution of the window
+  - **Display Window Resolution:** View the current window resolution and use two sliders to change it interactively.
+  - **Fullscreen Option:** Toggle between windowed and fullscreen display modes
 
-Audio:
-Volumen slider
+**View:**
+- The 'View' section allows you to activate and deactivate various windows within the engine.
 
+### Rendering
 
-**Objects**
-Allows to create all kinds of primitives. Including an empty GameObject.
+The rendering capabilities of KaChow Engine allow you to create visually stunning 3D scenes. You can control various rendering options in the 'Render' section:
 
-Hierarchy
-Dsiplay all GamObjects and allows to select and move them.
+- **Lighting:** Enable or disable lighting for your scene.
+- **Cullface:** Control face culling to optimize rendering.
+- **Depth Test:** Toggle depth testing for proper layering.
+- **Color Material:** Customize material colors for objects.
+- **Wireframe:** Visualize objects in wireframe mode.
+- **Textures 2D:** Manage and apply textures to your objects.
+- **VSync:** Enable or disable vertical synchronization for smoother rendering.
+- **Brightness Slider:** Adjust the brightness of the scene.
 
-Inspector
-Displays the info of the GameObject selected.
-Change it's name.
-Show mesh info and face normals.
-Diplsy texture info and allows to change it.
+### Input
 
-Console
-Prints all important LOGS.
+- **Mouse and Keyboard Inputs:** Display the current input from the mouse and keyboard, making it easy to understand and manage user interactions.
 
-External libraries
-Externals libraries used in our engine:
+### Audio
 
-SDL
-ImGui
-Assimp
-Glew
-MathGeoLib
-DevIL
+- **Volume Slider:** Adjust the volume to create the desired auditory experience.
+
+### Objects
+
+Create and manipulate objects within your scenes with ease, including primitives and empty GameObjects.
+
+- **Hierarchy:** View and interact with a list of all GameObjects in your scene, making it simple to select and manipulate them.
+
+- **Inspector:** Customize GameObjects by changing their names, viewing mesh information, adjusting materials, and applying textures.
+
+### Console
+
+The 'Console' provides a central location for important logs and messages, making it easy to debug and monitor.
+
+### External Libraries
+
+Our engine relies on various external libraries to power its functionality:
+
+- [SDL](https://www.libsdl.org/): Simple DirectMedia Layer for cross-platform development.
+- [ImGui](https://github.com/ocornut/imgui): The Dear ImGui library for creating user interfaces.
+- [Assimp](https://www.assimp.org/): The Open Asset Import Library for 3D model loading.
+- [Glew](http://glew.sourceforge.net/): The OpenGL Extension Wrangler Library for OpenGL extensions.
+- [MathGeoLib](https://github.com/juj/MathGeoLib): A C++ library for linear algebra and geometry.
+- [DevIL](http://openil.sourceforge.net/): The Developer's Image Library for image file handling.
+
