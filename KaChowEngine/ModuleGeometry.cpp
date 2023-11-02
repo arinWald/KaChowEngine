@@ -54,6 +54,8 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
             childGameObject->name = "Mesh_" + std::to_string(i);
 
             ImportMesh(scene->mMeshes[i], parentGameObject, childGameObject, scene, i);
+            childGameObject->GetMaterialComponent()->texture_path = file_path;
+
         }
 
         // Use scene->mNumMeshes to iterate on scene->mMeshes array
@@ -119,8 +121,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
         CgameObject->AddComponent(meshComp);
 
         ourMesh->id_texture = App->texture2D->checkerID;
-        ourMesh->texture_height = App->texture2D->textureHeight;
-        ourMesh->texture_width = App->texture2D->textureWidth;
+
 
 
         if (scene->HasMaterials()) {
@@ -146,7 +147,8 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
                 CgameObject->AddComponent(matComp);
             }
         }
-
+        ourMesh->texture_height = App->texture2D->textureHeight;
+        ourMesh->texture_width = App->texture2D->textureWidth;
         
     }
     else

@@ -92,8 +92,13 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 
 	BYTE* data = ilGetData();
 	ILuint imgWidth, imgHeight;
+
 	imgWidth = ilGetInteger(IL_IMAGE_WIDTH);
 	imgHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	textureWidth = imgWidth;
+	textureHeight = imgHeight;
+
 	int const type = ilGetInteger(IL_IMAGE_TYPE);
 	int const format = ilGetInteger(IL_IMAGE_FORMAT);
 
@@ -108,6 +113,20 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 
 	glTexImage2D(GL_TEXTURE_2D, 0, format, imgWidth, imgHeight, 0, format, type, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
+
+	// FOr inspector to print
+	if (App->scene->selectedGameObj != nullptr) {
+		if (App->scene->selectedGameObj->GetMeshComponent() != nullptr) {
+
+			App->scene->selectedGameObj->GetMeshComponent()->mesh->texture_width = imgWidth;
+			App->scene->selectedGameObj->GetMeshComponent()->mesh->texture_height = imgHeight;
+		}
+		if (App->scene->selectedGameObj->GetMaterialComponent() != nullptr) {
+
+			App->scene->selectedGameObj->GetMaterialComponent()->texture_path = file_path;
+		}
+	}
+
 	ilDeleteImages(1, &devilImageId);
 
 	glBindTexture(GL_TEXTURE_2D, 0);

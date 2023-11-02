@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "Glew/include/glew.h"
 #include "ImGui/imgui.h"
+#include <string>
 
 class GameObject;
 class Component;
@@ -27,6 +28,8 @@ public:
 	virtual void Enable();
 	virtual void Disable();
 	/*virtual Update();*/
+
+	std::string texture_path;
 
 
 };

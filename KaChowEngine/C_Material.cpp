@@ -27,9 +27,18 @@ void C_Material::OnEditor()
 	//Texture component inspector
 	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
 	{
+		std::string pathaux = "Path: " + std::string(texture_path);
+		ImGui::TextWrapped(pathaux.c_str());
+
+		int width = mParent->GetMeshComponent()->mesh->texture_width;
+		int height = mParent->GetMeshComponent()->mesh->texture_height;
+
+		std::string aux = "Size: " + std::to_string(width) + " x " + std::to_string(height);
+		ImGui::Text(aux.c_str());
+
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		ImGui::Combo("##ChoseTexture", &currentTexture, listTextures, IM_ARRAYSIZE(listTextures));
+		ImGui::Combo("##Choose Texture", &currentTexture, listTextures, IM_ARRAYSIZE(listTextures));
 
 	}
 
