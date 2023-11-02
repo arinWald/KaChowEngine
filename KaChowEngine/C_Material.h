@@ -9,6 +9,13 @@
 class GameObject;
 class Component;
 
+enum CurrentTextureType
+{
+	TEXTURE,
+	NONE,
+	CHECKERS,
+};
+
 class C_Material : public Component
 {
 public:
@@ -23,7 +30,7 @@ public:
 	void ResetTexture();
 	void UpdateMeshTexture();
 
-	int currentTexture;
+	CurrentTextureType currentTexture;
 
 	virtual void Enable();
 	virtual void Disable();

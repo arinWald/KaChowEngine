@@ -6,7 +6,7 @@
 C_Material::C_Material() : Component(nullptr)
 {
 	type = ComponentType::MATERIAL;
-	currentTexture = 0;
+	currentTexture = TEXTURE;
 	mParent = nullptr;
 }
 
@@ -14,7 +14,7 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
 	this->mParent = parent;
-	currentTexture = 0;
+	currentTexture = TEXTURE;
 }
 
 C_Material::~C_Material()
@@ -23,23 +23,25 @@ C_Material::~C_Material()
 
 void C_Material::OnEditor()
 {
-	const char* listTextures[]{ "Texture", "None", "Checker" };
+	const char* textureList[]{ "Texture", "None", "Checker" };
 
 	//Texture component inspector
-	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
+	if (ImGui::CollapsingHeader("Texture"))
 	{
-		std::string pathaux = "Path: " + std::string(texture_path);
-		ImGui::TextWrapped(pathaux.c_str());
-
 		int width = mParent->GetMeshComponent()->mesh->texture_width;
 		int height = mParent->GetMeshComponent()->mesh->texture_height;
 
 		std::string aux = "Size: " + std::to_string(width) + " x " + std::to_string(height);
-		ImGui::Text(aux.c_str());
+		ImGui::TextWrapped(aux.c_str());
 
-		ImGui::Text("Texture: ");
+		std::string pathaux = "Path: " + std::string(texture_path);
+		ImGui::TextWrapped(pathaux.c_str());
+
+		ImGui::Text("Change Texture: ");
 		ImGui::SameLine();
-		ImGui::Combo("##Choose Texture", &currentTexture, listTextures, IM_ARRAYSIZE(listTextures));
+		int txtType = currentTexture;
+		ImGui::Combo("##Choose Texture", &txtType, textureList, IM_ARRAYSIZE(textureList));
+		currentTexture = (CurrentTextureType)txtType;
 
 	}
 
@@ -74,16 +76,14 @@ void C_Material::UpdateMeshTexture()
 	if (cm == nullptr || cm->mesh == nullptr) return;
 
 	//Send selected texture
-	if (currentTexture == 0) {
+	if (currentTexture == TEXTURE) {
 		cm->mesh->id_texture = textureID;
 		return;
 	}
-
-	if (currentTexture == 2) {
+	else if (currentTexture == CHECKERS) {
 		cm->mesh->id_texture = App->texture2D->checkerID;
 		return;
 	}
-
 	cm->mesh->id_texture = 0;
 }
 
