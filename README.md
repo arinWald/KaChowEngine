@@ -73,7 +73,7 @@ In the 'Configuration' section, you can fine-tune various settings to optimize y
 **Window:**
 - In the 'Window' section, you can manage the display settings:
 
-  - **Window Resolution:** Control the resolution of the window
+  - **Window Resolution:** Display the resolution of the window
   - **Display Window Resolution:** View the current window resolution and use two sliders to change it interactively.
   - **Fullscreen Option:** Toggle between windowed and fullscreen display modes
 
