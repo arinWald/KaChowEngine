@@ -6,6 +6,7 @@
 C_Material::C_Material() : Component(nullptr)
 {
 	type = ComponentType::MATERIAL;
+	currentTexture = 0;
 	mParent = nullptr;
 }
 
