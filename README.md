@@ -18,7 +18,7 @@ It has been made by: Arnau Gonzalez and Pau Argiz
 2. Extract files from the .zip
 3. Execute .exe
 
-### The engine
+## The engine
 
 ### Camera
 
@@ -58,9 +58,7 @@ KaChow Engine simplifies asset management through its Drag & Drop functionality:
 - The engine allows users to drag and drop FBX files from anywhere on the hard drive.
 - Users can also drag and drop files to assign textures to GameObjects.
 
-
-
-### Windows
+## Windows
 
 ### Configuration
 
