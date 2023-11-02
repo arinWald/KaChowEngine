@@ -115,7 +115,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
 
         BufferMesh(ourMesh);
 
-        C_Mesh* meshComp = new C_Mesh();
+        C_Mesh* meshComp = new C_Mesh(CgameObject);
         ourMesh->owner = CgameObject;
         meshComp->mesh = ourMesh;
         CgameObject->AddComponent(meshComp);

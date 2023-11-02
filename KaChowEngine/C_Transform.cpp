@@ -5,7 +5,7 @@ C_Transform::C_Transform() : Component(nullptr)
 
 }
 
-C_Transform::C_Transform(GameObject* parent) : Component(nullptr)
+C_Transform::C_Transform(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM;
 	this->mParent = parent;

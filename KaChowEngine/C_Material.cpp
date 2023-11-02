@@ -9,7 +9,7 @@ C_Material::C_Material() : Component(nullptr)
 	mParent = nullptr;
 }
 
-C_Material::C_Material(GameObject* parent) : Component(nullptr)
+C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
 	this->mParent = parent;

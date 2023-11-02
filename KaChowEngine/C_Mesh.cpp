@@ -9,8 +9,10 @@ C_Mesh::C_Mesh() : Component(nullptr)
     showNormals = false;
 }
 
-C_Mesh::C_Mesh(GameObject* parent) : Component(nullptr)
+C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 {
+    type = ComponentType::MESH;
+    mesh = nullptr;
     showNormals = false;
 }
 

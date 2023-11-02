@@ -7,6 +7,7 @@ GameObject::GameObject()
 	mParent = nullptr;
 	mTransform = new C_Transform();
 	type = ShapeType::NONE;
+	deleteGameObject = false;
 
 	mComponents.push_back(mTransform);
 }
@@ -61,6 +62,8 @@ GameObject::GameObject(GameObject* parent)
 	mTransform = new C_Transform();
 
 	type = ShapeType::NONE;
+
+	deleteGameObject = false;
 
 	mComponents.push_back(mTransform);
 }
@@ -163,6 +166,7 @@ void GameObject::PrintOnInspector()
 			deleteGameObject = true;
 			delete App->scene->selectedGameObj;
 			App->scene->selectedGameObj = nullptr;
+			
 		}
 
 		for (size_t i = 0; i < mComponents.size(); i++)
