@@ -122,9 +122,6 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject")) {
 
-			/*if (!draggedGameObject->fixed || !hoveredGameObj->fixed) {
-				draggedGameObject->SetNewParent(hoveredGameObj);
-			}*/
 			draggedGameObject->SetNewParent(hoveredGameObj);
 		}
 		ImGui::EndDragDropTarget();

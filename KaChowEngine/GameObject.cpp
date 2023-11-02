@@ -17,8 +17,6 @@ GameObject::~GameObject()
 	name = "";
 	mTransform = nullptr;
 
-	// pilota (delete del reves?)
-
 	if (deleteGameObject && mParent != nullptr) {
 		mParent->DeleteChild(this);
 	}

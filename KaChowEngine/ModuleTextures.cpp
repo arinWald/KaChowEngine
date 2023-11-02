@@ -8,11 +8,10 @@
 #pragma comment(lib, "DevIL/libx86/ILU.lib")
 #pragma comment(lib, "DevIL/libx86/ILUT.lib")
 
-//#include "SDL/include/SDL_opengl.h"
 
 ModuleTextures::ModuleTextures(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	//textureID = 0;
+
 }
 
 bool ModuleTextures::Init()
@@ -44,26 +43,22 @@ bool ModuleTextures::Start()
 	glEnable(GL_TEXTURE_2D);
 	//glActiveTexture(GL_TEXTURE0);
 
-	//Generate and bind texture
+
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &checkerID);
 	glBindTexture(GL_TEXTURE_2D, checkerID);
 
-	//How texture behaves outside 0,1 range (S->x, T->y)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); //GL_CLAMP
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	//Texture behaviour after resize (MIN->smaller , MAG->bigger)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	//Create Texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	//unbind texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 
@@ -93,19 +88,8 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 
 	bool success = ilLoadImage(file_path);
 
-	/*if (!success) {
-		LOG ERROR LOADING TEXTURE
-		return 0;
-	}*/
-
 	success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
-	//if (!success) {
-	//	LOG converting texture
-	//	return 0;
-	//}
-
-	//Extract loaded image data
 	BYTE* data = ilGetData();
 	ILuint imgWidth, imgHeight;
 	imgWidth = ilGetInteger(IL_IMAGE_WIDTH);
@@ -134,7 +118,6 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 
 void ModuleTextures::FreeTexture(GLuint texId)
 {
-	//Delete texture
 	if (texId != 0)
 	{
 		glDeleteTextures(1, &texId);

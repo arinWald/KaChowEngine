@@ -49,7 +49,6 @@ GameObject* ModuleGeometry::LoadFile(const char* file_path)
         // ProcessNode here?
         for (int i = 0; i < scene->mNumMeshes; i++)
         {
-            //Create object to store mesh
             GameObject* childGameObject = new GameObject();
             parentGameObject->AddThisChild(childGameObject);
             childGameObject->name = "Mesh_" + std::to_string(i);
@@ -94,7 +93,6 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
         ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
     }
 
-    // Load faces
     if (aiMesh->HasFaces())
     {
         ourMesh->num_index = aiMesh->mNumFaces * 3;
@@ -124,17 +122,17 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
         ourMesh->texture_height = App->texture2D->textureHeight;
         ourMesh->texture_width = App->texture2D->textureWidth;
 
-        //Has a texture
+
         if (scene->HasMaterials()) {
             if (scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-                //Get texture path
+
                 aiString texture_path;
                 scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
                 aiString new_path;
                 new_path.Set("Assets/Textures/");
                 new_path.Append(texture_path.C_Str());
 
-                //Build component
+
                 C_Material* matComp = new C_Material();
                 matComp->mParent = CgameObject;
                 matComp->SetTexture(new_path.C_Str());
@@ -205,23 +203,6 @@ void Mesh::RenderFaceNormals()
 
 void Mesh::Render()
 {
-    //glEnable(GL_TEXTURE_2D);
-    //glEnableClientState(GL_VERTEX_ARRAY);
-
-    //// Binding buffers
-    //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-    //// Draw
-    //glVertexPointer(3, GL_FLOAT, 0, NULL);
-    //glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
-
-    //// Unbind buffers
-    //glDisableClientState(GL_VERTEX_ARRAY);
-
-
-
-
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_COORD_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -232,13 +213,12 @@ void Mesh::Render()
 
     glBindTexture(GL_TEXTURE_2D, id_texture);
 
-    //Indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
     glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
 
 
     glDisableClientState(GL_VERTEX_ARRAY);
-    //cleaning texture
+
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glDisable(GL_TEXTURE_COORD_ARRAY);
@@ -246,18 +226,15 @@ void Mesh::Render()
 
 void ModuleGeometry::BufferMesh(Mesh* mesh)
 {
-    //Fill buffers with vertex
+
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    // Dos buffers, vertex i index
     glGenBuffers(1, (GLuint*)&(mesh->id_vertex));
     glGenBuffers(1, (GLuint*)&(mesh->id_index));
 
-    // Bind and fill buffers
     glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * VERTEX_ARGUMENTS, mesh->vertex, GL_STATIC_DRAW);
 
-    //Fill buffers with indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_index, mesh->index, GL_STATIC_DRAW);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -284,7 +261,6 @@ void ModuleGeometry::RenderScene()
 bool ModuleGeometry::CleanUp()
 {
 
-    // detach log stream
     aiDetachAllLogStreams();
     return true;
 }
@@ -302,31 +278,6 @@ vec3 Mesh::GetVectorFromIndex(float* startValue)
 
 void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
 {
-    //if (*vertexNormals == true)
-    //{
-    //    float normalLenght = 0.05f;
-    //    glPointSize(3.0f);
-    //    glColor3f(1, 0, 0);
-    //    glBegin(GL_POINTS);
-    //    for (unsigned int i = 0; i < vertices_count * 3; i += 3)
-    //    {
-    //        glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-    //    }
-    //    glEnd();
-    //    glColor3f(0, 1, 0);
-    //    glPointSize(1.0f);
-
-    //    //Vertex normals
-    //    glColor3f(0, 1, 0);
-    //    glBegin(GL_LINES);
-    //    for (unsigned int i = 0; i < normals_count * 3; i += 3)
-    //    {
-    //        glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-    //        glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
-    //    }
-    //    glEnd();
-    //    glColor3f(1, 1, 1);
-    //}
 
     if (*faceNormals == true)
     {

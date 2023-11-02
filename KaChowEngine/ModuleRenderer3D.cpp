@@ -64,11 +64,9 @@ bool ModuleRenderer3D::Init()
 		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
-		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Check for error
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -76,11 +74,9 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 
-		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		//Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -94,7 +90,6 @@ bool ModuleRenderer3D::Init()
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		//Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -132,28 +127,6 @@ bool ModuleRenderer3D::Init()
 	Grid.axis = true;
 
 
-	// CUBE TEST
-	//VBO = 0;
-	//EBO = 0;
-	//VAO = 0;
-	//glGenBuffers(1, &VBO);
-	//glGenBuffers(1, &EBO);
-	//glGenVertexArrays(1, &VAO);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CubeIndices), CubeIndices, GL_STATIC_DRAW);
-	////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	//glBindVertexArray(VAO);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	//glEnableVertexAttribArray(0);
-	//glBindVertexArray(0);
-
-
 	return ret;
 }
 
@@ -173,7 +146,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
@@ -185,7 +157,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
@@ -201,7 +172,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");

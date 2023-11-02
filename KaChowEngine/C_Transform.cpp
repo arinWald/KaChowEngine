@@ -2,17 +2,15 @@
 
 C_Transform::C_Transform() : Component(nullptr)
 {
+	type = ComponentType::TRANSFORM;
 
+	resetMatrix();
 }
 
 C_Transform::C_Transform(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM;
 	this->mParent = parent;
-
-	//mPosition = { 0, 0, 0 };
-	//mScale = { 0, 0, 0 };
-	//mRotation = { 0, 0, 0};
 
 	resetMatrix();
 }

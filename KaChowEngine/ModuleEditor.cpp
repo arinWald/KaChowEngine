@@ -33,13 +33,10 @@ bool ModuleEditor::Init()
     // "pilota"
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-    // Setup Dear ImGui style
-
     // Canviar color de editor
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
 
-    // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
     ImGui_ImplOpenGL3_Init();
 
@@ -188,7 +185,6 @@ update_status ModuleEditor::DrawEditor()
             if (ImGui::CollapsingHeader("Window"))
             {
                 ImGui::Text("Window Size: %d x %d", App->window->e_width, App->window->e_height);
-                    /*ImGui::Text("Brightness: %d", BARIABLE);*/
                 if(ImGui::Checkbox("Fullscreen", &fullscreen))
                 {
                     if (fullscreen)
@@ -531,7 +527,6 @@ update_status ModuleEditor::DrawEditor()
 
 bool ModuleEditor::CleanUp()
 {
-    // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();

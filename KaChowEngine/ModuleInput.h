@@ -67,9 +67,7 @@ private:
 	int mouse_z;
 	int mouse_x_motion;
 	int mouse_y_motion;
-	//int mouse_z_motion;
 
-	// Pointer for directory of dropped file
 	char* dropped_filedir;
 	std::string dropped_filedir_s;
 };
