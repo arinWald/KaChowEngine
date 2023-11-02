@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="MathGeoLib\include\Geometry\AABB.cpp" />
     <ClCompile Include="MathGeoLib\include\Geometry\Capsule.cpp" />
@@ -89,9 +87,6 @@
     <ClCompile Include="ImGui\backends\imgui_impl_sdl2.cpp">
       <Filter>Sources\ImGui\Backends</Filter>
     </ClCompile>
-    <ClCompile Include="Parser\json.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleGeometry.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -119,9 +114,17 @@
     <ClCompile Include="OurPrimitive.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser\json.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="MathGeoLib\include\Geometry\AABB.h" />
@@ -243,9 +246,6 @@
     <ClInclude Include="ImGui\backends\imgui_impl_sdl2.h">
       <Filter>Sources\ImGui\Backends</Filter>
     </ClInclude>
-    <ClInclude Include="Parser\json.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleGeometry.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -272,6 +272,12 @@
     </ClInclude>
     <ClInclude Include="OurPrimitive.h">
       <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\json.h">
+      <Filter>Sources\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -301,9 +307,6 @@
     <Filter Include="Sources\Modules">
       <UniqueIdentifier>{bbb2ca12-bd79-426a-8a46-3bc8656a83c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Modules\Game">
-      <UniqueIdentifier>{8bbdec62-184b-4181-bde6-42a9eba8aff0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Tools">
       <UniqueIdentifier>{f507fcd8-4ef9-4ffe-bce8-6219b41c6bbd}</UniqueIdentifier>
     </Filter>
@@ -312,6 +315,9 @@
     </Filter>
     <Filter Include="Sources\Gameobject">
       <UniqueIdentifier>{047afb33-9ed8-4ecb-91af-99fe1b765231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{e393e436-abc9-4d56-a3cf-47af02fc5d1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
