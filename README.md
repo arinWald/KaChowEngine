@@ -14,7 +14,7 @@ It has been made by: Arnau Gonzalez and Pau Argiz
 
 ### Download the engine
 
-1. Download the last release [here](https://github.com/arinWald/KaChowEngine).
+1. Download the last release [here]([https://github.com/arinWald/KaChowEngine](https://github.com/arinWald/KaChowEngine/releases/tag/0.5)).
 2. Extract files from the .zip
 3. Execute .exe
 
