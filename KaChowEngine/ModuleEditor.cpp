@@ -197,7 +197,7 @@ update_status ModuleEditor::DrawEditor()
                     }
                 }
 
-                int preWidth = App->window->e_width;
+                /*int preWidth = App->window->e_width;
                 int preHeight = App->window->e_height;
 
                 ImGui::SliderInt("Window Width", &App->window->e_width, 320, 2560);
@@ -210,7 +210,7 @@ update_status ModuleEditor::DrawEditor()
                 if (preHeight != App->window->e_height)
                 {
                     App->window->ChangeHeight();
-                }
+                }*/
                
 
                 ImGui::Text("View");
