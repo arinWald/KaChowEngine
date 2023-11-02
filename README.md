@@ -38,14 +38,17 @@ E - Move Down
 F - Focus object selected
 
 **Inspector**
+
 Displays all different components of the selected GameObjects.
 
 **Components**
+
 Component Transform - Rotate, position and scale.
 Component Mesh - Show all info about differents meshes vertex of selected object.
 Component Materials - Allow viewing textures.
 
 **Drag&Drop**
+
 The engine allows the user to Drag&Drop FBX files from anywhere in the hard drive and later, drag and drop files to put textures for the GameObjects.
 
 ### Windows
