@@ -26,7 +26,7 @@ void C_Material::OnEditor()
 	const char* textureList[]{ "Texture", "None", "Checker" };
 
 	//Texture component inspector
-	if (ImGui::CollapsingHeader("Texture"))
+	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
 	{
 		int width = mParent->GetMeshComponent()->mesh->texture_width;
 		int height = mParent->GetMeshComponent()->mesh->texture_height;
@@ -38,7 +38,6 @@ void C_Material::OnEditor()
 		ImGui::TextWrapped(pathaux.c_str());
 
 		ImGui::Text("Change Texture: ");
-		ImGui::SameLine();
 		int txtType = currentTexture;
 		ImGui::Combo("##Choose Texture", &txtType, textureList, IM_ARRAYSIZE(textureList));
 		currentTexture = (CurrentTextureType)txtType;
