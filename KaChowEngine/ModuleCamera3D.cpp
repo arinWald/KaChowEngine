@@ -63,16 +63,35 @@ update_status ModuleCamera3D::Update(float dt)
 		RotationAroundCamera(dt);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) FocusCameraToSelectedObject();
+	Position += newPos;
+	Reference += newPos;
 
-	newPos -= App->input->GetMouseZ() * Z;
+	if ((App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
+
+		// Center camera to 0,0,0 when pressing Left Alt
+
+		Reference = float3(0.0f, 0.0f, 0.0f);
+		LookAt(Reference);
+
+	}
+	else {
+
+		// Orbital camera FPS when we aren't pressing Left Alt
+
+		Reference = Position;
+
+	}
+
+	/*newPos -= App->input->GetMouseZ() * Z;
 
 	Position += newPos;
 	Reference += newPos;
 
+	Reference = Position;
+
 	OrbitSelectedObject(dt);
 
-	LookAt(Reference);
+	LookAt(Reference);*/
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
