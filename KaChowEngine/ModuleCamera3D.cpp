@@ -216,7 +216,7 @@ void ModuleCamera3D::RotationAroundCamera(float dt)
 	if (dx != 0)
 	{
 		float DeltaX = (float)dx * Sensitivity;
-
+		
 		float3 rotationAxis(0.0f, 1.0f, 0.0f);
 		Quat rotationQuat = Quat::RotateAxisAngle(rotationAxis, DeltaX);
 

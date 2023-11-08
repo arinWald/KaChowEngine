@@ -34,7 +34,7 @@ struct Mesh
 
 	GLuint texture_width = 0, texture_height = 0;
 
-	GameObject* owner;
+	GameObject* owner = nullptr;
 
 	/*uint VBO;
 	uint EBO;*/

@@ -67,7 +67,7 @@ void C_Transform::resetMatrix()
 					0, 0, 0, 1 };
 	mPosition = { 0,0,0 };
 	mRotation = { 0,0,0 };
-	mScale = { 0,0,0 };
+	mScale = { 1,1,1 };
 }
 
 float3 C_Transform::getPosition(bool globalPosition)

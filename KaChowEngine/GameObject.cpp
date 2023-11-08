@@ -5,7 +5,7 @@ GameObject::GameObject()
 {
 	name = "GameObject";
 	mParent = nullptr;
-	mTransform = new C_Transform();
+	mTransform = new C_Transform(mParent);
 	type = ShapeType::NONE;
 	deleteGameObject = false;
 
@@ -57,8 +57,8 @@ GameObject::GameObject(GameObject* parent)
 		parent->mChildren.push_back(this);
 	}
 
-	mTransform = new C_Transform();
-
+	mTransform = new C_Transform(mParent);
+	
 	type = ShapeType::NONE;
 
 	deleteGameObject = false;
