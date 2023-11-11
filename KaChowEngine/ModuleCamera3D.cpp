@@ -13,7 +13,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = float3(0.0f, 10.0f, 5.0f);
 	Reference = float3(0.0f, 0.0f, 0.0f);
-	ViewMatrix = IdentityMatrix;
+	ViewMatrix.SetIdentity();
 
 	CalculateViewMatrix();
 }
@@ -140,7 +140,7 @@ void ModuleCamera3D::Move(const float3& Movement)
 // -----------------------------------------------------------------
 float* ModuleCamera3D::GetViewMatrix()
 {
-	return ViewMatrix.M;
+	return &ViewMatrix.At(4, 4);
 }
 
 void ModuleCamera3D::FocusCameraToSelectedObject()
@@ -270,5 +270,5 @@ float3 ModuleCamera3D::RotateVector(const float3& u, float angle, const float3& 
 void ModuleCamera3D::CalculateViewMatrix()
 {
 	//todo: USE MATHGEOLIB here BEFORE 1st delivery! (TIP: Use MathGeoLib/Geometry/Frustum.h, view and projection matrices are managed internally.)
-	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -(X.Dot(Position)), -(Y.Dot(Position)), -(Z.Dot(Position)), 1.0f);
+	ViewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -(X.Dot(Position)), -(Y.Dot(Position)), -(Z.Dot(Position)), 1.0f);
 }
