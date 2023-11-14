@@ -39,6 +39,14 @@ struct Mesh
 	/*uint VBO;
 	uint EBO;*/
 
+	AABB AABB_box;
+	OBB OBB_box;
+	AABB Global_AABB_box;
+
+	void InitAABB();
+	void RenderAABB();
+	void Render();
+
 	float* vertexFaceNormals = nullptr;
 	aiVector3D* vertexNormals = nullptr;
 

@@ -7,6 +7,8 @@
 
 #include "Glew/include/glew.h"
 
+#include <vector>
+
 ModuleGeometry::ModuleGeometry(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -230,6 +232,30 @@ mat4x4 ConvertFloat4x4ToMat4(const float4x4& floatMatrix) {
     mat[15] = floatMatrix.At(3, 3);
 
     return mat;
+}
+
+void Mesh::InitAABB()
+{
+    std::vector<float3> correctVertex;
+    for (size_t i = 0; i < num_vertex * VERTEX_ARGUMENTS; i += VERTEX_ARGUMENTS)
+    {
+        correctVertex.emplace_back(vertex[i], vertex[i + 1], vertex[i + 2]);
+    }
+    AABB_box.SetFrom(&correctVertex[0], correctVertex.size());
+}
+
+void Mesh::RenderAABB()
+{
+    float3 corners1[8];
+    OBB_box.GetCornerPoints(corners1);
+
+    renderer3D->DrawBox(corners1, float3(255, 0, 0));
+
+    float3 corners2[8];
+    Global_AABB_box.GetCornerPoints(corners2);
+
+    // Draw
+    Application::GetInstance()->renderer3D->DrawBox(corners2, float3(0, 0, 255));
 }
 
 void Mesh::Render()
