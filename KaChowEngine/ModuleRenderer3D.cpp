@@ -188,15 +188,14 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::DrawBox(float3* corners, float3 color)
 {
-	int indices[24] = { 0,2,2,6,6,4,4,0,0,1,1,3,3,2,4,5,6,7,5,7,3,7,1,5 };
 	glBegin(GL_LINES);
 	glColor3fv(color.ptr());
 
+	int indices[24] = { 0,2,2,6,6,4,4,0,0,1,1,3,3,2,4,5,6,7,5,7,3,7,1,5 };
 	for (size_t i = 0; i < 24; i++)
-	{
 		glVertex3fv(corners[indices[i]].ptr());
-	}
 
+	// Reset color
 	glColor3f(255.f, 255.f, 255.f);
 	glEnd();
 }

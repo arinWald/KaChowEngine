@@ -116,6 +116,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
             }
         }
         
+        ourMesh->InitAABB();
 
         BufferMesh(ourMesh);
 
@@ -247,15 +248,15 @@ void Mesh::InitAABB()
 void Mesh::RenderAABB()
 {
     float3 corners1[8];
+
     OBB_box.GetCornerPoints(corners1);
 
-    renderer3D->DrawBox(corners1, float3(255, 0, 0));
+    App->renderer3D->DrawBox(corners1, float3(255, 0, 0));
 
     float3 corners2[8];
     Global_AABB_box.GetCornerPoints(corners2);
 
-    // Draw
-    Application::GetInstance()->renderer3D->DrawBox(corners2, float3(0, 0, 255));
+    App->renderer3D->DrawBox(corners2, float3(0, 0, 255));
 }
 
 void Mesh::Render()
@@ -311,11 +312,23 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 
 void ModuleGeometry::RenderScene()
 {
+
+    for (int i = 0; i < meshes.size(); i++)
+    {
+        meshes[i]->OBB_box = meshes[i]->AABB_box;
+        meshes[i]->OBB_box.Transform(meshes[i]->owner->mTransform->getGlobalMatrix().Transposed());
+        meshes[i]->Global_AABB_box.SetNegativeInfinity();
+        meshes[i]->Global_AABB_box.Enclose(meshes[i]->OBB_box);
+    }
+
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
+
+
         // Reset to default
         glColor3f(1.0f, 1.0f, 1.0f);
         meshes[i]->Render();    
+        meshes[i]->RenderAABB(); //AABBs
         glColor3f(1.0f, 0.0f, 0.0f);
         if (meshes[i]->owner->GetMeshComponent()->showNormals) {
             meshes[i]->RenderFaceNormals();

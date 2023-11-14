@@ -18,7 +18,7 @@ public:
 
 	virtual void Enable();
 	virtual void Disable();
-	/*virtual Update();*/
+	virtual void Update();
 
 	Mesh* mesh;
 
