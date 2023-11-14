@@ -20,6 +20,8 @@ public:
 	virtual void Disable();
 	virtual void Update();
 
+	void UpdateBBData();
+
 	Mesh* mesh;
 
 	bool showNormals;
