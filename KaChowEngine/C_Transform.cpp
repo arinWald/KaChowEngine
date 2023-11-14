@@ -24,13 +24,13 @@ void C_Transform::OnEditor()
 	if (ImGui::CollapsingHeader("Transform"))
 	{
 		ImGui::Text("X\t\t Y\t\t Z");
-		ImGui::InputFloat3("Position", mPosition.ptr());
+		ImGui::DragFloat3("Position", mPosition.ptr(), 0.25f);
 
 		ImGui::Text("X\t\t Y\t\t Z");
-		ImGui::InputFloat3("Rotation", mRotation.ptr());
+		ImGui::DragFloat3("Rotation", mRotation.ptr(), 0.25f);
 
 		ImGui::Text("X\t\t Y\t\t Z");
-		ImGui::InputFloat3("Scale", mScale.ptr());
+		ImGui::DragFloat3("Scale", mScale.ptr(), 0.25f);
 	}
 
 

@@ -312,15 +312,6 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 
 void ModuleGeometry::RenderScene()
 {
-
-    for (int i = 0; i < meshes.size(); i++)
-    {
-        meshes[i]->OBB_box = meshes[i]->AABB_box;
-        meshes[i]->OBB_box.Transform(meshes[i]->owner->mTransform->getGlobalMatrix().Transposed());
-        meshes[i]->Global_AABB_box.SetNegativeInfinity();
-        meshes[i]->Global_AABB_box.Enclose(meshes[i]->OBB_box);
-    }
-
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
 
