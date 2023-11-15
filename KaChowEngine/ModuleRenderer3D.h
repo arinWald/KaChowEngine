@@ -49,5 +49,6 @@ public:
 	GLuint EBO;
 	GLuint VAO;
 
+	GameObject* gameCamera;
 	C_Camera* mainCamera;
 };	
