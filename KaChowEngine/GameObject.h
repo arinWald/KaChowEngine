@@ -14,6 +14,7 @@ class Component;
 class C_Transform;
 class C_Mesh;
 class C_Material;
+class C_Camera;
 class GameObject
 {
 public:
