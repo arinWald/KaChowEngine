@@ -2,6 +2,7 @@
 #include "ModuleGeometry.h"
 #include "Application.h"
 #include "C_Transform.h"
+#include "Glew/include/glew.h"
 
 C_Camera::C_Camera() : Component(nullptr)
 {
@@ -15,7 +16,6 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
 	this->mParent = parent;
-	printCount = 0;
 	SetCam();
 	GenFrameBuffer();
 }
@@ -23,8 +23,9 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 C_Camera::~C_Camera()
 {
 	glDeleteFramebuffers(1, &camBuffer);
-	glDeleteFramebuffers(1, &renderObjBuffer);
 	glDeleteFramebuffers(1, &frameBuffer);
+	glDeleteFramebuffers(1, &renderObjBuffer);
+	
 }
 
 void C_Camera::OnEditor()
@@ -32,35 +33,7 @@ void C_Camera::OnEditor()
 
 	if (ImGui::CollapsingHeader("Camera"))
 	{
-		ImGui::Text("");
-		ImGui::Text("Rendered objects: %d", printCount);
-		ImGui::Text("");
 
-		if (ImGui::SliderInt("FOV", &fov, 5, 180)) {
-			frustrumCamera.verticalFov = fov * DEGTORAD;
-			frustrumCamera.horizontalFov = 2.0f * atanf(tanf(frustrumCamera.verticalFov / 2.0f) * 1.7f);
-		}
-		if (ImGui::Button("Reset FOV")) {
-			fov = 60.0f;
-
-			frustrumCamera.verticalFov = fov * DEGTORAD;
-			frustrumCamera.horizontalFov = 2.0f * atanf(tanf(frustrumCamera.verticalFov / 2.0f) * 1.7f);
-		}
-
-
-		ImGui::SliderFloat("Near Distance", &frustrumCamera.nearPlaneDistance, 0.1f, frustrumCamera.farPlaneDistance);
-		if (ImGui::Button("Reset Near Distance")) {
-			frustrumCamera.nearPlaneDistance = 0.1f;
-		}
-
-		ImGui::InputFloat("Far Distance", &frustrumCamera.farPlaneDistance);
-		if (ImGui::Button("Reset Far Distance")) {
-			frustrumCamera.farPlaneDistance = 500.f;
-		}
-		ImGui::Text("");
-		if (ImGui::Button("Set Main Camera", ImVec2(120, 50))) {
-			App->renderer3D->mainCamera = this;
-		}
 	}
 }
 
@@ -110,6 +83,8 @@ void C_Camera::GenFrameBuffer()
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
 }
 
 float* C_Camera::GetViewMatrix()

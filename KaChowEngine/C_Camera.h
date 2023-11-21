@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "Glew/include/glew.h"
+//#include "Glew/include/glew.h"
 #include "ImGui/imgui.h"
 
 class GameObject;
@@ -31,17 +31,13 @@ public:
 	float4x4 viewMatrix;
 	float4x4 projectionMatrix;
 
-	// pilota
-	int printCount;
-
-	int fov;
-
 	uint frameBuffer;
 	uint camBuffer;
 
+	int fov;
+
 	virtual void Enable();
 	virtual void Disable();
-	//virtual Update();
 
 	// Pilota
 	uint renderObjBuffer;

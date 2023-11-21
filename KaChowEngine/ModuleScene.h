@@ -18,9 +18,12 @@ public:
 	bool CleanUp();
 
 	void PrintHierarchy(GameObject* GO, int index);
+	void WindowScene();
 
 	// Pilota
 	GameObject* CreateGameObject(GameObject* parent);
+
+	ImVec2 WindowSize;
 
 	GameObject* rootGameObject;
 	GameObject* selectedGameObj;

@@ -115,11 +115,11 @@ void ModuleWindow::SetResizable()
 void ModuleWindow::ChangeWidth()
 {
 	SDL_SetWindowSize(window, e_width, e_height);
-	App->renderer3D->OnResize(e_width, e_height);
+	//App->renderer3D->OnResize(e_width, e_height);
 }
 
 void ModuleWindow::ChangeHeight()
 {
 	SDL_SetWindowSize(window, e_width, e_height);
-	App->renderer3D->OnResize(e_width, e_height);
+	//App->renderer3D->OnResize(e_width, e_height);
 }

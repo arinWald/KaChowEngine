@@ -28,8 +28,8 @@ public:
 
 	float3 getPosition(bool globalPosition = false);
 	void setPosition(float3 pos);
-	float3 getRotation();
-	void setRotation(float3 rotation);
+	Quat getRotation();
+	void setRotation(Quat rotation);
 	float3 getScale();
 	void setScale(float3 scale);
 
@@ -40,7 +40,7 @@ public:
 
 	float3 mPosition;
 	float3 mScale;
-	float3 mRotation;
+	Quat mRotation;
 
 	// Posarli matriux local del parent
 	float4x4 mGlobalMatrix;

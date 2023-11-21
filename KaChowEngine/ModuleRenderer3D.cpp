@@ -65,9 +65,11 @@ bool ModuleRenderer3D::Init()
 		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
+		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
+		//Check for error
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -75,9 +77,11 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 
+		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
+		//Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -89,8 +93,9 @@ bool ModuleRenderer3D::Init()
 		glClearDepth(1.0f);
 
 		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+		//Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -102,9 +107,9 @@ bool ModuleRenderer3D::Init()
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 
 		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		lights[0].ambient.Set(1.20f, 1.0f, 1.0f, 1.0f);
 		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
+		lights[0].SetPos(0.0f, 0.0f, -2.5f);
 		lights[0].Init();
 
 		GLfloat MaterialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -118,15 +123,12 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-
-		glewInit();
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	Grid.axis = true;
-
 
 	return ret;
 }
@@ -152,16 +154,18 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
-
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->GetProjectionMatrix());
+	glLoadMatrixf(App->camera->sceneCam->GetProjectMatrix());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->camera->sceneCam->GetViewMatrix());
+
+	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->sceneCam->frameBuffer);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	lights[0].SetPos(App->camera->sceneCamera.pos.x, App->camera->sceneCamera.pos.y, App->camera->sceneCamera.pos.z);
+	lights[0].SetPos(App->camera->sceneCam->frustrumCamera.pos.x, App->camera->sceneCam->frustrumCamera.pos.y, App->camera->sceneCam->frustrumCamera.pos.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -173,9 +177,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
 
+	App->geoLoader->RenderScene();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	App->geoLoader->RenderScene();
+	App->scene->WindowScene();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	if (App->editor->DrawEditor() == UPDATE_STOP)
 	{
@@ -221,7 +229,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glLoadMatrixf(App->camera->sceneCamera.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(App->camera->sceneCam->frustrumCamera.ProjectionMatrix().Transposed().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

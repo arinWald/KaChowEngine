@@ -66,7 +66,7 @@ void C_Transform::resetMatrix()
 					0, 0, 1, 0,
 					0, 0, 0, 1 };
 	mPosition = { 0,0,0 };
-	mRotation = { 0,0,0 };
+	mRotation = { 0,0,0,0 };
 	mScale = { 1,1,1 };
 }
 
@@ -84,12 +84,12 @@ void C_Transform::setPosition(float3 pos)
 	calculateMatrix();
 }
 
-float3 C_Transform::getRotation()
+Quat C_Transform::getRotation()
 {
 	return mRotation;
 }
 
-void C_Transform::setRotation(float3 rotation)
+void C_Transform::setRotation(Quat rotation)
 {
 	mRotation = rotation;
 	calculateMatrix();

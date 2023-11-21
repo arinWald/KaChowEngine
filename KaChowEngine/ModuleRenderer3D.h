@@ -48,4 +48,6 @@ public:
 
 	GameObject* gameCamera;
 	C_Camera* mainCamera;
+
+	uint frameBuffer;
 };	

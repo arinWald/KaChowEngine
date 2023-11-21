@@ -2,6 +2,7 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
+#include "C_Camera.h"
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -22,12 +23,8 @@ bool ModuleScene::Start()
 	rootGameObject = new GameObject(nullptr);
 	rootGameObject->name = "Scene";
 
-
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 	bakerHouse->name = "BakerHouse";
-
-	App->camera->Position = float3(1.0f, 1.0f, 1.0f);
-	App->camera->LookAt(float3(0, 0, 0));
 
 	return true;
 }
@@ -129,6 +126,16 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 		ImGui::TreePop();
 	}
 				
+}
+
+void ModuleScene::WindowScene()
+{
+	ImGui::Begin("Scene");
+	WindowSize = ImGui::GetContentRegionAvail();
+
+	ImGui::Image((ImTextureID)App->camera->sceneCam->camBuffer, WindowSize, ImVec2(0, 1), ImVec2(1, 0));
+
+	ImGui::End();
 }
 
 GameObject* ModuleScene::CreateGameObject(GameObject* parent)
