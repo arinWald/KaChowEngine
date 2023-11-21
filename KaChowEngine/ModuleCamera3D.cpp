@@ -7,15 +7,16 @@
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	X = float3(1.0f, 0.0f, 0.0f);
-	Y = float3(0.0f, 1.0f, 0.0f);
-	Z = float3(0.0f, 0.0f, 1.0f);
+	sceneCamera.type = FrustumType::PerspectiveFrustum;
+	sceneCamera.nearPlaneDistance = 0.1f;
+	sceneCamera.farPlaneDistance = 500.f;
+	sceneCamera.front = float3::unitZ;
+	sceneCamera.up = float3::unitY;
 
-	Position = float3(0.0f, 10.0f, 5.0f);
-	Reference = float3(0.0f, 0.0f, 0.0f);
-	ViewMatrix.SetIdentity();
+	sceneCamera.verticalFov = 60.0f * DEGTORAD;
+	sceneCamera.horizontalFov = 2.0f * atanf(tanf(sceneCamera.verticalFov / 2.0f) * 1.7f);
 
-	CalculateViewMatrix();
+	sceneCamera.pos = float3(0, 0, -10);
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -41,57 +42,60 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
-
-	float3 newPos(0, 0, 0);
 	float speed = 3.0f * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) sceneCamera.pos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) sceneCamera.pos.y -= speed;
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos += Y * speed;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos -= Y * speed;
-
-		RotationAroundCamera(dt);
-	}
-
-	Position += newPos;
-	Reference += newPos;
-
-	if ((App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
-
-		Reference = float3(0.0f, 0.0f, 0.0f);
-		LookAt(Reference);
-
-	}
-	else {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) sceneCamera.pos -= sceneCamera.front * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) sceneCamera.pos += sceneCamera.front * speed;
 
 
-		Reference = Position;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) sceneCamera.pos -= sceneCamera.WorldRight() * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) sceneCamera.pos += sceneCamera.WorldRight() * speed;
 
-	}
+	//// Implement a debug camera with keys and mouse
+	//// Now we can make this movememnt frame rate independant!
 
-	/*newPos -= App->input->GetMouseZ() * Z;
+	//float3 newPos(0, 0, 0);
+	//float speed = 3.0f * dt;
+	//if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//	speed = 8.0f * dt;
 
-	Position += newPos;
-	Reference += newPos;
+	//if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	//{
+	//	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	//	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
-	Reference = Position;
+	//	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	//	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
-	OrbitSelectedObject(dt);
+	//	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos += Y * speed;
+	//	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos -= Y * speed;
 
-	LookAt(Reference);*/
+	//	RotationAroundCamera(dt);
+	//}
 
-	// Recalculate matrix -------------
-	CalculateViewMatrix();
+	//Position += newPos;
+	//Reference += newPos;
+
+	//if ((App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
+
+	//	Reference = float3(0.0f, 0.0f, 0.0f);
+	//	LookAt(Reference);
+
+	//}
+	//else {
+
+
+	//	Reference = Position;
+	//}
+
+	//// Recalculate matrix -------------
+	//CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
 }
@@ -140,7 +144,16 @@ void ModuleCamera3D::Move(const float3& Movement)
 // -----------------------------------------------------------------
 float* ModuleCamera3D::GetViewMatrix()
 {
-	return &ViewMatrix.At(4, 4);
+	viewMatrix = sceneCamera.ViewMatrix();
+	viewMatrix.Transpose();
+	return viewMatrix.ptr();
+}
+
+float* ModuleCamera3D::GetProjectionMatrix()
+{
+	projectionMatrix = sceneCamera.ProjectionMatrix();
+	projectionMatrix.Transpose();
+	return projectionMatrix.ptr();
 }
 
 void ModuleCamera3D::FocusCameraToSelectedObject()
@@ -270,5 +283,5 @@ float3 ModuleCamera3D::RotateVector(const float3& u, float angle, const float3& 
 void ModuleCamera3D::CalculateViewMatrix()
 {
 	//todo: USE MATHGEOLIB here BEFORE 1st delivery! (TIP: Use MathGeoLib/Geometry/Frustum.h, view and projection matrices are managed internally.)
-	ViewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -(X.Dot(Position)), -(Y.Dot(Position)), -(Z.Dot(Position)), 1.0f);
+	viewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -(X.Dot(Position)), -(Y.Dot(Position)), -(Z.Dot(Position)), 1.0f);
 }

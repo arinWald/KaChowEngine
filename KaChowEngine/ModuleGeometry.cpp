@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"
+#include "Globals.h"
 
 #include "Glew/include/glew.h"
 
@@ -335,7 +336,7 @@ bool ModuleGeometry::CleanUp()
     return true;
 }
 
-vec3 Mesh::GetVectorFromIndex(float* startValue)
+float3 Mesh::GetVectorFromIndex(float* startValue)
 {
     float x = *startValue;
     ++startValue;
@@ -343,7 +344,7 @@ vec3 Mesh::GetVectorFromIndex(float* startValue)
     ++startValue;
     float z = *startValue;
 
-    return vec3(x, y, z);
+    return float3(x, y, z);
 }
 
 void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
@@ -357,12 +358,13 @@ void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
         glBegin(GL_LINES);
         for (int i = 0; i < num_index; i += 3)
         {
-            vec3 A = GetVectorFromIndex(&vertex[index[i] * 3]);
-            vec3 B = GetVectorFromIndex(&vertex[index[i + 1] * 3]);
-            vec3 C = GetVectorFromIndex(&vertex[index[i + 2] * 3]);
+            float3 A = GetVectorFromIndex(&vertex[index[i] * 3]);
+            float3 B = GetVectorFromIndex(&vertex[index[i + 1] * 3]);
+            float3 C = GetVectorFromIndex(&vertex[index[i + 2] * 3]);
 
-            vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
+            float3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
 
+            // Pilota
             vec3 crossVec = cross((B - A), (C - A));
             vec3 normalDirection = normalize(crossVec);
 
