@@ -34,8 +34,6 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update(float dt)
 {
-
-	rootGameObject->Update();
 	bool ret = UPDATE_CONTINUE;
 
 	

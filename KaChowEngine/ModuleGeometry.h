@@ -18,9 +18,6 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 
-#include "MathGeoLib/include/Geometry/AABB.h"
-#include "MathGeoLib/include/Geometry/OBB.h"
-
 
 #define VERTEX_ARGUMENTS 5
 
@@ -48,6 +45,7 @@ struct Mesh
 
 	void InitAABB();
 	void RenderAABB();
+	void Render();
 
 	float* vertexFaceNormals = nullptr;
 	aiVector3D* vertexNormals = nullptr;
