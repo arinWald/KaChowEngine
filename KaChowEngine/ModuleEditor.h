@@ -7,6 +7,7 @@
 #include "Globals.h"
 #include <vector>
 #include <string>
+#include "ImGui/imgui.h"
 
 #include "Glew/include/glew.h"
 
@@ -71,6 +72,8 @@ private:
 	float VRAMReserved = 0.f;
 
 public:
+	ImGuiIO* io;
+
 	std::vector<std::string>* logVector;
 	bool vSync;
 };

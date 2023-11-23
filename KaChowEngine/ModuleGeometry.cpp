@@ -227,33 +227,33 @@ void Mesh::RenderFaceNormals()
     }
 
 }
-
-mat4x4 ConvertFloat4x4ToMat4(const float4x4& floatMatrix) {
-
-    mat4x4 mat;
-    floatMatrix[1];
-    mat[0] = floatMatrix.At(0, 0);
-    mat[1] = floatMatrix.At(0, 1);
-    mat[2] = floatMatrix.At(0, 2);
-    mat[3] = floatMatrix.At(0, 3);
-
-    mat[4] = floatMatrix.At(1, 0);
-    mat[5] = floatMatrix.At(1, 1);
-    mat[6] = floatMatrix.At(1, 2);
-    mat[7] = floatMatrix.At(1, 0);
-
-    mat[8] = floatMatrix.At(2, 0);
-    mat[9] = floatMatrix.At(2, 1);
-    mat[10] = floatMatrix.At(2, 2);
-    mat[11] = floatMatrix.At(2, 3);
-
-    mat[12] = floatMatrix.At(3, 0);
-    mat[13] = floatMatrix.At(3, 1);
-    mat[14] = floatMatrix.At(3, 2);
-    mat[15] = floatMatrix.At(3, 3);
-
-    return mat;
-}
+//
+//mat4x4 ConvertFloat4x4ToMat4(const float4x4& floatMatrix) {
+//
+//    mat4x4 mat;
+//    floatMatrix[1];
+//    mat[0] = floatMatrix.At(0, 0);
+//    mat[1] = floatMatrix.At(0, 1);
+//    mat[2] = floatMatrix.At(0, 2);
+//    mat[3] = floatMatrix.At(0, 3);
+//
+//    mat[4] = floatMatrix.At(1, 0);
+//    mat[5] = floatMatrix.At(1, 1);
+//    mat[6] = floatMatrix.At(1, 2);
+//    mat[7] = floatMatrix.At(1, 0);
+//
+//    mat[8] = floatMatrix.At(2, 0);
+//    mat[9] = floatMatrix.At(2, 1);
+//    mat[10] = floatMatrix.At(2, 2);
+//    mat[11] = floatMatrix.At(2, 3);
+//
+//    mat[12] = floatMatrix.At(3, 0);
+//    mat[13] = floatMatrix.At(3, 1);
+//    mat[14] = floatMatrix.At(3, 2);
+//    mat[15] = floatMatrix.At(3, 3);
+//
+//    return mat;
+//}
 
 void Mesh::Render()
 {
@@ -273,7 +273,7 @@ void Mesh::Render()
 
     if (owner != nullptr) {
 
-        glMultMatrixf((&ConvertFloat4x4ToMat4(owner->mTransform->getGlobalMatrix())));
+        glMultMatrixf(owner->mTransform->getLocalMatrix().ptr());
     }
 
     glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
@@ -331,7 +331,7 @@ bool ModuleGeometry::CleanUp()
     return true;
 }
 
-vec3 Mesh::GetVectorFromIndex(float* startValue)
+float3 Mesh::GetVectorFromIndex(float* startValue)
 {
     float x = *startValue;
     ++startValue;
@@ -339,7 +339,7 @@ vec3 Mesh::GetVectorFromIndex(float* startValue)
     ++startValue;
     float z = *startValue;
 
-    return vec3(x, y, z);
+    return float3(x, y, z);
 }
 
 void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
@@ -353,14 +353,14 @@ void Mesh::RenderMeshDebug(/*bool* vertexNormals,*/ bool* faceNormals)
         glBegin(GL_LINES);
         for (int i = 0; i < num_index; i += 3)
         {
-            vec3 A = GetVectorFromIndex(&vertex[index[i] * 3]);
-            vec3 B = GetVectorFromIndex(&vertex[index[i + 1] * 3]);
-            vec3 C = GetVectorFromIndex(&vertex[index[i + 2] * 3]);
+            float3 A = GetVectorFromIndex(&vertex[index[i] * 3]);
+            float3 B = GetVectorFromIndex(&vertex[index[i + 1] * 3]);
+            float3 C = GetVectorFromIndex(&vertex[index[i + 2] * 3]);
 
-            vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
+            float3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
 
-            vec3 crossVec = cross((B - A), (C - A));
-            vec3 normalDirection = normalize(crossVec);
+            float3 crossVec = Cross((B - A), (C - A));
+            float3 normalDirection = crossVec.Normalized();
 
             glVertex3f(middle.x, middle.y, middle.z);
             glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
