@@ -28,8 +28,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void DrawBox(float3* corners, float3 color);
-
 	void OnResize(int width, int height);
 
 public:
