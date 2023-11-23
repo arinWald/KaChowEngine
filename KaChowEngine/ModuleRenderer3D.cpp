@@ -6,7 +6,6 @@
 
 #include "ModuleTextures.h"
 
-#include "C_Camera.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glu32.lib") /* link Microsoft OpenGL lib   */
@@ -133,16 +132,7 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	gameCamera = new GameObject(App->scene->rootGameObject);
-
-	gameCamera->name = "Main Camera";
-
-	//GameCamera->name = "Main Camera";
-	C_Camera* camera = new C_Camera(gameCamera);
-	mainCamera = camera;
-	gameCamera->mComponents.push_back(camera);
-	gameCamera->mTransform->mPosition = float3(0, 2, -10);
-	gameCamera->mTransform->calculateMatrix();
+	//App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 
 	return false;
 }
@@ -156,13 +146,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->sceneCamera->GetProjectMatrix());
-
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
+
+	/*App->editor->AddFPS(App->GetDT());*/
+
 
 	return UPDATE_CONTINUE;
 }

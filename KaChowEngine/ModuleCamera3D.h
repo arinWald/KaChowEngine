@@ -7,7 +7,6 @@
 //todo: REMOVE this before 1st delivery!!
 #include "glmath.h"
 
-class C_Camera;
 class ModuleCamera3D : public Module
 {
 public:
@@ -35,8 +34,6 @@ public:
 
 	//You won't need this after using Frustum
 	float3 X, Y, Z, Position, Reference;
-
-	C_Camera* sceneCamera;
 
 private:
 
