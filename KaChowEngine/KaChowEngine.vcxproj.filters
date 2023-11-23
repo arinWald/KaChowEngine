@@ -85,6 +85,9 @@
     <ClCompile Include="Main.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="Parser\json.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="MathGeoLib\include\Geometry\Capsule.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
@@ -184,9 +187,6 @@
     <ClCompile Include="MathGeoLib\include\Geometry\TriangleMesh.cpp">
       <Filter>External\Others</Filter>
     </ClCompile>
-    <ClCompile Include="Parser\parson.c">
-      <Filter>Sources\Tools</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -275,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\json.h">
+      <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\include\Geometry\Capsule.h">
       <Filter>Primitives</Filter>
@@ -461,9 +464,6 @@
     </ClInclude>
     <ClInclude Include="MathGeoLib\include\Geometry\TriangleMesh.h">
       <Filter>External\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser\parson.h">
-      <Filter>Sources\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

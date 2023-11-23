@@ -24,11 +24,6 @@ C_Mesh::~C_Mesh()
 
 void C_Mesh::Update()
 {
-    UpdateBBData();
-}
-
-void C_Mesh::UpdateBBData()
-{
     mesh->OBB_box = mesh->AABB_box;
     mesh->OBB_box.Transform(mesh->owner->mTransform->getGlobalMatrix().Transposed());
     mesh->Global_AABB_box.SetNegativeInfinity();
