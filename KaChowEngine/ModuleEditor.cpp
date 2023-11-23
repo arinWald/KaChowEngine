@@ -9,9 +9,6 @@
 #include "ImGui/backends/imgui_impl_opengl3.h"
 #include "ImGui/backends/imgui_impl_sdl2.h"
 
-#include "ModuleRenderer3D.h"
-#include "C_Camera.h"
-
 ModuleEditor::ModuleEditor(Application * app, bool start_enabled) : Module(app, start_enabled)
 {
     logVector = new std::vector<std::string>();
@@ -520,6 +517,7 @@ update_status ModuleEditor::DrawEditor()
     if (isActivatedDemo) {
         ImGui::ShowDemoWindow();
     }
+    
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

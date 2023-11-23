@@ -15,8 +15,7 @@
 
 
 #define MAX_LIGHTS 8
-class C_Camera;
-class GameObject;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -48,6 +47,4 @@ public:
 	GLuint VBO;
 	GLuint EBO;
 	GLuint VAO;
-
-	C_Camera* mainCamera;
 };	

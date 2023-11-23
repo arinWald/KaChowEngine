@@ -187,9 +187,6 @@
     <ClCompile Include="Parser\parson.c">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="C_Camera.cpp">
-      <Filter>Sources\Gameobject</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -467,9 +464,6 @@
     </ClInclude>
     <ClInclude Include="Parser\parson.h">
       <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="C_Camera.h">
-      <Filter>Sources\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
