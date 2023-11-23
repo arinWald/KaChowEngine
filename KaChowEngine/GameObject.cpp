@@ -14,7 +14,36 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	name = "";
+
+	//for (size_t i = 0; i < mComponents.size(); ++i)
+	//{
+	//	delete mComponents[i];
+	//	//mComponents[i] = nullptr;
+	//}
+	//mComponents.clear();
+
+
+	//if (mParent != nullptr) {
+	//	for (size_t i = 0; i < mParent->mChildren.size(); ++i)
+	//	{
+	//		if (mParent->mChildren[i] == this) {
+	//			mParent->mChildren.erase(mParent->mChildren.begin() + i);
+	//			mParent = nullptr;
+	//		}
+	//		break;
+	//	}
+	//}
+	//mTransform = nullptr;
+
+
+	//while (!mChildren.empty())
+	//{
+	//	delete mChildren[0];
+	//}
+	//mChildren.clear();
+
+
+	/*name = "";*/
 	mTransform = nullptr;
 
 	if (deleteGameObject && mParent != nullptr) {
@@ -32,6 +61,7 @@ GameObject::~GameObject()
 		delete mChildren[i];
 		mChildren[i] = nullptr;
 	}
+
 	/*for (size_t i = mComponents.size(); i >= 0; --i)
 	{
 		delete mComponents[i];
@@ -44,7 +74,7 @@ GameObject::~GameObject()
 		mChildren[i] = nullptr;
 	}*/
 
-	mComponents.clear();
+	//mComponents.clear();
 }
 
 GameObject::GameObject(GameObject* parent)
@@ -114,6 +144,17 @@ C_Material* GameObject::GetMaterialComponent()
 		}
 	}
 	return nullptr;
+}
+
+C_Camera* GameObject::GetCameraComponent()
+{
+	for (int i = 0; i < mComponents.size(); i++) {
+
+		if (mComponents[i]->type == ComponentType::CAMERA)
+		{
+			return (C_Camera*)mComponents[i];
+		}
+	}
 }
 
 bool GameObject::IsChildOf(GameObject* gameObject)

@@ -19,6 +19,11 @@ public:
 
 	void PrintHierarchy(GameObject* GO, int index);
 
+	void WindowScene();
+	void WindowGame();
+
+	ImVec2 WindowSize;
+
 	// Pilota
 	GameObject* CreateGameObject(GameObject* parent);
 

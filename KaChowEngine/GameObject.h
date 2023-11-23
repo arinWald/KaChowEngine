@@ -6,6 +6,7 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "C_Camera.h"
 #include "Application.h"
 #include "OurPrimitive.h"
 
@@ -14,6 +15,7 @@ class Component;
 class C_Transform;
 class C_Mesh;
 class C_Material;
+class C_Camera;
 class GameObject
 {
 public:
@@ -34,6 +36,7 @@ public:
 
 	C_Mesh* GetMeshComponent();
 	C_Material* GetMaterialComponent();
+	C_Camera* GetCameraComponent();
 
 
 	std::string name;

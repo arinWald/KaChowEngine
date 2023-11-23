@@ -519,7 +519,10 @@ update_status ModuleEditor::DrawEditor()
     if (isActivatedDemo) {
         ImGui::ShowDemoWindow();
     }
+
+    App->scene->WindowScene();
     
+    App->scene->WindowGame();
 
     ImGui::Render();
 

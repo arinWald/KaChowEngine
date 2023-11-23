@@ -6,6 +6,7 @@
 #include "SDL\include\SDL_opengl.h"
 #include "ImGui/backends/imgui_impl_opengl3.h"
 #include "ModuleTextures.h"
+#include "C_Camera.h"
 
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -133,26 +134,38 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	//App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	LOG("Render Start");
+	bool ret = true;
 
-	return false;
+	GameCamera = new GameObject(App->scene->rootGameObject);
+
+	GameCamera->name = "Main Camera";
+
+	C_Camera* cam = new C_Camera(GameCamera);
+	cam->FrustumCam.pos = float3(0, 2, -10);
+	mainCam = cam;
+	GameCamera->mComponents.push_back(cam);
+
+	return ret;
 }
 
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(App->camera->GetProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	lights[0].SetPos(App->camera->FrustumCam.pos.x, App->camera->FrustumCam.pos.y, App->camera->FrustumCam.pos.z);
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->camera->sceneCam->GetProjectionMatrix());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->camera->sceneCam->GetViewMatrix());
+
+	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->sceneCam->frameBuffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+	lights[0].SetPos(App->camera->sceneCam->FrustumCam.pos.x, App->camera->sceneCam->FrustumCam.pos.y, App->camera->sceneCam->FrustumCam.pos.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -165,17 +178,38 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-
-	glBindBuffer(GL_FRAMEBUFFER, 0);
-
 	Grid.Render();
 
 	App->geoLoader->RenderScene();
+
+	glBindBuffer(GL_FRAMEBUFFER, 0);
+
+	if (mainCam != nullptr) {
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf(mainCam->GetProjectionMatrix());
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixf(mainCam->GetViewMatrix());
+
+		glBindFramebuffer(GL_FRAMEBUFFER, mainCam->frameBuffer);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+		App->geoLoader->RenderScene();
+
+	}
 
 	if (App->editor->DrawEditor() == UPDATE_STOP)
 	{
 		return UPDATE_STOP;
 	}
+
+
+	glBindBuffer(GL_FRAMEBUFFER, 0);
 
 	glViewport(0, 0, (int)App->editor->io->DisplaySize.x, (int)App->editor->io->DisplaySize.y);
 
@@ -206,7 +240,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glLoadMatrixf(App->camera->FrustumCam.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(App->camera->sceneCam->FrustumCam.ProjectionMatrix().Transposed().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

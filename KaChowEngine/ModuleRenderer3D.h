@@ -11,6 +11,8 @@
 
 #define MAX_LIGHTS 8
 
+class GameObject;
+class C_Camera;
 class ModuleRenderer3D : public Module
 {
 public:
@@ -28,6 +30,9 @@ public:
 	void DrawBox(float3* corners, float3 color);
 
 public:
+
+	GameObject* GameCamera;
+	C_Camera* mainCam;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

@@ -4,29 +4,11 @@
 #include "MathGeoLib/include/Math/Quat.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "C_Transform.h"
+#include "C_Camera.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	/*X = float3(1.0f, 0.0f, 0.0f);
-	Y = float3(0.0f, 1.0f, 0.0f);
-	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = float3(0.0f, 10.0f, 5.0f);
-	Reference = float3(0.0f, 0.0f, 0.0f);
-	ViewMatrix.SetIdentity();
-
-	CalculateViewMatrix();*/
-
-	FrustumCam.type = FrustumType::PerspectiveFrustum;
-	FrustumCam.nearPlaneDistance = 0.1f;
-	FrustumCam.farPlaneDistance = 500.f;
-	FrustumCam.front = float3::unitZ;
-	FrustumCam.up = float3::unitY;
-
-	FrustumCam.verticalFov = 60.0f * DEGTORAD;
-	FrustumCam.horizontalFov = 2.0f * atanf(tanf(FrustumCam.verticalFov / 2.0f) * 1.7f);
-
-	FrustumCam.pos = float3(0, 0, -10);
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -38,6 +20,9 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
+	sceneCam = new C_Camera();
+	sceneCam->FrustumCam.pos = float3(0, 2, -10);
+
 	return ret;
 }
 
@@ -45,6 +30,8 @@ bool ModuleCamera3D::Start()
 bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
+
+	delete sceneCam;
 
 	return true;
 }
@@ -57,15 +44,15 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) FrustumCam.pos.y += speed;
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) FrustumCam.pos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) sceneCam->FrustumCam.pos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) sceneCam->FrustumCam.pos.y -= speed;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) FrustumCam.pos -= FrustumCam.front * speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) FrustumCam.pos += FrustumCam.front * speed;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) sceneCam->FrustumCam.pos += sceneCam->FrustumCam.front * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) sceneCam->FrustumCam.pos -= sceneCam->FrustumCam.front * speed;
 
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) FrustumCam.pos -= FrustumCam.WorldRight() * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) FrustumCam.pos += FrustumCam.WorldRight() * speed;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) sceneCam->FrustumCam.pos -= sceneCam->FrustumCam.WorldRight() * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) sceneCam->FrustumCam.pos += sceneCam->FrustumCam.WorldRight() * speed;
 
 
 
@@ -166,25 +153,25 @@ update_status ModuleCamera3D::Update(float dt)
 //}
 
 // -----------------------------------------------------------------
-float* ModuleCamera3D::GetViewMatrix()
-{
-
-	viewMatrix = FrustumCam.ViewMatrix();
-
-	viewMatrix.Transpose();
-
-	return viewMatrix.ptr();
-}
-
-float* ModuleCamera3D::GetProjectionMatrix()
-{
-
-	projectionMatrix = FrustumCam.ProjectionMatrix();
-
-	projectionMatrix.Transpose();
-
-	return projectionMatrix.ptr();
-}
+//float* ModuleCamera3D::GetViewMatrix()
+//{
+//
+//	viewMatrix = FrustumCam.ViewMatrix();
+//
+//	viewMatrix.Transpose();
+//
+//	return viewMatrix.ptr();
+//}
+//
+//float* ModuleCamera3D::GetProjectionMatrix()
+//{
+//
+//	projectionMatrix = sceneCam->FrustumCam.ProjectionMatrix();
+//
+//	projectionMatrix.Transpose();
+//
+//	return projectionMatrix.ptr();
+//}
 
 
 // ALL CODE BELOW IS NOT BEING USED RIGHT NOW
