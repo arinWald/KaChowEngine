@@ -18,6 +18,9 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 
+#include "MathGeoLib/include/Geometry/AABB.h"
+#include "MathGeoLib/include/Geometry/OBB.h"
+
 
 #define VERTEX_ARGUMENTS 5
 
@@ -39,11 +42,17 @@ struct Mesh
 	/*uint VBO;
 	uint EBO;*/
 
+	AABB AABB_box;
+	OBB OBB_box;
+	AABB Global_AABB_box;
+	void InitAABB();
+	void RenderAABB();
+	void Render();
+
 	float* vertexFaceNormals = nullptr;
 	aiVector3D* vertexNormals = nullptr;
 
 	void RenderFaceNormals();
-	void Render();
 	vec3 GetVectorFromIndex(float* startValue);
 	void RenderMeshDebug(/*bool* vertexNormals, */bool* faceNormals);
 };

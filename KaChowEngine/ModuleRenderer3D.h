@@ -30,6 +30,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	void DrawBox(float3* corners, float3 color);
+
 public:
 
 	Light lights[MAX_LIGHTS];

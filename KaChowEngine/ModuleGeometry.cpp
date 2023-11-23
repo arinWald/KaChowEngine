@@ -7,6 +7,8 @@
 
 #include "Glew/include/glew.h"
 
+#include <vector>
+
 ModuleGeometry::ModuleGeometry(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -32,6 +34,26 @@ bool ModuleGeometry::Start()
     aiAttachLogStream(&stream);
 
     return ret;
+}
+
+void Mesh::InitAABB()
+{
+    std::vector<float3> correctVertex;
+    for (size_t i = 0; i < num_vertex * VERTEX_ARGUMENTS; i += VERTEX_ARGUMENTS)
+    {
+        correctVertex.emplace_back(vertex[i], vertex[i + 1], vertex[i + 2]);
+    }
+    AABB_box.SetFrom(&correctVertex[0], correctVertex.size());
+}
+void Mesh::RenderAABB()
+{
+    float3 corners1[8];
+    OBB_box.GetCornerPoints(corners1);
+    App->renderer3D->DrawBox(corners1, float3(255, 0, 0));
+    float3 corners2[8];
+    Global_AABB_box.GetCornerPoints(corners2);
+    // Draw
+    App->renderer3D->DrawBox(corners2, float3(0, 0, 255));
 }
 
 GameObject* ModuleGeometry::LoadFile(const char* file_path)
@@ -114,6 +136,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
             }
         }
         
+        ourMesh->InitAABB();
 
         BufferMesh(ourMesh);
 
@@ -289,7 +312,10 @@ void ModuleGeometry::RenderScene()
     for (int i = 0; i < meshes.size(); i++) {
         // Reset to default
         glColor3f(1.0f, 1.0f, 1.0f);
-        meshes[i]->Render();    
+        meshes[i]->Render();
+
+        meshes[i]->RenderAABB();
+
         glColor3f(1.0f, 0.0f, 0.0f);
         if (meshes[i]->owner->GetMeshComponent()->showNormals) {
             meshes[i]->RenderFaceNormals();

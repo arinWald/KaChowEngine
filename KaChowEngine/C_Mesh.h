@@ -18,7 +18,8 @@ public:
 
 	virtual void Enable();
 	virtual void Disable();
-	/*virtual Update();*/
+	void UpdateBBData();
+	virtual void Update() override;
 
 	Mesh* mesh;
 

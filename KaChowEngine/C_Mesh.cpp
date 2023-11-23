@@ -48,3 +48,16 @@ void C_Mesh::Disable()
 {
 	active = false;
 }
+
+void C_Mesh::UpdateBBData()
+{
+    mesh->OBB_box = mesh->AABB_box;
+    mesh->OBB_box.Transform(mesh->owner->mTransform->getGlobalMatrix().Transposed());
+    mesh->Global_AABB_box.SetNegativeInfinity();
+    mesh->Global_AABB_box.Enclose(mesh->OBB_box);
+}
+
+void C_Mesh::Update()
+{
+    UpdateBBData();
+}
