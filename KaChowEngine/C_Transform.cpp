@@ -106,46 +106,15 @@ void C_Transform::setScale(float3 scale)
 	calculateMatrix();
 }
 
-void C_Transform::SetTransfoMatrix(float3 position, Quat rotation, float3 scale)
-{
-	float x = rotation.x * DEGTORAD;
-	float y = rotation.y * DEGTORAD;
-	float z = rotation.z * DEGTORAD;
-
-	mLocalMatrix[0][0] = cos(y) * cos(z);
-	mLocalMatrix[1][0] = -cos(x) * sin(z) + sin(y) * cos(z) * sin(x);
-	mLocalMatrix[2][0] = sin(x) * sin(z) + sin(y) * cos(z) * cos(x);
-	mLocalMatrix[3][0] = rotation.x;
-
-	mLocalMatrix[0][1] = cos(y) * sin(z);
-	mLocalMatrix[1][1] = cos(x) * cos(z) + sin(y) * sin(z) * sin(z);
-	mLocalMatrix[2][1] = -sin(x) * cos(z) + sin(y) * sin(z) * cos(x);
-	mLocalMatrix[3][1] = position.y;
-
-	mLocalMatrix[0][2] = -sin(y);
-	mLocalMatrix[1][2] = cos(y) * sin(x);
-	mLocalMatrix[2][2] = cos(x) * cos(y);
-	mLocalMatrix[3][2] = position.z;
-
-	mLocalMatrix[0][3] = 0;
-	mLocalMatrix[1][3] = 0;
-	mLocalMatrix[2][3] = 0;
-	mLocalMatrix[3][3] = 1;
-
-	mLocalMatrix[0][0] *= scale.x;
-	mLocalMatrix[1][1] *= scale.y;
-	mLocalMatrix[2][2] *= scale.z;
 
 
-	if (mParent->mParent->mTransform != nullptr)
-	{
-		mGlobalMatrixT = mParent->mParent->mTransform->mGlobalMatrixT * mLocalMatrix;
-		//glTransformT = glTransformT.Transposed();
-	}
-	else {
-		//glTransformT = lTransform.Transposed();
-	}
-}
+//void C_Transform::SetTransfoMatrix(float3 position, Quat rotation, float3 scale)
+//{
+//	// Pilota
+//	mPosition = position;
+//	mRotation = rotation;
+//	mScale = scale;
+//}
 
 void C_Transform::calculateMatrix()
 {

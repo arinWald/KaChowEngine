@@ -3,8 +3,9 @@
 #include "Globals.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
-#include "MathGeoLib/include/Geometry/Frustum.h"
 
+//todo: REMOVE this before 1st delivery!!
+#include "glmath.h"
 
 class C_Camera;
 class ModuleCamera3D : public Module
@@ -21,7 +22,6 @@ public:
 	void LookAt(const float3& Spot);
 	void Move(const float3& Movement);
 	float* GetViewMatrix();
-	float* GetProjectionMatrix();
 	void FocusCameraToSelectedObject();
 	void RotationAroundCamera(float dt);
 	void OrbitSelectedObject(float dt);
@@ -36,10 +36,9 @@ public:
 	//You won't need this after using Frustum
 	float3 X, Y, Z, Position, Reference;
 
-	Frustum sceneCamera;
+	C_Camera* sceneCamera;
 
 private:
 
-	float4x4 viewMatrix;
-	float4x4 projectionMatrix;
+	float4x4 ViewMatrix;
 };

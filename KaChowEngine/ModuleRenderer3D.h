@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
+#include "glmath.h"
+
 
 #include "Glew/include/glew.h"
 
@@ -36,11 +38,12 @@ public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	
-	float4x4 ProjectionMatrix;
+	//You won't need this after using Frustum
+	mat4x4 ProjectionMatrix;
 	CPlane Grid;
 
-	float3x3 NormalMatrix;
-	float4x4 ModelMatrix, ViewMatrix;
+	mat3x3 NormalMatrix;
+	mat4x4 ModelMatrix, ViewMatrix;
 
 	GLuint VBO;
 	GLuint EBO;

@@ -5,6 +5,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "glmath.h"
 #include <vector>
 
 #include "Glew/include/glew.h"
@@ -16,7 +17,6 @@
 #include "Assimp/include/postprocess.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 #pragma comment (lib, "Glew/libx86/glew32.lib")
-#include "SDL/include/SDL_opengl.h"
 
 #include "MathGeoLib/include/Geometry/AABB.h"
 #include "MathGeoLib/include/Geometry/OBB.h"
@@ -54,7 +54,7 @@ struct Mesh
 
 	void RenderFaceNormals();
 	void Render();
-	float3 GetVectorFromIndex(float* startValue);
+	vec3 GetVectorFromIndex(float* startValue);
 	void RenderMeshDebug(/*bool* vertexNormals, */bool* faceNormals);
 };
 

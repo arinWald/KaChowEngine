@@ -33,8 +33,8 @@ public:
 	float3 getScale();
 	void setScale(float3 scale);
 
-	// Pilota
-	void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
+	//// Pilota
+	//void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
 
 	void calculateMatrix();
 
@@ -44,6 +44,5 @@ public:
 
 	// Posarli matriux local del parent
 	float4x4 mGlobalMatrix;
-	float4x4 mGlobalMatrixT;
 	float4x4 mLocalMatrix;
 };

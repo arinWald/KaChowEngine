@@ -147,6 +147,7 @@ bool ModuleRenderer3D::Start()
 	return false;
 }
 
+// PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -156,12 +157,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->GetProjectionMatrix());
+	glLoadMatrixf(App->camera->sceneCamera->GetProjectMatrix());
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
-	lights[0].SetPos(App->camera->sceneCamera.pos.x, App->camera->sceneCamera.pos.y, App->camera->sceneCamera.pos.z);
+	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -172,8 +170,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	Grid.Render();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	App->geoLoader->RenderScene();
 
@@ -221,7 +217,10 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glLoadMatrixf(App->camera->sceneCamera.ProjectionMatrix().Transposed().ptr());
+
+	//todo: USE MATHGEOLIB here BEFORE 1st delivery! (TIP: Use MathGeoLib/Geometry/Frustum.h, view and projection matrices are managed internally.)
+	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	glLoadMatrixf(ProjectionMatrix.M);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
