@@ -37,5 +37,5 @@ public:
 
 private:
 
-	float4x4 ViewMatrix;
+	mat4x4 ViewMatrix;
 };
