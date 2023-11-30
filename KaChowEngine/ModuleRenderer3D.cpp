@@ -7,6 +7,7 @@
 #include "ImGui/backends/imgui_impl_opengl3.h"
 #include "ModuleTextures.h"
 #include "C_Camera.h"
+#include "C_Transform.h"
 
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -142,9 +143,10 @@ bool ModuleRenderer3D::Start()
 	GameCamera->name = "Main Camera";
 
 	C_Camera* cam = new C_Camera(GameCamera);
-	cam->FrustumCam.pos = float3(0, 2, -10);
 	mainCam = cam;
 	GameCamera->mComponents.push_back(cam);
+	GameCamera->mTransform->mPosition = float3(0, 2, -10);
+	GameCamera->mTransform->calculateMatrix();
 
 	return ret;
 }
@@ -212,8 +214,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glBindBuffer(GL_FRAMEBUFFER, 0);
 
 	glViewport(0, 0, (int)App->editor->io->DisplaySize.x, (int)App->editor->io->DisplaySize.y);
-
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;

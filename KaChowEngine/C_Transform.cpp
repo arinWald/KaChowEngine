@@ -59,6 +59,16 @@ float4x4 C_Transform::getLocalMatrix()
 	return mLocalMatrix;
 }
 
+float4x4 C_Transform::GetTransformMatrix()
+{
+	if (mParent->mParent == nullptr) {
+		return mLocalMatrix;
+	}
+	else {
+		return mLocalMatrix * mParent->mParent->mTransform->GetTransformMatrix();
+	}
+}
+
 void C_Transform::resetMatrix()
 {
 	mLocalMatrix = { 1, 0, 0, 0,
@@ -105,16 +115,6 @@ void C_Transform::setScale(float3 scale)
 	mScale = scale;
 	calculateMatrix();
 }
-
-
-
-//void C_Transform::SetTransfoMatrix(float3 position, Quat rotation, float3 scale)
-//{
-//	// Pilota
-//	mPosition = position;
-//	mRotation = rotation;
-//	mScale = scale;
-//}
 
 void C_Transform::calculateMatrix()
 {

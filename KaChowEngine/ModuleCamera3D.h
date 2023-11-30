@@ -15,6 +15,7 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+	void Rotation();
 
 	//void Look(const float3& Position, const float3& Reference, bool RotateAroundReference = false);
 	//void LookAt(const float3& Spot);
@@ -31,6 +32,8 @@ public:
 	//unsigned int frameBuffer;
 
 	C_Camera* sceneCam;
+
+	float mouseSens = 0.50f;
 //
 //private:
 //

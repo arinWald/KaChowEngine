@@ -41,6 +41,13 @@ void C_Camera::SetCam()
 	FrustumCam.pos = float3(0, 0, 0);
 }
 
+void C_Camera::LookAt(const float3& target)
+{
+	FrustumCam.front = (target - FrustumCam.pos).Normalized();
+	float3 X = float3(0, 1, 0).Cross(FrustumCam.front).Normalized();
+	FrustumCam.up = FrustumCam.front.Cross(X);
+}
+
 void C_Camera::GenBuffer()
 {
 	glGenFramebuffers(1, &frameBuffer);
@@ -93,10 +100,39 @@ float* C_Camera::GetProjectionMatrix()
 	return projectionMatrix.ptr();
 }
 
-void C_Camera::Inspector()
+void C_Camera::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Camera"))
 	{
+		if (ImGui::SliderInt("FOV", &FOV, 5, 200)) {
+			FrustumCam.verticalFov = FOV * DEGTORAD;
+			FrustumCam.horizontalFov = 2.0f * atanf(tanf(FrustumCam.verticalFov / 2.0f) * 1.7f);
+		}
+		if (ImGui::Button("Reset")) {
+			FOV = 60.0f;
 
+			FrustumCam.verticalFov = FOV * DEGTORAD;
+			FrustumCam.horizontalFov = 2.0f * atanf(tanf(FrustumCam.verticalFov / 2.0f) * 1.7f);
+		}
+
+		ImGui::SliderFloat("Near Distance", &FrustumCam.nearPlaneDistance, 0.1f, 500.f);
+		if (ImGui::Button("Reset")) {
+			FrustumCam.nearPlaneDistance = 0.1f;
+		}
+
+		ImGui::SliderFloat("Far Distance", &FrustumCam.farPlaneDistance, 500.f, 1000.f);
+		if (ImGui::Button("Reset")) {
+			FrustumCam.farPlaneDistance = 500.f;
+		}
 	}
+}
+
+void C_Camera::CameraTransform()
+{
+	if (mParent == nullptr) return;
+	FrustumCam.pos = mParent->mTransform->mPosition;
+	float4x4 matrix = mParent->mTransform->GetTransformMatrix();
+
+	FrustumCam.up = matrix.RotatePart().Col(1).Normalized();
+	FrustumCam.front = matrix.RotatePart().Col(2).Normalized();
 }

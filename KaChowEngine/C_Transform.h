@@ -23,6 +23,7 @@ public:
 
 	float4x4 getGlobalMatrix();
 	float4x4 getLocalMatrix();
+	float4x4 GetTransformMatrix();
 
 	void resetMatrix();
 
@@ -33,8 +34,6 @@ public:
 	float3 getScale();
 	void setScale(float3 scale);
 
-	//// Pilota
-	//void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
 
 	void calculateMatrix();
 

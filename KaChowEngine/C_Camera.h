@@ -17,12 +17,15 @@ public:
 	~C_Camera();
 
 	void SetCam();
+	void LookAt(const float3& target);
 	void GenBuffer();
 
 	float* GetViewMatrix();
 	float* GetProjectionMatrix();
 
-	void Inspector();
+	void OnEditor() override;
+
+	void CameraTransform();
 
 	Frustum FrustumCam;
 	float4x4 viewMatrix;
@@ -30,6 +33,7 @@ public:
 
 	unsigned int cameraBuffer;
 	unsigned int frameBuffer;
+	int FOV = 60.0f;
 
 private:
 
