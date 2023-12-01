@@ -2,8 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
-#include "glmath.h"
-
 
 #include "Glew/include/glew.h"
 
@@ -11,11 +9,10 @@
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "Primitive.h"
 
-//todo: REMOVE this before 1st delivery!!
-
-
 #define MAX_LIGHTS 8
 
+class GameObject;
+class C_Camera;
 class ModuleRenderer3D : public Module
 {
 public:
@@ -50,4 +47,7 @@ public:
 	GLuint VBO;
 	GLuint EBO;
 	GLuint VAO;
+
+	GameObject* GameCamera;
+	C_Camera* mainCam;
 };	

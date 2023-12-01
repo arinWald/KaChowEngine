@@ -136,6 +136,16 @@ bool ModuleRenderer3D::Start()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	GameCamera = new GameObject(App->scene->rootGameObject);
+
+	GameCamera->name = "Main Camera";
+
+	C_Camera* cam = new C_Camera();
+	mainCam = cam;
+	GameCamera->mComponents.push_back(cam);
+	GameCamera->mTransform->mPosition = float3(0, 2, -10);
+	GameCamera->mTransform->calculateMatrix();
+
 	return false;
 }
 
