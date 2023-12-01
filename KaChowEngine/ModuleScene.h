@@ -19,7 +19,6 @@ public:
 
 	void PrintHierarchy(GameObject* GO, int index);
 
-	// Pilota
 	GameObject* CreateGameObject(GameObject* parent);
 
 	GameObject* rootGameObject;

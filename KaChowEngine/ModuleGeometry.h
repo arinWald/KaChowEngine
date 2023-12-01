@@ -5,7 +5,6 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
 #include <vector>
 
 #include "Glew/include/glew.h"
@@ -54,7 +53,7 @@ struct Mesh
 
 	void RenderFaceNormals();
 	void Render();
-	vec3 GetVectorFromIndex(float* startValue);
+	float3 GetVectorFromIndex(float* startValue);
 	void RenderMeshDebug(/*bool* vertexNormals, */bool* faceNormals);
 };
 

@@ -5,7 +5,7 @@
 
 C_Camera::C_Camera() :Component(nullptr)
 {
-
+	FOV = 60.0f;
 	type = ComponentType::CAMERA;
 	mParent = nullptr;
 
@@ -14,7 +14,7 @@ C_Camera::C_Camera() :Component(nullptr)
 	frustum.farPlaneDistance = 500.f;
 	frustum.front = float3::unitZ;
 	frustum.up = float3::unitY;
-	frustum.verticalFov = 60.0f * DEGTORAD;
+	frustum.verticalFov = FOV * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f); // 16:9 ~= 1,77777...
 	frustum.pos = float3(0, 0, 0);
 }
@@ -23,9 +23,31 @@ C_Camera::~C_Camera()
 {
 }
 
-void C_Camera::PrintInspector()
+void C_Camera::OnEditor()
 {
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		if (ImGui::SliderFloat("FOV", &FOV, 5, 200)) {
+			frustum.verticalFov = FOV * DEGTORAD;
+			frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
+		}
+		if (ImGui::Button("Reset")) {
+			FOV = 60.0f;
 
+			frustum.verticalFov = FOV * DEGTORAD;
+			frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
+		}
+
+		ImGui::SliderFloat("Near Distance", &frustum.nearPlaneDistance, 0.1f, 500.f);
+		if (ImGui::Button("Reset")) {
+			frustum.nearPlaneDistance = 0.1f;
+		}
+
+		ImGui::SliderFloat("Far Distance", &frustum.farPlaneDistance, 500.f, 1000.f);
+		if (ImGui::Button("Reset")) {
+			frustum.farPlaneDistance = 500.f;
+		}
+	}
 }
 
 void C_Camera::Update()

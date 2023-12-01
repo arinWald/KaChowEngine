@@ -43,6 +43,9 @@ bool ModuleEditor::Init()
     mFPSLog.reserve(30);
     mMsLog.reserve(30);
 
+    gameWindowSize = { 0,0 };
+    sceneWindowSize = { 0,0 };
+
     cvCounter = 0;
 
     // Config window
@@ -230,7 +233,40 @@ update_status ModuleEditor::DrawEditor()
                 {
                     isActivatedConsole != isActivatedConsole;
                 }
+                if (ImGui::Checkbox("Scene Window", &isActivatedSceneWindow))
+                {
+                    isActivatedSceneWindow != isActivatedSceneWindow;
+                }
+                if (ImGui::Checkbox("Game Window", &isActivatedGameWindow))
+                {
+                    isActivatedGameWindow != isActivatedGameWindow;
+                }
             }
+
+            /*if (ImGui::CollapsingHeader("Camera"))
+            {
+                if (ImGui::SliderInt("FOV", &App->camera->sceneCam->FOV, 5, 200)) {
+                    App->camera->sceneCam->FrustumCam.verticalFov = App->camera->sceneCam->FOV * DEGTORAD;
+                    App->camera->sceneCam->FrustumCam.horizontalFov = 2.0f * atanf(tanf(App->camera->sceneCam->FrustumCam.verticalFov / 2.0f) * 1.7f);
+                }
+                if (ImGui::Button("Reset FOV")) {
+                    App->camera->sceneCam->FOV = 60.0f;
+
+                    App->camera->sceneCam->FrustumCam.verticalFov = App->camera->sceneCam->FOV * DEGTORAD;
+                    App->camera->sceneCam->FrustumCam.horizontalFov = 2.0f * atanf(tanf(App->camera->sceneCam->FrustumCam.verticalFov / 2.0f) * 1.7f);
+                }
+
+
+                ImGui::SliderFloat("Near Distance", &App->camera->sceneCam->FrustumCam.nearPlaneDistance, 0.1f, App->camera->sceneCam->FrustumCam.farPlaneDistance);
+                if (ImGui::Button("Reset Near Distance")) {
+                    App->camera->sceneCam->FrustumCam.nearPlaneDistance = 0.1f;
+                }
+
+                ImGui::InputFloat("Far Distance", &App->camera->sceneCam->FrustumCam.farPlaneDistance);
+                if (ImGui::Button("Reset Far Distance")) {
+                    App->camera->FrustumCam.farPlaneDistance = 500.f;
+                }
+            }*/
            
 
             // Render
@@ -514,6 +550,15 @@ update_status ModuleEditor::DrawEditor()
         }
     }
 
+    if (isActivatedGameWindow)
+    {
+        GameWindow();
+    }
+    if (isActivatedSceneWindow)
+    {
+        SceneWindow();
+    }
+
     if (isActivatedDemo) {
         ImGui::ShowDemoWindow();
     }
@@ -534,6 +579,34 @@ bool ModuleEditor::CleanUp()
     RELEASE(logVector);
 
     return true;
+}
+
+void ModuleEditor::GameWindow()
+{
+    //Begin scene & get size
+    ImGui::Begin("Game", 0, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus);
+    gameWindowSize = ImGui::GetContentRegionAvail();
+
+    //Get proportion, and match with 16:9
+    ImVec2 newWinSize = gameWindowSize;
+    newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
+
+    //Get uv's offset proportionate to image
+    float uvOffset = (gameWindowSize.x - newWinSize.x) / 2.0f;
+    uvOffset /= newWinSize.x;
+
+    //Print image (window size), modify UV's to match 
+    //ImGui::Image((ImTextureID)app->renderer3D->cameraBuffer, sizeWindScn, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
+
+    ImGui::End();
+
+    //ImGui::Render();
+    //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ModuleEditor::SceneWindow()
+{
+
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)

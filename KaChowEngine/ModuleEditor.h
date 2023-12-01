@@ -7,6 +7,7 @@
 #include "Globals.h"
 #include <vector>
 #include <string>
+#include "ImGui/imgui.h"
 
 #include "Glew/include/glew.h"
 
@@ -22,6 +23,9 @@ public:
 	update_status DrawEditor();
 	bool CleanUp() override;
 
+	void GameWindow();
+	void SceneWindow();
+
 	void AddHistogramData(const float aFPS, std::vector<float>& aMS);
 
 	void ConsoleLog(const char* tmp_string);
@@ -32,6 +36,12 @@ public:
 	std::vector<float> mMsLog;
 
 private:
+	// Game & Scene window
+	ImVec2 gameWindowSize;
+	ImVec2 sceneWindowSize;
+
+
+
 	int cvCounter;
 
 	// Config window 
@@ -53,6 +63,8 @@ private:
 	bool isActivatedHierarchy;
 	bool isActivatedConsole;
 	bool isActivatedDemo;
+	bool isActivatedGameWindow;
+	bool isActivatedSceneWindow;
 
 	// Hardware info
 	std::string caps;
