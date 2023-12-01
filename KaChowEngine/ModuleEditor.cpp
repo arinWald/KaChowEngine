@@ -67,6 +67,8 @@ bool ModuleEditor::Init()
    isActivatedDemo = false;
    isActivatedInspector = true;
    isActivatedConsole = true;
+   isActivatedGameWindow = true;
+   isActivatedSceneWindow = true;
 
    GetHardwareInfo();
 
@@ -546,8 +548,9 @@ update_status ModuleEditor::DrawEditor()
                 ImGui::Text((*logVector)[i].c_str());
             }
 
-            ImGui::End();
+            
         }
+        ImGui::End();
     }
 
     if (isActivatedGameWindow)
@@ -559,7 +562,8 @@ update_status ModuleEditor::DrawEditor()
         SceneWindow();
     }
 
-    if (isActivatedDemo) {
+    if (isActivatedDemo) 
+    {
         ImGui::ShowDemoWindow();
     }
     
@@ -583,30 +587,39 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::GameWindow()
 {
-    //Begin scene & get size
     ImGui::Begin("Game", 0, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus);
     gameWindowSize = ImGui::GetContentRegionAvail();
 
-    //Get proportion, and match with 16:9
     ImVec2 newWinSize = gameWindowSize;
     newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
 
-    //Get uv's offset proportionate to image
     float uvOffset = (gameWindowSize.x - newWinSize.x) / 2.0f;
     uvOffset /= newWinSize.x;
 
-    //Print image (window size), modify UV's to match 
-    //ImGui::Image((ImTextureID)app->renderer3D->cameraBuffer, sizeWindScn, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
-
     ImGui::End();
-
-    //ImGui::Render();
-    //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ModuleEditor::SceneWindow()
 {
+    //Begin scene & get size
+    ImGui::Begin("Scene");
+    sceneWindowSize = ImGui::GetContentRegionAvail();
 
+    //Get proportion, and match with 16:9
+    ImVec2 newWinSize = sceneWindowSize;
+    newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
+
+    //Get uv's offset proportionate to image
+    float uvOffset = (sceneWindowSize.x - newWinSize.x) / 2.0f;
+    uvOffset /= newWinSize.x;
+
+    //Print image (window size), modify UV's to match 
+    ImGui::Image((ImTextureID)App->renderer3D->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
+
+    ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)
