@@ -8,12 +8,14 @@
 #include "C_Material.h"
 #include "Application.h"
 #include "OurPrimitive.h"
+#include "C_Camera.h"
 
 enum class ComponentType;
 class Component;
 class C_Transform;
 class C_Mesh;
 class C_Material;
+class C_Camera;
 class GameObject
 {
 public:

@@ -3,7 +3,7 @@
 #include "ModuleRenderer3D.h"
 #include "Primitive.h"
 #include "SDL\include\SDL_opengl.h"
-
+#include "C_Camera.h"
 #include "ModuleTextures.h"
 
 
@@ -20,6 +20,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	ProjectionMatrix.SetIdentity();
 }
 
 // Destructor
@@ -121,8 +122,7 @@ bool ModuleRenderer3D::Init()
 		glewInit();
 	}
 
-	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 
 	Grid.axis = true;
 
@@ -133,6 +133,8 @@ bool ModuleRenderer3D::Init()
 bool ModuleRenderer3D::Start()
 {
 	//App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	// Projection matrix for
+	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return false;
 }
@@ -144,9 +146,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(App->camera->camera->GetViewMatrix());
 
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(0, 0, 0);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -208,9 +210,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	//todo: USE MATHGEOLIB here BEFORE 1st delivery! (TIP: Use MathGeoLib/Geometry/Frustum.h, view and projection matrices are managed internally.)
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(ProjectionMatrix.M);
+	glLoadMatrixf(App->camera->camera->GetProjetionMatrix());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

@@ -4,8 +4,15 @@
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
 
-//todo: REMOVE this before 1st delivery!!
-#include "glmath.h"
+class C_Camera;
+
+enum class CamStates {
+
+	NORMAL,
+	FLYING,
+	FOCUSED,
+};
+
 
 class ModuleCamera3D : public Module
 {
@@ -17,25 +24,21 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const float3& Position, const float3& Reference, bool RotateAroundReference = false);
-	void LookAt(const float3& Spot);
-	void Move(const float3& Movement);
-	float* GetViewMatrix();
-	void FocusCameraToSelectedObject();
-	void RotationAroundCamera(float dt);
-	void OrbitSelectedObject(float dt);
-	float3 RotateVector(const float3& u, float angle, const float3& v);
+	float3 SelectedObjectPos();
 
+	//bool SaveConfig(JsonParser& node) const;
+	//bool LoadConfig(JsonParser& node);
 private:
 
-	void CalculateViewMatrix();
+	void MouseRotation(float dx, float dy, float sensitivity);
 
 public:
 
-	//You won't need this after using Frustum
+
 	float3 X, Y, Z, Position, Reference;
 
-private:
+	C_Camera* camera;
+	CamStates camState;
 
-	float4x4 ViewMatrix;
+
 };

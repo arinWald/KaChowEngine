@@ -36,13 +36,16 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	
-	//You won't need this after using Frustum
-	mat4x4 ProjectionMatrix;
+
 	CPlane Grid;
 
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix;
+	float3x3 NormalMatrix;
+	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	unsigned int cameraBuffer;
+	unsigned int inGameBuffer;
+	unsigned int frameBuffer;
+	unsigned int renderObjBuffer;
 
 	GLuint VBO;
 	GLuint EBO;
