@@ -133,20 +133,6 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	//App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
-	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	GameCamera = new GameObject(App->scene->rootGameObject);
-
-	GameCamera->name = "Main Camera";
-
-	C_Camera* cam = new C_Camera();
-	mainGameCam = cam;
-	GameCamera->mComponents.push_back(cam);
-	GameCamera->mTransform->mPosition = float3(0, 2, -10);
-	GameCamera->mTransform->calculateMatrix();
-
 	return false;
 }
 
@@ -156,8 +142,17 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
+	//Bind game camera framebuffer
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->camera->camera->GetProjetionMatrix());
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->camera->GetViewMatrix());
+
+	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->camera->frameBuffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	// Finish game camera frame buffer binding
 
 	lights[0].SetPos(0, 0, 0);
 
@@ -175,6 +170,27 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	Grid.Render();
 
 	App->geoLoader->RenderScene();
+
+	if (mainGameCam != nullptr)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		//Bind game camera framebuffer
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf(mainGameCam->GetProjetionMatrix());
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixf(mainGameCam->GetViewMatrix());
+
+		glBindFramebuffer(GL_FRAMEBUFFER, mainGameCam->frameBuffer);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		// Finish game camera frame buffer binding
+
+		App->geoLoader->RenderGameScene();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	if (App->editor->DrawEditor() == UPDATE_STOP)
 	{

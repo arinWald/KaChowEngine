@@ -74,6 +74,7 @@ public:
 	void ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObject* CgameObject, const aiScene* scene, int index);
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
+	void RenderGameScene();
 
 private:
 	GameObject* newGameObject;

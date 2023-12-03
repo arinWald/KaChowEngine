@@ -327,6 +327,13 @@ void ModuleGeometry::RenderScene()
     }
 }
 
+void ModuleGeometry::RenderGameScene()
+{
+    for (int i = 0; i < meshes.size(); i++) {
+        meshes[i]->Render();
+    }
+}
+
 
 bool ModuleGeometry::CleanUp()
 {
