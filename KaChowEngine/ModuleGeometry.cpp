@@ -330,7 +330,9 @@ void ModuleGeometry::RenderScene()
 void ModuleGeometry::RenderGameScene()
 {
     for (int i = 0; i < meshes.size(); i++) {
+        glColor3f(1.0f, 1.0f, 1.0f);
         meshes[i]->Render();
+        glColor3f(1.0f, 0.0f, 0.0f);
     }
 }
 
