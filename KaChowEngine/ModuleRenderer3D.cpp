@@ -215,6 +215,11 @@ bool ModuleRenderer3D::CleanUp()
 	return true;
 }
 
+C_Camera* ModuleRenderer3D::GetMainCamera()
+{
+	return mainGameCam;
+}
+
 void ModuleRenderer3D::DrawBox(float3* corners, float3 color)
 {
 	glBegin(GL_LINES);

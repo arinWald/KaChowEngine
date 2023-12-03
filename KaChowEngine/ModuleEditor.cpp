@@ -587,16 +587,24 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::GameWindow()
 {
+    //Begin scene & get size
     ImGui::Begin("Game", 0, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus);
-    gameWindowSize = ImGui::GetContentRegionAvail();
+    sceneWindowSize = ImGui::GetContentRegionAvail();
 
-    ImVec2 newWinSize = gameWindowSize;
+    //Get proportion, and match with 16:9
+    ImVec2 newWinSize = sceneWindowSize;
     newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
 
-    float uvOffset = (gameWindowSize.x - newWinSize.x) / 2.0f;
+    //Get uv's offset proportionate to image
+    float uvOffset = (sceneWindowSize.x - newWinSize.x) / 2.0f;
     uvOffset /= newWinSize.x;
 
+    //Print image (window size), modify UV's to match 
+    if (App->renderer3D->GetMainCamera() != nullptr)
+        ImGui::Image((ImTextureID)App->renderer3D->GetMainCamera()->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
+
     ImGui::End();
+
 }
 
 void ModuleEditor::SceneWindow()
@@ -613,13 +621,9 @@ void ModuleEditor::SceneWindow()
     float uvOffset = (sceneWindowSize.x - newWinSize.x) / 2.0f;
     uvOffset /= newWinSize.x;
 
-    //Print image (window size), modify UV's to match 
-    ImGui::Image((ImTextureID)App->renderer3D->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
+    ImGui::Image((ImTextureID)App->camera->camera->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
     ImGui::End();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)
