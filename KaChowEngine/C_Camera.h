@@ -17,6 +17,7 @@ public:
 	void Move(const float3& Movement);
 	float* GetViewMatrix();
 	float* GetProjetionMatrix();
+	void CreateFrameBuffer();
 
 	Frustum frustum;
 	float3 reference;
