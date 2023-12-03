@@ -21,6 +21,7 @@
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	ProjectionMatrix.SetIdentity();
+	mainGameCam = nullptr;
 }
 
 // Destructor
@@ -141,7 +142,7 @@ bool ModuleRenderer3D::Start()
 	GameCamera->name = "Main Camera";
 
 	C_Camera* cam = new C_Camera();
-	mainCam = cam;
+	mainGameCam = cam;
 	GameCamera->mComponents.push_back(cam);
 	GameCamera->mTransform->mPosition = float3(0, 2, -10);
 	GameCamera->mTransform->calculateMatrix();
@@ -224,5 +225,23 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void ModuleRenderer3D::SetMainCamera(C_Camera* cam)
+{
+	//No main camera
+	if (cam == nullptr) {
+		mainGameCam = nullptr;
+		LOG("There's no game camera");
+		return;
+	}
+
+	//Switch main cameras
+	if (mainGameCam != nullptr)
+		mainGameCam->isMainCamera = false;
+
+	cam->isMainCamera = true;
+
+	mainGameCam = cam;
 }
 

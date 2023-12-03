@@ -29,6 +29,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	void SetMainCamera(C_Camera* cam);
+
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -49,5 +51,5 @@ public:
 	GLuint VAO;
 
 	GameObject* GameCamera;
-	C_Camera* mainCam;
+	C_Camera* mainGameCam;
 };	

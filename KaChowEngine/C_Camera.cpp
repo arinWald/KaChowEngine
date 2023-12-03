@@ -5,29 +5,40 @@
 
 C_Camera::C_Camera() :Component(nullptr)
 {
-	FOV = 60.0f;
+	typeCameraSelected = 0;
+
+	FOV = 60;
+	farDistance = 500.0f;
+	nearDistance = 0.1f;
+
 	type = ComponentType::CAMERA;
 	mParent = nullptr;
 
+	//Frustum
 	frustum.type = PerspectiveFrustum;
-	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 500.f;
+	frustum.nearPlaneDistance = nearDistance;
+	frustum.farPlaneDistance = farDistance; //inspector
 	frustum.front = float3::unitZ;
 	frustum.up = float3::unitY;
 	frustum.verticalFov = FOV * DEGTORAD;
-	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f); // 16:9 ~= 1,77777...
+	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
 	frustum.pos = float3(0, 0, 0);
 }
 
 C_Camera::~C_Camera()
 {
+	if (isMainCamera) App->renderer3D->SetMainCamera(nullptr);
+
+	glDeleteFramebuffers(1, &cameraBuffer);
+	glDeleteFramebuffers(1, &frameBuffer);
+	glDeleteFramebuffers(1, &renderObjBuffer);
 }
 
 void C_Camera::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Camera"))
 	{
-		if (ImGui::SliderFloat("FOV", &FOV, 5, 200)) {
+		if (ImGui::SliderInt("FOV", &FOV, 5, 200)) {
 			frustum.verticalFov = FOV * DEGTORAD;
 			frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
 		}

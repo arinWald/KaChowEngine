@@ -9,7 +9,6 @@ public:
 	C_Camera(GameObject owner);
 	~C_Camera();
 
-	void PrintInspector();
 	void Update();
 	void OnEditor() override;
 
@@ -22,9 +21,19 @@ public:
 	Frustum frustum;
 	float3 reference;
 
-	float FOV;
+	int typeCameraSelected ;
+
+	int FOV;
+	float farDistance;
+	float nearDistance;
+
+	bool isMainCamera = false;
+
+	unsigned int cameraBuffer;
+	unsigned int frameBuffer;
 
 private:
 	float4x4 viewMatrix;
 	float4x4 projectionMatrix;
+	unsigned int renderObjBuffer;
 };
