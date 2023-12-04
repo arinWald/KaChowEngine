@@ -63,6 +63,8 @@ bool ModuleEditor::Init()
    bright = 0.0f;
    bright_aux = 0.0f;
 
+   isAABB = true;
+
    isActivatedHierarchy = true;
    isActivatedDemo = false;
    isActivatedInspector = true;
@@ -408,6 +410,23 @@ update_status ModuleEditor::DrawEditor()
                     {
                         SDL_SetWindowBrightness(App->window->window, bright);
                         bright_aux = bright * 100;
+                    }
+
+                    ImGui::TreePop();
+                }
+                if (ImGui::TreeNode("Debug"))
+                {
+
+                    if (ImGui::Checkbox("Draw AABB", &isAABB))
+                    {
+                        if (isAABB)
+                        {
+                            LOG("AABB On");
+                        }
+                        else
+                        {
+                            LOG("AABB Off");
+                        }
                     }
 
                     ImGui::TreePop();

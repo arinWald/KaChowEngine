@@ -320,7 +320,9 @@ void ModuleGeometry::RenderScene()
             // Reset to default
             glColor3f(1.0f, 1.0f, 1.0f);
             meshes[i]->Render();
-            meshes[i]->RenderAABB(); //AABBs
+
+            if(App->editor->isAABB) meshes[i]->RenderAABB(); //AABBs
+
             glColor3f(1.0f, 0.0f, 0.0f);
             if (meshes[i]->owner->GetMeshComponent()->showNormals) {
                 meshes[i]->RenderFaceNormals();

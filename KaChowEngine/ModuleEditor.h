@@ -59,6 +59,9 @@ private:
 	float bright;
 	float bright_aux;
 
+public:
+	bool isAABB;
+private:
 	bool isActivatedInspector;
 	bool isActivatedHierarchy;
 	bool isActivatedConsole;
