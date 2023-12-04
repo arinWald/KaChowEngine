@@ -314,25 +314,33 @@ void ModuleGeometry::RenderScene()
 {
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
-
-
-        // Reset to default
-        glColor3f(1.0f, 1.0f, 1.0f);
-        meshes[i]->Render();    
-        meshes[i]->RenderAABB(); //AABBs
-        glColor3f(1.0f, 0.0f, 0.0f);
-        if (meshes[i]->owner->GetMeshComponent()->showNormals) {
-            meshes[i]->RenderFaceNormals();
+        // Render if object inside frustrum
+        if (App->camera->camera->ObjectInsideFrustrum(meshes[i]))
+        {
+            // Reset to default
+            glColor3f(1.0f, 1.0f, 1.0f);
+            meshes[i]->Render();
+            meshes[i]->RenderAABB(); //AABBs
+            glColor3f(1.0f, 0.0f, 0.0f);
+            if (meshes[i]->owner->GetMeshComponent()->showNormals) {
+                meshes[i]->RenderFaceNormals();
+            }
         }
     }
 }
 
 void ModuleGeometry::RenderGameScene()
 {
+    int meshesRendered = 0;
     for (int i = 0; i < meshes.size(); i++) {
-        glColor3f(1.0f, 1.0f, 1.0f);
-        meshes[i]->Render();
-        glColor3f(1.0f, 0.0f, 0.0f);
+
+        if (App->renderer3D->GetMainCamera()->ObjectInsideFrustrum(meshes[i]))
+        {
+            glColor3f(1.0f, 1.0f, 1.0f);
+            meshes[i]->Render();
+            glColor3f(1.0f, 0.0f, 0.0f);
+            meshesRendered++;
+        }
     }
 }
 

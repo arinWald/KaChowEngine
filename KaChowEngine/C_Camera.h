@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
+struct Mesh;
 class C_Camera : public Component
 {
 public:
@@ -18,6 +19,7 @@ public:
 	float* GetViewMatrix();
 	float* GetProjetionMatrix();
 	void CreateFrameBuffer();
+	bool ObjectInsideFrustrum(Mesh* mesh);
 
 	Frustum frustum;
 	float3 reference;

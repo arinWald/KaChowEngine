@@ -167,6 +167,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	Grid.Render();
+
 	App->geoLoader->RenderScene();
 
 	if (mainGameCam != nullptr)

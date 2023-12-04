@@ -188,3 +188,26 @@ void C_Camera::CreateFrameBuffer()
 
 	App->renderer3D->SetMainCamera(this);
 }
+
+bool C_Camera::ObjectInsideFrustrum(Mesh* mesh)
+{
+	float3 boxPoints[8];
+	Plane frustumPlanes[6];
+
+	mesh->Global_AABB_box.GetCornerPoints(boxPoints);
+	frustum.GetPlanes(frustumPlanes);
+
+	for (size_t i = 0; i < 6; i++)
+	{
+		int p = 0;
+		for (size_t j = 0; j < 8; j++)
+		{
+			if (frustumPlanes[i].IsOnPositiveSide(boxPoints[j]))
+				p++;
+		}
+		if (p == 8) {
+			return false;
+		}
+	}
+	return true;
+}
