@@ -135,6 +135,11 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 				
 }
 
+void ModuleScene::SetGameObjectSelected(GameObject* gameObject)
+{
+	selectedGameObj = gameObject;
+}
+
 GameObject* ModuleScene::CreateGameObject(GameObject* parent)
 {
 	GameObject* newGameObject = new GameObject(parent);

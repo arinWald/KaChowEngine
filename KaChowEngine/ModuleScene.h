@@ -19,6 +19,8 @@ public:
 
 	void PrintHierarchy(GameObject* GO, int index);
 
+	void SetGameObjectSelected(GameObject* gameObject);
+
 	GameObject* CreateGameObject(GameObject* parent);
 
 	GameObject* rootGameObject;

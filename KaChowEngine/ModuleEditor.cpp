@@ -667,16 +667,61 @@ void ModuleEditor::SceneWindow()
 
     ImGui::Image((ImTextureID)App->camera->camera->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
-    if (!App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN && ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered())
+    if (ImGui::IsMouseClicked(0, true) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
     {
+        std::vector<GameObject*> pickedGameObjects;
+        std::vector<GameObject*> triangleGameObject;
+
         ImVec2 mousePos = ImGui::GetMousePos();
 
-        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
-            ImGui::GetWindowWidth(), ImGui::GetWindowHeight(), mousePos);
-
-        LOG("%f, %f", norm.x, norm.y);
+        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x,
+            ImGui::GetWindowPos().y + ImGui::GetFrameHeight(),
+            ImGui::GetWindowSize().x,
+            ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), mousePos);
 
         LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
+
+        for (size_t i = 0; i < App->geoLoader->meshes.size(); i++)
+        {
+            if (picking.Intersects(App->geoLoader->meshes[i]->OBB_box))
+            {
+                LOG("%d", App->geoLoader->meshes[i]->num_vertex);
+
+                if (App->geoLoader->meshes[i]->owner != nullptr)
+                {
+                    pickedGameObjects.push_back(App->geoLoader->meshes[i]->owner);
+                }
+            }
+        }
+
+        for (size_t i = 0; i < pickedGameObjects.size(); i++)
+        {
+            Mesh* m = pickedGameObjects[i]->GetMeshComponent()->mesh;
+            for (size_t j = 0; j < m->num_index; j += 3)
+            {
+                float3 pT1, pT2, pT3;
+                float* v1 = &m->vertex[m->index[j] * VERTEX_ARGUMENTS];
+                float* v2 = &m->vertex[m->index[j + 1] * VERTEX_ARGUMENTS];
+                float* v3 = &m->vertex[m->index[j + 2] * VERTEX_ARGUMENTS];
+                pT1 = float3(*v1, *(v1 + 1), *(v1 + 2));
+                pT2 = float3(*v2, *(v2 + 1), *(v2 + 2));
+                pT3 = float3(*v3, *(v3 + 1), *(v3 + 2));
+
+                Triangle triangle(pT1, pT2, pT3);
+
+                if (picking.Intersects(triangle, nullptr, nullptr))
+                {
+                    triangleGameObject.push_back(pickedGameObjects[i]);
+                }
+            }
+        }
+        if (triangleGameObject.size() != 0)
+        {
+            App->scene->SetGameObjectSelected(*triangleGameObject.begin());
+        }
+        pickedGameObjects.clear();
+        triangleGameObject.clear();
+
     }
 
     ImGui::End();
