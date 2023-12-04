@@ -42,7 +42,6 @@ void C_Camera::OnEditor()
 
 	if (ImGui::CollapsingHeader("Camera"))
 	{
-		//is main camera??
 		if (isMainCamera)
 		{
 			ImGui::SameLine();
@@ -50,11 +49,11 @@ void C_Camera::OnEditor()
 		}
 
 		ImGui::Text("");
-
-		//Chose type of camera
+		ImGui::Text("Rendered objects: %d", App->geoLoader->meshesRendered);
+		ImGui::Text("");
 		ImGui::Text("Camera type:\t ");
 		ImGui::SameLine();
-		if (ImGui::Combo("##CameraType", &typeCameraSelected, listType, IM_ARRAYSIZE(listType)))
+		if (ImGui::Combo("CameraType", &typeCameraSelected, listType, IM_ARRAYSIZE(listType)))
 		{
 			if (typeCameraSelected == 0)
 				frustum.type = PerspectiveFrustum;
@@ -65,7 +64,6 @@ void C_Camera::OnEditor()
 
 		ImGui::Text("");
 
-		//Fov camera
 		ImGui::Text("FOV\t\t\t  ");
 		ImGui::SameLine();
 		if (ImGui::SliderInt("FOV", &FOV, 10, 170))
@@ -73,23 +71,29 @@ void C_Camera::OnEditor()
 			frustum.verticalFov = FOV * DEGTORAD;
 			frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
 		}
+		if (ImGui::Button("Reset FOV")) {
+			FOV = 60.0f;
+
+			frustum.verticalFov = FOV * DEGTORAD;
+			frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.7f);
+		}
 
 		ImGui::Text("");
-
-		//Slider Set Near Distane
 		ImGui::Text("Near Distance\t");
 		ImGui::SameLine();
-		if (ImGui::SliderFloat("##nearDistance", &nearDistance, 0.1f, farDistance))
+		if (ImGui::SliderFloat("NearDistance", &nearDistance, 0.1f, farDistance))
 		{
 			frustum.nearPlaneDistance = nearDistance;
+		}
+		if (ImGui::Button("Reset Near Distance")) {
+			frustum.nearPlaneDistance = 0.1f;
 		}
 
 		ImGui::Text("");
 
-		//Input float Set Far Distane
 		ImGui::Text("Far Distance\t ");
 		ImGui::SameLine();
-		if (ImGui::InputFloat("##farDistance", &farDistance))
+		if (ImGui::SliderFloat("FarDistance", &farDistance, 0.1f, 1000.f))
 		{
 			if (farDistance <= nearDistance)
 			{
@@ -98,13 +102,15 @@ void C_Camera::OnEditor()
 
 			frustum.farPlaneDistance = farDistance;
 		}
+		if (ImGui::Button("Reset Far Distance")) {
+			frustum.farPlaneDistance = 500.f;
+		}
 
 		ImGui::Text("");
 
-		//Button Set main camera
 		ImGui::Text("");
 		ImGui::SameLine((ImGui::GetWindowWidth() / 2) - 75);
-		if (ImGui::Button("Set as main camera", ImVec2(150, 25)))
+		if (ImGui::Button("Set as main camera", ImVec2(120, 50)))
 		{
 			App->renderer3D->SetMainCamera(this);
 		}

@@ -29,6 +29,7 @@ bool ModuleCamera3D::Start()
 
 	camera = new C_Camera();
 	camera->frustum.pos = float3(0, 0, -10);
+	typeCameraSelected = 0;
 
 	return ret;
 }

@@ -26,6 +26,13 @@ bool ModuleScene::Start()
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 	bakerHouse->name = "BakerHouse";
 
+	// Game camera at start
+	currentGameCamera = new GameObject(rootGameObject);
+	currentGameCamera->name = "Game Camera";
+	C_Camera* cameraComponent = new C_Camera();
+	currentGameCamera->AddComponent(cameraComponent);
+
+
 	return true;
 }
 

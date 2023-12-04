@@ -39,6 +39,5 @@ public:
 
 	C_Camera* camera;
 	CamStates camState;
-
-
+	int typeCameraSelected;
 };

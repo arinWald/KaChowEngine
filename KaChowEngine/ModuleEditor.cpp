@@ -245,31 +245,56 @@ update_status ModuleEditor::DrawEditor()
                 }
             }
 
-            /*if (ImGui::CollapsingHeader("Camera"))
+            if (ImGui::CollapsingHeader("Camera"))
             {
-                if (ImGui::SliderInt("FOV", &App->camera->sceneCam->FOV, 5, 200)) {
-                    App->camera->sceneCam->FrustumCam.verticalFov = App->camera->sceneCam->FOV * DEGTORAD;
-                    App->camera->sceneCam->FrustumCam.horizontalFov = 2.0f * atanf(tanf(App->camera->sceneCam->FrustumCam.verticalFov / 2.0f) * 1.7f);
+                const char* listType[]{ "Perspective", "Orthographic" };
+                ImGui::Text("Camera type:\t ");
+                ImGui::SameLine();
+                if (ImGui::Combo("CameraType", &App->camera->typeCameraSelected, listType, IM_ARRAYSIZE(listType)))
+                {
+                    if (App->camera->typeCameraSelected == 0)
+                        App->camera->camera->frustum.type = PerspectiveFrustum;
+
+                    if (App->camera->typeCameraSelected == 1)
+                        App->camera->camera->frustum.type = OrthographicFrustum;
+                }
+                if (ImGui::SliderInt("FOV", &App->camera->camera->FOV, 5, 200)) {
+                    App->camera->camera->frustum.verticalFov = App->camera->camera->FOV * DEGTORAD;
+                    App->camera->camera->frustum.horizontalFov = 2.0f * atanf(tanf(App->camera->camera->frustum.verticalFov / 2.0f) * 1.7f);
                 }
                 if (ImGui::Button("Reset FOV")) {
-                    App->camera->sceneCam->FOV = 60.0f;
+                    App->camera->camera->FOV = 60.0f;
 
-                    App->camera->sceneCam->FrustumCam.verticalFov = App->camera->sceneCam->FOV * DEGTORAD;
-                    App->camera->sceneCam->FrustumCam.horizontalFov = 2.0f * atanf(tanf(App->camera->sceneCam->FrustumCam.verticalFov / 2.0f) * 1.7f);
+                    App->camera->camera->frustum.verticalFov = App->camera->camera->FOV * DEGTORAD;
+                    App->camera->camera->frustum.horizontalFov = 2.0f * atanf(tanf(App->camera->camera->frustum.verticalFov / 2.0f) * 1.7f);
                 }
 
 
-                ImGui::SliderFloat("Near Distance", &App->camera->sceneCam->FrustumCam.nearPlaneDistance, 0.1f, App->camera->sceneCam->FrustumCam.farPlaneDistance);
+                ImGui::Text("Near Distance\t");
+                ImGui::SameLine();
+                if (ImGui::SliderFloat("NearDistance", &App->camera->camera->frustum.nearPlaneDistance, 0.1f, App->camera->camera->frustum.farPlaneDistance))
+                {
+                    App->camera->camera->frustum.nearPlaneDistance = App->camera->camera->frustum.nearPlaneDistance;
+                }
                 if (ImGui::Button("Reset Near Distance")) {
-                    App->camera->sceneCam->FrustumCam.nearPlaneDistance = 0.1f;
+                    App->camera->camera->frustum.nearPlaneDistance = 0.1f;
                 }
 
-                ImGui::InputFloat("Far Distance", &App->camera->sceneCam->FrustumCam.farPlaneDistance);
-                if (ImGui::Button("Reset Far Distance")) {
-                    App->camera->FrustumCam.farPlaneDistance = 500.f;
+                ImGui::Text("Far Distance\t ");
+                ImGui::SameLine();
+                if (ImGui::SliderFloat("FarDistance", &App->camera->camera->frustum.farPlaneDistance, 0.1f, 1000.f))
+                {
+                    if (App->camera->camera->frustum.farPlaneDistance <= App->camera->camera->frustum.nearPlaneDistance)
+                    {
+                        App->camera->camera->frustum.nearPlaneDistance = App->camera->camera->frustum.farPlaneDistance;
+                    }
+
+                    App->camera->camera->frustum.farPlaneDistance = App->camera->camera->frustum.farPlaneDistance;
                 }
-            }*/
-           
+                if (ImGui::Button("Reset Far Distance")) {
+                    App->camera->camera->frustum.farPlaneDistance = 500.f;
+                }
+            }
 
             // Render
             if (ImGui::CollapsingHeader("Render"))

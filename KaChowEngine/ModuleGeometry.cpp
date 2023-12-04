@@ -331,7 +331,7 @@ void ModuleGeometry::RenderScene()
 
 void ModuleGeometry::RenderGameScene()
 {
-    int meshesRendered = 0;
+    meshesRendered = 0;
     for (int i = 0; i < meshes.size(); i++) {
 
         if (App->renderer3D->GetMainCamera()->ObjectInsideFrustrum(meshes[i]))
