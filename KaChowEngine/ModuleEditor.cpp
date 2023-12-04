@@ -667,7 +667,28 @@ void ModuleEditor::SceneWindow()
 
     ImGui::Image((ImTextureID)App->camera->camera->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
+    if (!App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN && ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered())
+    {
+        ImVec2 mousePos = ImGui::GetMousePos();
+
+        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
+            ImGui::GetWindowWidth(), ImGui::GetWindowHeight(), mousePos);
+
+        LOG("%f, %f", norm.x, norm.y);
+
+        LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
+    }
+
     ImGui::End();
+}
+
+ImVec2 ModuleEditor::NormMousePos(float x, float y, float w, float h, ImVec2 p)
+{
+    ImVec2 normP;
+
+    normP.x = ((p.x - x) / w);
+    normP.y = ((p.y - y) / h);
+    return normP;
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)

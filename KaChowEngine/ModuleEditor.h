@@ -32,6 +32,8 @@ public:
 
 	void GetHardwareInfo();
 
+	ImVec2 NormMousePos(float x, float y, float w, float h, ImVec2 p);
+
 	std::vector<float> mFPSLog;
 	std::vector<float> mMsLog;
 
