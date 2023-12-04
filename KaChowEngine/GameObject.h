@@ -36,6 +36,7 @@ public:
 
 	C_Mesh* GetMeshComponent();
 	C_Material* GetMaterialComponent();
+	C_Camera* GetCameraComponent();
 
 
 	std::string name;
@@ -47,6 +48,7 @@ public:
 	C_Transform* mTransform;
 
 	bool deleteGameObject;
+	int componentNum;
 
 	ShapeType type;
 

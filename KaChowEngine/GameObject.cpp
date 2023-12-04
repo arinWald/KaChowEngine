@@ -10,6 +10,27 @@ GameObject::GameObject()
 	deleteGameObject = false;
 
 	mComponents.push_back(mTransform);
+	componentNum = 0;
+}
+
+GameObject::GameObject(GameObject* parent)
+{
+	name = "GameObject";
+	this->mParent = parent;
+
+	if (parent != nullptr)
+	{
+		parent->mChildren.push_back(this);
+	}
+
+	mTransform = new C_Transform(mParent);
+
+	type = ShapeType::NONE;
+
+	deleteGameObject = false;
+
+	mComponents.push_back(mTransform);
+	componentNum = 0;
 }
 
 GameObject::~GameObject()
@@ -45,25 +66,6 @@ GameObject::~GameObject()
 	}*/
 
 	mComponents.clear();
-}
-
-GameObject::GameObject(GameObject* parent)
-{
-	name = "GameObject";
-	this->mParent = parent;
-
-	if (parent != nullptr)
-	{
-		parent->mChildren.push_back(this);
-	}
-
-	mTransform = new C_Transform(mParent);
-	
-	type = ShapeType::NONE;
-
-	deleteGameObject = false;
-
-	mComponents.push_back(mTransform);
 }
 
 void GameObject::AddComponent(Component* component)
@@ -116,6 +118,18 @@ C_Material* GameObject::GetMaterialComponent()
 	return nullptr;
 }
 
+C_Camera* GameObject::GetCameraComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::CAMERA)
+		{
+			return (C_Camera*)mComponents[i];
+		}
+	}
+	return nullptr;
+}
+
 bool GameObject::IsChildOf(GameObject* gameObject)
 {
 	if (gameObject == this)
@@ -145,6 +159,8 @@ void GameObject::DeleteChild(GameObject* child)
 
 void GameObject::PrintOnInspector()
 {
+	char* compList[]{ "Add Component", "Mesh Component", "Material Component", "Camera Component" };
+
 	char aux[255] = { ' ' };
 
 	if (mParent != nullptr)
@@ -181,6 +197,48 @@ void GameObject::PrintOnInspector()
 
 		ImGui::Text("");
 		ImGui::SameLine(ImGui::GetWindowWidth() / 6);
+
+		if (ImGui::Combo("##AddComponent", &componentNum, compList, IM_ARRAYSIZE(compList)))
+		{
+			switch (componentNum) {
+			case 1:
+			{
+				//Mesh component
+				if (GetMeshComponent() == nullptr) {
+					C_Mesh* compMesh = new C_Mesh();
+					AddComponent(compMesh);
+				}
+				else {
+					LOG("Mesh Component already added, can't duplicate.")
+				}
+			}
+			break;
+			case 2:
+			{
+				if (GetMaterialComponent() == nullptr) {
+					C_Material* compMat = new C_Material();
+					AddComponent(compMat);
+				}
+				else {
+					LOG("Texture Component already added, can't duplicate.")
+				}
+			}
+			break;
+			case 3:
+			{
+				if (GetCameraComponent() == nullptr) {
+					C_Camera* compCam = new C_Camera();
+					AddComponent(compCam);
+				}
+				else {
+					LOG("Camera Component already added, can't duplicate.")
+				}
+			}
+			break;
+			}
+			componentNum = 0;
+		}
+
 	}
 }
 

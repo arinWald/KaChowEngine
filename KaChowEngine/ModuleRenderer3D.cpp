@@ -167,8 +167,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	Grid.Render();
-
 	App->geoLoader->RenderScene();
 
 	if (mainGameCam != nullptr)
@@ -189,6 +187,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		App->geoLoader->RenderGameScene();
 	}
+
+	Grid.Render();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
