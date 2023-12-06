@@ -659,90 +659,7 @@ void ModuleEditor::SceneWindow()
 
     ImGui::Image((ImTextureID)App->camera->camera->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
-    // Mouse Picking
-    if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
-    {
-        std::vector<GameObject*> PickedGO;
-
-        ImVec2 mousePos = ImGui::GetMousePos();
-        LOG("Mouse Pos: %.2f, %.2f", mousePos.x, mousePos.y);
-
-        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x,
-            ImGui::GetWindowPos().y + ImGui::GetFrameHeight(),
-            ImGui::GetWindowSize().x,
-            ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), mousePos);
-
-        // Offset to fix error
-        norm.x -= .5f;
-        norm.y -= .5f;
-
-        LOG("Normalized Pos: %.2f, %.2f", norm.x, norm.y);
-
-        LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
-        App->renderer3D->ls = picking;
-
-        for (size_t i = 0; i < App->geoLoader->meshes.size(); i++)
-        {
-            if (picking.Intersects(App->geoLoader->meshes[i]->OBB_box))
-            {
-                LOG("%d", App->geoLoader->meshes[i]->num_vertex)
-
-                    if (App->geoLoader->meshes[i]->owner != nullptr)
-                        PickedGO.push_back(App->geoLoader->meshes[i]->owner);
-            }
-        }
-
-
-        float currentDist;
-        float minDist = 0;
-
-        for (size_t i = 0; i < PickedGO.size(); i++)
-        {
-            Mesh* m = PickedGO[i]->GetMeshComponent()->mesh;
-            float4x4 mat = PickedGO[i]->mTransform->getGlobalMatrix().Transposed();
-
-            for (size_t j = 0; j < m->num_index; j += 3)
-            {
-                //Get mesh vertex xyz
-                float* v1 = &m->vertex[m->index[j] * VERTEX_ARGUMENTS];
-                float* v2 = &m->vertex[m->index[j + 1] * VERTEX_ARGUMENTS];
-                float* v3 = &m->vertex[m->index[j + 2] * VERTEX_ARGUMENTS];
-
-                //Transform vertex
-                float4 pT1 = mat * float4(*v1, *(v1 + 1), *(v1 + 2), 1);
-                float4 pT2 = mat * float4(*v2, *(v2 + 1), *(v2 + 2), 1);
-                float4 pT3 = mat * float4(*v3, *(v3 + 1), *(v3 + 2), 1);
-
-                //Get vertex position in float3
-                float3 _pt1 = float3(pT1.x, pT1.y, pT1.z);
-                float3 _pt2 = float3(pT2.x, pT2.y, pT2.z);
-                float3 _pt3 = float3(pT3.x, pT3.y, pT3.z);
-
-                //Set triangle
-                Triangle triangle(_pt1, _pt2, _pt3);
-
-                //Compare triangle intersecting
-                if (picking.Intersects(triangle, &currentDist, nullptr))
-                {
-                    //Set initial minDist
-                    if (minDist == 0) {
-                        minDist = currentDist;
-                        App->scene->SetGameObjectSelected(PickedGO[i]);
-                        continue;
-                    }
-
-                    //If nearer, select
-                    if (minDist > currentDist) {
-                        minDist = currentDist;
-                        App->scene->SetGameObjectSelected(PickedGO[i]);
-                    }
-                }
-            }
-        }
-        //If no object selected, make nullptr
-        if (PickedGO.size() == 0) App->scene->SetGameObjectSelected(nullptr);
-        PickedGO.clear();
-    }
+    MousePicking();
 
     ImGui::End();
 }
@@ -754,6 +671,84 @@ ImVec2 ModuleEditor::NormMousePos(float x, float y, float w, float h, ImVec2 p)
     normP.x = (p.x - x) / w;
     normP.y = 1.0f - (p.y - y) / h;  // Invert the Y-axis
     return normP;
+}
+
+void ModuleEditor::MousePicking()
+{
+    if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
+    {
+        std::vector<GameObject*> PickedGO;
+
+        ImVec2 mousePos = ImGui::GetMousePos();
+        /*LOG("Mouse Pos: %.2f, %.2f", mousePos.x, mousePos.y);*/
+
+        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x,
+            ImGui::GetWindowPos().y + ImGui::GetFrameHeight(),
+            ImGui::GetWindowSize().x,
+            ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), mousePos);
+
+        // Offset to fix error
+        norm.x -= .5f;
+        norm.y -= .5f;
+
+        /*LOG("Normalized Pos: %.2f, %.2f", norm.x, norm.y);*/
+
+        LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
+        App->renderer3D->ls = picking;
+
+        for (size_t i = 0; i < App->geoLoader->meshes.size(); i++)
+        {
+            if (picking.Intersects(App->geoLoader->meshes[i]->OBB_box))
+            {
+                //LOG("%d", App->geoLoader->meshes[i]->num_vertex);
+
+                if (App->geoLoader->meshes[i]->owner != nullptr)
+                    PickedGO.push_back(App->geoLoader->meshes[i]->owner);
+            }
+        }
+
+        float currentDist;
+        float minDist = 0;
+
+        for (size_t i = 0; i < PickedGO.size(); i++)
+        {
+            Mesh* m = PickedGO[i]->GetMeshComponent()->mesh;
+            float4x4 mat = PickedGO[i]->mTransform->getGlobalMatrix().Transposed();
+
+            for (size_t j = 0; j < m->num_index; j += 3)
+            {
+                float* v1 = &m->vertex[m->index[j] * VERTEX_ARGUMENTS];
+                float* v2 = &m->vertex[m->index[j + 1] * VERTEX_ARGUMENTS];
+                float* v3 = &m->vertex[m->index[j + 2] * VERTEX_ARGUMENTS];
+
+                float4 pT1 = mat * float4(*v1, *(v1 + 1), *(v1 + 2), 1);
+                float4 pT2 = mat * float4(*v2, *(v2 + 1), *(v2 + 2), 1);
+                float4 pT3 = mat * float4(*v3, *(v3 + 1), *(v3 + 2), 1);
+
+                float3 _pt1 = float3(pT1.x, pT1.y, pT1.z);
+                float3 _pt2 = float3(pT2.x, pT2.y, pT2.z);
+                float3 _pt3 = float3(pT3.x, pT3.y, pT3.z);
+
+                Triangle triangle(_pt1, _pt2, _pt3);
+
+                if (picking.Intersects(triangle, &currentDist, nullptr))
+                {
+                    if (minDist == 0) {
+                        minDist = currentDist;
+                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                        continue;
+                    }
+
+                    if (minDist > currentDist) {
+                        minDist = currentDist;
+                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                    }
+                }
+            }
+        }
+        if (PickedGO.size() == 0) App->scene->SetGameObjectSelected(nullptr);
+        PickedGO.clear();
+    }
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)

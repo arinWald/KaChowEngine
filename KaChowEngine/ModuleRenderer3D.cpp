@@ -171,7 +171,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	App->geoLoader->RenderScene();
 
-	DrawLine(ls.a, ls.b);
+	/*DrawLine(ls.a, ls.b);*/
 
 	if (mainGameCam != nullptr)
 	{
@@ -191,7 +191,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		App->geoLoader->RenderGameScene();
 
-		DrawLine(ls.a, ls.b);
+		/*DrawLine(ls.a, ls.b);*/
 	}
 
 	Grid.Render();
