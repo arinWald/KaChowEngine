@@ -557,6 +557,30 @@ update_status ModuleEditor::DrawEditor()
             ImGui::EndMenu();
         }
        
+        ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 37);
+        {
+            if (ImGui::ImageButton(ImTextureID("Assets/UI/play.png"), ImVec2(15, 15)))
+            {
+                LOG("Play");
+                //App->SetGameDT();
+            }
+
+            ImGui::SameLine();
+
+            if (ImGui::ImageButton(ImTextureID("Assets/UI/stop.png"), ImVec2(15, 15)))
+            {
+                LOG("Stop");
+                //App->StopGameDT();
+            }
+
+            ImGui::SameLine();
+
+            if (ImGui::ImageButton(ImTextureID("Assets/UI/pause.png"), ImVec2(15, 15)))
+            {
+                LOG("Pause");
+                //App->PauseGameDT();
+            }
+        }
 
         ImGui::EndMainMenuBar();
     }
@@ -677,23 +701,23 @@ void ModuleEditor::MousePicking()
 {
     if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
     {
-        std::vector<GameObject*> PickedGO;
+        std::vector<GameObject*> pickedGameObject;
 
         ImVec2 mousePos = ImGui::GetMousePos();
         /*LOG("Mouse Pos: %.2f, %.2f", mousePos.x, mousePos.y);*/
 
-        ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x,
+        ImVec2 normalPosition = NormMousePos(ImGui::GetWindowPos().x,
             ImGui::GetWindowPos().y + ImGui::GetFrameHeight(),
             ImGui::GetWindowSize().x,
             ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), mousePos);
 
         // Offset to fix error
-        norm.x -= .5f;
-        norm.y -= .5f;
+        normalPosition.x -= .5f;
+        normalPosition.y -= .5f;
 
         /*LOG("Normalized Pos: %.2f, %.2f", norm.x, norm.y);*/
 
-        LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
+        LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(normalPosition.x, normalPosition.y);
         App->renderer3D->ls = picking;
 
         for (size_t i = 0; i < App->geoLoader->meshes.size(); i++)
@@ -703,17 +727,17 @@ void ModuleEditor::MousePicking()
                 //LOG("%d", App->geoLoader->meshes[i]->num_vertex);
 
                 if (App->geoLoader->meshes[i]->owner != nullptr)
-                    PickedGO.push_back(App->geoLoader->meshes[i]->owner);
+                    pickedGameObject.push_back(App->geoLoader->meshes[i]->owner);
             }
         }
 
         float currentDist;
         float minDist = 0;
 
-        for (size_t i = 0; i < PickedGO.size(); i++)
+        for (size_t i = 0; i < pickedGameObject.size(); i++)
         {
-            Mesh* m = PickedGO[i]->GetMeshComponent()->mesh;
-            float4x4 mat = PickedGO[i]->mTransform->getGlobalMatrix().Transposed();
+            Mesh* m = pickedGameObject[i]->GetMeshComponent()->mesh;
+            float4x4 mat = pickedGameObject[i]->mTransform->getGlobalMatrix().Transposed();
 
             for (size_t j = 0; j < m->num_index; j += 3)
             {
@@ -735,19 +759,19 @@ void ModuleEditor::MousePicking()
                 {
                     if (minDist == 0) {
                         minDist = currentDist;
-                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                        App->scene->SetGameObjectSelected(pickedGameObject[i]);
                         continue;
                     }
 
                     if (minDist > currentDist) {
                         minDist = currentDist;
-                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                        App->scene->SetGameObjectSelected(pickedGameObject[i]);
                     }
                 }
             }
         }
-        if (PickedGO.size() == 0) App->scene->SetGameObjectSelected(nullptr);
-        PickedGO.clear();
+        if (pickedGameObject.size() == 0) App->scene->SetGameObjectSelected(nullptr);
+        pickedGameObject.clear();
     }
 }
 

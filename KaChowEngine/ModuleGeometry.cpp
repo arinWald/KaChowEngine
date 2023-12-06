@@ -285,16 +285,19 @@ void ModuleGeometry::BufferMesh(Mesh* mesh)
 
 void ModuleGeometry::RenderScene()
 {
+    meshesRendered = 0;
     //Render the scene
     for (int i = 0; i < meshes.size(); i++) {
         // Render if object inside frustrum
-        if (App->camera->camera->ObjectInsideFrustrum(meshes[i]))
+        if (App->renderer3D->GetMainCamera()->ObjectInsideFrustrum(meshes[i]))
         {
             // Reset to default
             glColor3f(1.0f, 1.0f, 1.0f);
             meshes[i]->Render();
 
             if(App->editor->isAABB) meshes[i]->RenderAABB(); //AABBs
+
+            meshesRendered++;
 
             glColor3f(1.0f, 0.0f, 0.0f);
             if (meshes[i]->owner->GetMeshComponent()->showNormals) {
@@ -304,20 +307,20 @@ void ModuleGeometry::RenderScene()
     }
 }
 
-void ModuleGeometry::RenderGameScene()
-{
-    meshesRendered = 0;
-    for (int i = 0; i < meshes.size(); i++) {
-
-        if (App->renderer3D->GetMainCamera()->ObjectInsideFrustrum(meshes[i]))
-        {
-            glColor3f(1.0f, 1.0f, 1.0f);
-            meshes[i]->Render();
-            glColor3f(1.0f, 0.0f, 0.0f);
-            meshesRendered++;
-        }
-    }
-}
+//void ModuleGeometry::RenderGameScene()
+//{
+//    meshesRendered = 0;
+//    for (int i = 0; i < meshes.size(); i++) {
+//
+//        if (App->renderer3D->GetMainCamera()->ObjectInsideFrustrum(meshes[i]))
+//        {
+//            glColor3f(1.0f, 1.0f, 1.0f);
+//            meshes[i]->Render();
+//            glColor3f(1.0f, 0.0f, 0.0f);
+//            meshesRendered++;
+//        }
+//    }
+//}
 
 
 bool ModuleGeometry::CleanUp()

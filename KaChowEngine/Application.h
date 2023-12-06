@@ -39,7 +39,9 @@ public:
 private:
 
 	Timer	ms_timer;
+	Timer game_timer;
 	float	dt;
+	float gamedt;
 	uint    maxFPS;
 	float    lastMsFrame;
 	std::vector<Module*> list_modules;
@@ -54,6 +56,13 @@ public:
 	bool CleanUp();
 	float GetDT();
 	void LOGToEditor(const char* tmp_string);
+
+	float GetGameDT();
+	void SetGameDT();
+	void StopGameDT();
+	void PauseGameDT();
+
+	int timeSpeed;
 
 private:
 

@@ -43,6 +43,7 @@ bool Application::Init()
 	bool ret = true;
 
 	maxFPS = 400;
+	timeSpeed = 1;
 
 	// Call Init() in all modules
 	for (std::vector<Module*>::const_iterator it = list_modules.cbegin(); it != list_modules.cend() && ret; ++it)
@@ -135,4 +136,29 @@ void Application::AddModule(Module* mod)
 void Application::LOGToEditor(const char* tmp_string)
 {
 	editor->ConsoleLog(tmp_string);
+}
+
+float Application::GetGameDT()
+{
+	return gamedt;
+}
+
+void Application::SetGameDT()
+{
+	game_timer.Start();
+	gamedt = ((float)game_timer.Read() / 1000.0f) * timeSpeed;
+}
+
+void Application::StopGameDT()
+{
+	game_timer.Stop();
+	gamedt = 0;
+}
+
+void Application::PauseGameDT()
+{
+	if (gamedt == 0)
+		gamedt = ((float)game_timer.Read() / 1000.0f) * timeSpeed;
+	else
+		gamedt = 0;
 }

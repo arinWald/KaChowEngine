@@ -189,7 +189,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		// Finish game camera frame buffer binding
 
-		App->geoLoader->RenderGameScene();
+		App->editor->isAABB = false;
+
+		App->geoLoader->RenderScene();
+
+		App->editor->isAABB = true;
 
 		/*DrawLine(ls.a, ls.b);*/
 	}
