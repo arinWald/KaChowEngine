@@ -137,6 +137,11 @@ void ModuleScene::PrintHierarchy(GameObject* gameObject, int index)
 
 void ModuleScene::SetGameObjectSelected(GameObject* gameObject)
 {
+	if (gameObject == nullptr) {
+		selectedGameObj = nullptr;
+		return;
+	}
+
 	selectedGameObj = gameObject;
 }
 

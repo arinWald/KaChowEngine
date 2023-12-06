@@ -7,6 +7,7 @@
 
 #include "MathGeoLib/include/Math/float3x3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 #include "Primitive.h"
 
 #define MAX_LIGHTS 8
@@ -28,6 +29,7 @@ public:
 	C_Camera* GetMainCamera();
 
 	void DrawBox(float3* corners, float3 color);
+	void DrawLine(float3 a, float3 b);
 
 	void OnResize(int width, int height);
 
@@ -51,6 +53,8 @@ public:
 	GLuint VBO;
 	GLuint EBO;
 	GLuint VAO;
+
+	LineSegment ls;
 
 	GameObject* GameCamera;
 	C_Camera* mainGameCam;

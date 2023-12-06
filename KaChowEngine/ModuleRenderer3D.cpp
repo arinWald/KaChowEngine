@@ -171,6 +171,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	App->geoLoader->RenderScene();
 
+	DrawLine(ls.a, ls.b);
+
 	if (mainGameCam != nullptr)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -188,6 +190,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		// Finish game camera frame buffer binding
 
 		App->geoLoader->RenderGameScene();
+
+		DrawLine(ls.a, ls.b);
 	}
 
 	Grid.Render();
@@ -233,6 +237,21 @@ void ModuleRenderer3D::DrawBox(float3* corners, float3 color)
 
 	// Reset color
 	glColor3f(255.f, 255.f, 255.f);
+	glEnd();
+}
+
+void ModuleRenderer3D::DrawLine(float3 a, float3 b)
+{
+	glBegin(GL_LINES);
+
+	glColor3fv(float3(255.0f, 0, 255.0f).ptr());
+
+
+	glVertex3fv(a.ptr());
+	glVertex3fv(b.ptr());
+
+	glColor3f(255.f, 255.f, 255.f);
+
 	glEnd();
 }
 

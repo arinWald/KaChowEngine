@@ -631,19 +631,14 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::GameWindow()
 {
-    //Begin scene & get size
     ImGui::Begin("Game", 0, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus);
     sceneWindowSize = ImGui::GetContentRegionAvail();
-
-    //Get proportion, and match with 16:9
     ImVec2 newWinSize = sceneWindowSize;
     newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
 
-    //Get uv's offset proportionate to image
     float uvOffset = (sceneWindowSize.x - newWinSize.x) / 2.0f;
     uvOffset /= newWinSize.x;
 
-    //Print image (window size), modify UV's to match 
     if (App->renderer3D->GetMainCamera() != nullptr)
         ImGui::Image((ImTextureID)App->renderer3D->GetMainCamera()->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
@@ -653,75 +648,100 @@ void ModuleEditor::GameWindow()
 
 void ModuleEditor::SceneWindow()
 {
-    //Begin scene & get size
     ImGui::Begin("Scene");
     sceneWindowSize = ImGui::GetContentRegionAvail();
 
-    //Get proportion, and match with 16:9
     ImVec2 newWinSize = sceneWindowSize;
     newWinSize.x = (newWinSize.y / 9.0f) * 16.0f;
 
-    //Get uv's offset proportionate to image
     float uvOffset = (sceneWindowSize.x - newWinSize.x) / 2.0f;
     uvOffset /= newWinSize.x;
 
     ImGui::Image((ImTextureID)App->camera->camera->cameraBuffer, sceneWindowSize, ImVec2(-uvOffset, 1), ImVec2(1 + uvOffset, 0));
 
-    if (ImGui::IsMouseClicked(0, true) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
+    // Mouse Picking
+    if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
     {
-        std::vector<GameObject*> pickedGameObjects;
-        std::vector<GameObject*> triangleGameObject;
+        std::vector<GameObject*> PickedGO;
 
         ImVec2 mousePos = ImGui::GetMousePos();
+        LOG("Mouse Pos: %.2f, %.2f", mousePos.x, mousePos.y);
 
         ImVec2 norm = NormMousePos(ImGui::GetWindowPos().x,
             ImGui::GetWindowPos().y + ImGui::GetFrameHeight(),
             ImGui::GetWindowSize().x,
             ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), mousePos);
 
+        // Offset to fix error
+        norm.x -= .5f;
+        norm.y -= .5f;
+
+        LOG("Normalized Pos: %.2f, %.2f", norm.x, norm.y);
+
         LineSegment picking = App->camera->camera->frustum.UnProjectLineSegment(norm.x, norm.y);
+        App->renderer3D->ls = picking;
 
         for (size_t i = 0; i < App->geoLoader->meshes.size(); i++)
         {
             if (picking.Intersects(App->geoLoader->meshes[i]->OBB_box))
             {
-                LOG("%d", App->geoLoader->meshes[i]->num_vertex);
+                LOG("%d", App->geoLoader->meshes[i]->num_vertex)
 
-                if (App->geoLoader->meshes[i]->owner != nullptr)
-                {
-                    pickedGameObjects.push_back(App->geoLoader->meshes[i]->owner);
-                }
+                    if (App->geoLoader->meshes[i]->owner != nullptr)
+                        PickedGO.push_back(App->geoLoader->meshes[i]->owner);
             }
         }
 
-        for (size_t i = 0; i < pickedGameObjects.size(); i++)
+
+        float currentDist;
+        float minDist = 0;
+
+        for (size_t i = 0; i < PickedGO.size(); i++)
         {
-            Mesh* m = pickedGameObjects[i]->GetMeshComponent()->mesh;
+            Mesh* m = PickedGO[i]->GetMeshComponent()->mesh;
+            float4x4 mat = PickedGO[i]->mTransform->getGlobalMatrix().Transposed();
+
             for (size_t j = 0; j < m->num_index; j += 3)
             {
-                float3 pT1, pT2, pT3;
+                //Get mesh vertex xyz
                 float* v1 = &m->vertex[m->index[j] * VERTEX_ARGUMENTS];
                 float* v2 = &m->vertex[m->index[j + 1] * VERTEX_ARGUMENTS];
                 float* v3 = &m->vertex[m->index[j + 2] * VERTEX_ARGUMENTS];
-                pT1 = float3(*v1, *(v1 + 1), *(v1 + 2));
-                pT2 = float3(*v2, *(v2 + 1), *(v2 + 2));
-                pT3 = float3(*v3, *(v3 + 1), *(v3 + 2));
 
-                Triangle triangle(pT1, pT2, pT3);
+                //Transform vertex
+                float4 pT1 = mat * float4(*v1, *(v1 + 1), *(v1 + 2), 1);
+                float4 pT2 = mat * float4(*v2, *(v2 + 1), *(v2 + 2), 1);
+                float4 pT3 = mat * float4(*v3, *(v3 + 1), *(v3 + 2), 1);
 
-                if (picking.Intersects(triangle, nullptr, nullptr))
+                //Get vertex position in float3
+                float3 _pt1 = float3(pT1.x, pT1.y, pT1.z);
+                float3 _pt2 = float3(pT2.x, pT2.y, pT2.z);
+                float3 _pt3 = float3(pT3.x, pT3.y, pT3.z);
+
+                //Set triangle
+                Triangle triangle(_pt1, _pt2, _pt3);
+
+                //Compare triangle intersecting
+                if (picking.Intersects(triangle, &currentDist, nullptr))
                 {
-                    triangleGameObject.push_back(pickedGameObjects[i]);
+                    //Set initial minDist
+                    if (minDist == 0) {
+                        minDist = currentDist;
+                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                        continue;
+                    }
+
+                    //If nearer, select
+                    if (minDist > currentDist) {
+                        minDist = currentDist;
+                        App->scene->SetGameObjectSelected(PickedGO[i]);
+                    }
                 }
             }
         }
-        if (triangleGameObject.size() != 0)
-        {
-            App->scene->SetGameObjectSelected(*triangleGameObject.begin());
-        }
-        pickedGameObjects.clear();
-        triangleGameObject.clear();
-
+        //If no object selected, make nullptr
+        if (PickedGO.size() == 0) App->scene->SetGameObjectSelected(nullptr);
+        PickedGO.clear();
     }
 
     ImGui::End();
@@ -731,8 +751,8 @@ ImVec2 ModuleEditor::NormMousePos(float x, float y, float w, float h, ImVec2 p)
 {
     ImVec2 normP;
 
-    normP.x = ((p.x - x) / w);
-    normP.y = ((p.y - y) / h);
+    normP.x = (p.x - x) / w;
+    normP.y = 1.0f - (p.y - y) / h;  // Invert the Y-axis
     return normP;
 }
 
