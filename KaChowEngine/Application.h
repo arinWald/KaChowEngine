@@ -14,6 +14,13 @@
 
 #include<vector>
 
+enum class GameState
+{
+	PLAY,
+	PAUSE,
+	STOP
+};
+
 class Modules;
 class ModuleWindow;
 class ModuleInput;
@@ -55,6 +62,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 	float GetDT();
+	void SetDT(float dt);
+	float DTG();
+	bool IsRunning();
+	bool IsPaused();
+	GameState GetState();
+	void SetState(GameState gameState);
 	void LOGToEditor(const char* tmp_string);
 
 	float GetGameDT();
@@ -63,6 +76,9 @@ public:
 	void PauseGameDT();
 
 	int timeSpeed;
+
+	float	dtG;
+	GameState gameState = GameState::STOP;
 
 private:
 

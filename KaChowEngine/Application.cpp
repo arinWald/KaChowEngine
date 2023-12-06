@@ -92,6 +92,11 @@ void Application::FinishUpdate()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+
+	//Time management
+	if (gameState == GameState::PLAY) dtG = dt * timeSpeed;
+	else dtG = 0;
+
 	PrepareUpdate();
 	
 	for (std::vector<Module*>::const_iterator it = list_modules.cbegin(); it != list_modules.cend() && ret == UPDATE_CONTINUE; ++it)
@@ -126,6 +131,36 @@ bool Application::CleanUp()
 float Application::GetDT()
 {
 	return dt;
+}
+
+void Application::SetDT(float dt)
+{
+	this->dt = dt;
+}
+
+float Application::DTG()
+{
+	return dtG;
+}
+
+bool Application::IsRunning()
+{
+	return gameState == GameState::PLAY;
+}
+
+bool Application::IsPaused()
+{
+	return gameState == GameState::PAUSE;
+}
+
+GameState Application::GetState()
+{
+	return gameState;
+}
+
+void Application::SetState(GameState gameState)
+{
+	this->gameState = gameState;
 }
 
 void Application::AddModule(Module* mod)

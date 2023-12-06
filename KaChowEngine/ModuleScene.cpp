@@ -38,11 +38,10 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update(float dt)
 {
-
-	rootGameObject->Update();
 	bool ret = UPDATE_CONTINUE;
 
-	
+	rootGameObject->Update();
+	currentGameCamera->mTransform->mPosition += {.01f * App->dtG, .01f * App->dtG, .01f * App->dtG};
 
 	return UPDATE_CONTINUE;
 }

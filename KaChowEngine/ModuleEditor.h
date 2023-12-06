@@ -89,6 +89,10 @@ private:
 	float VRAMAvailable = 0.f;
 	float VRAMReserved = 0.f;
 
+	GLuint playButton;
+	GLuint stopButton;
+	GLuint pauseButton;
+
 public:
 	std::vector<std::string>* logVector;
 	bool vSync;

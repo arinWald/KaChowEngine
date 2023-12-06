@@ -74,6 +74,10 @@ bool ModuleEditor::Init()
 
    GetHardwareInfo();
 
+   //playButton = App->texture2D->LoadTexture("Assets/UI/play.png");
+   //stopButton = App->texture2D->LoadTexture("Assets/UI/stop.png");
+   //pauseButton = App->texture2D->LoadTexture("Assets/UI/pause.png");
+
     return true;
 }
 
@@ -192,7 +196,7 @@ update_status ModuleEditor::DrawEditor()
             if (ImGui::CollapsingHeader("Window"))
             {
                 ImGui::Text("Window Size: %d x %d", App->window->e_width, App->window->e_height);
-                if(ImGui::Checkbox("Fullscreen", &fullscreen))
+                if (ImGui::Checkbox("Fullscreen", &fullscreen))
                 {
                     if (fullscreen)
                     {
@@ -218,7 +222,7 @@ update_status ModuleEditor::DrawEditor()
                 {
                     App->window->ChangeHeight();
                 }*/
-               
+
 
                 ImGui::Text("View");
                 if (ImGui::Checkbox("DemoWindow", &isActivatedDemo))
@@ -374,7 +378,7 @@ update_status ModuleEditor::DrawEditor()
                             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                             LOG("Wireframe Mode Off");
                         }
-                    }                    
+                    }
 
                     if (ImGui::Checkbox("Texture 2D", &texture2D))
                     {
@@ -488,7 +492,7 @@ update_status ModuleEditor::DrawEditor()
                 ShellExecute(0, 0, "https://github.com/arinWald/KaChowEngine", 0, 0, SW_SHOW);
             }
 
-            ImGui::SeparatorText("3rd Party Libraries used"); 
+            ImGui::SeparatorText("3rd Party Libraries used");
 
             if (ImGui::Button("SDL"))
             {
@@ -502,15 +506,15 @@ update_status ModuleEditor::DrawEditor()
             }
             ImGui::SameLine();
             ImGui::Text("Version: %s", glGetString(GL_VERSION));
-            
-            if(ImGui::Button("Glew"))
+
+            if (ImGui::Button("Glew"))
             {
                 ShellExecute(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version: %s", glewGetString(GLEW_VERSION));
-            
-            if(ImGui::Button("ImGui"))
+
+            if (ImGui::Button("ImGui"))
             {
                 ShellExecute(0, 0, "https://github.com/ocornut/imgui/", 0, 0, SW_SHOW);
             }
@@ -556,34 +560,46 @@ update_status ModuleEditor::DrawEditor()
 
             ImGui::EndMenu();
         }
-       
+
         ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 37);
         {
-            if (ImGui::ImageButton(ImTextureID("Assets/UI/play.png"), ImVec2(15, 15)))
+            //PLAY
+            if (ImGui::Button(">", ImVec2(25, 25)))
             {
-                LOG("Play");
-                //App->SetGameDT();
+                if (App->IsRunning()) {
+                    App->SetState(GameState::STOP);
+                    ImGui::SetWindowFocus("Scene");
+                }
+                else {
+                    App->SetState(GameState::PLAY);
+                    ImGui::SetWindowFocus("Game");
+                }
             }
 
             ImGui::SameLine();
 
-            if (ImGui::ImageButton(ImTextureID("Assets/UI/stop.png"), ImVec2(15, 15)))
+            //PAUSE
+            if (ImGui::Button("||", ImVec2(25, 25)))
             {
-                LOG("Stop");
-                //App->StopGameDT();
+                if (App->IsRunning()) {
+                    App->SetState(GameState::PAUSE);
+                }
             }
 
             ImGui::SameLine();
 
-            if (ImGui::ImageButton(ImTextureID("Assets/UI/pause.png"), ImVec2(15, 15)))
+            //STOP
+            if (ImGui::Button("[]", ImVec2(25, 25)))
             {
-                LOG("Pause");
-                //App->PauseGameDT();
+                if (App->IsRunning()) {
+                    App->SetState(GameState::STOP);
+                    ImGui::SetWindowFocus("Scene");
+                }
             }
         }
-
         ImGui::EndMainMenuBar();
     }
+
     if (isActivatedHierarchy) {
         if (ImGui::Begin("Hierarchy"))
         {
