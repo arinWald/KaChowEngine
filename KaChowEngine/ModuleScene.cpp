@@ -37,8 +37,10 @@ bool ModuleScene::Start()
 	currentGameCamera->name = "Game Camera";
 	C_Camera* cameraComponent = new C_Camera(UUIDGenerator::Generate());
 	currentGameCamera->AddComponent(cameraComponent);
-	currentGameCamera->mTransform->setPosition({ 50, 100, -75 });
-	currentGameCamera->mTransform->setRotation({ -50, 35, 0 });
+	currentGameCamera->mTransform->setPosition({ 0, 5, 0 });
+	//currentGameCamera->mTransform->setRotation({ -50, 35, 0 });
+
+	f = 0;
 
 	return true;
 }
@@ -48,7 +50,20 @@ update_status ModuleScene::Update(float dt)
 	bool ret = UPDATE_CONTINUE;
 
 	rootGameObject->Update();
-	currentGameCamera->mTransform->mPosition += {.01f * App->dtGame, .01f * App->dtGame, .01f * App->dtGame};
+
+	//currentGameCamera->mTransform->mPosition += {.01f * App->dtGame, .01f * App->dtGame, .01f * App->dtGame};
+
+	rotation = 1;
+	f += App->dtGame;
+
+	if (f > 0.03f) {
+		currentGameCamera->mTransform->mRotation.y += rotation;
+		currentGameCamera->mParent->mTransform->calculateMatrix();
+		if (currentGameCamera->mParent->mTransform->mRotation.y == 360) {
+			currentGameCamera->mParent->mTransform->mRotation.y = 0;
+		}
+		f = 0.0f;
+	}
 
 	return UPDATE_CONTINUE;
 }

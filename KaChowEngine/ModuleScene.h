@@ -40,4 +40,7 @@ public:
 	GameObject* prova4;
 	GameObject* prova5;
 	GameObject* prova6;
+
+	float rotation;
+	float f;
 };
