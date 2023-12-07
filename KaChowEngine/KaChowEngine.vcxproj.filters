@@ -190,9 +190,6 @@
     <ClCompile Include="C_Camera.cpp">
       <Filter>Sources\Gameobject</Filter>
     </ClCompile>
-    <ClCompile Include="Library.cpp">
-      <Filter>Sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="UUIDGenerator.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -478,9 +475,6 @@
       <Filter>Sources\Gameobject</Filter>
     </ClInclude>
     <ClInclude Include="UUIDGenerator.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Library.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
   </ItemGroup>
