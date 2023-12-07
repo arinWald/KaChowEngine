@@ -125,12 +125,12 @@ update_status ModuleInput::PreUpdate(float dt)
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped", dropped_filedir, App->window->window);
 
 				std::string extension = dropped_filedir_s.substr(dropped_filedir_s.find_last_of(".") + 1);
-				if (extension == "fbx" || extension == "FBX")
+				if (extension == "fbx" || extension == "FBX" || extension == "dae" || extension == "DAE")
 				{
-					LOG("Loading FBX");
+					LOG("Loading FBX or DAE");
 					App->geoLoader->LoadFile(dropped_filedir);
 				}
-				if (extension == "png" || extension == "dds" || extension == "PNG" || extension == "DDS")
+				if (extension == "png" || extension == "dds" || extension == "PNG" || extension == "DDS" || extension == "tga" || extension == "TGA")
 				{
 					LOG("Loading Textures");
 					if (App->scene->selectedGameObj != nullptr && App->scene->selectedGameObj->type != ShapeType::EMPTY)

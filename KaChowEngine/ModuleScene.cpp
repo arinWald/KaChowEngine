@@ -34,7 +34,8 @@ bool ModuleScene::Start()
 	currentGameCamera->name = "Game Camera";
 	C_Camera* cameraComponent = new C_Camera(UUIDGenerator::Generate());
 	currentGameCamera->AddComponent(cameraComponent);
-
+	currentGameCamera->mTransform->setPosition({ 3.5f, 1.5f, -5 });
+	currentGameCamera->mTransform->setRotation({ 0, 35.0f, 0 });
 
 	return true;
 }
