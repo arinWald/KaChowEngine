@@ -23,7 +23,7 @@ public:
 
 	void UpdateBBData();
 
-	Mesh* mesh;
+	std::vector<Mesh*> meshes;
 
 	bool showNormals;
 

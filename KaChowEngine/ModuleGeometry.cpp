@@ -40,130 +40,156 @@ bool ModuleGeometry::Start()
     return ret;
 }
 
-GameObject* ModuleGeometry::LoadFile(const char* file_path)
+GameObject* ModuleGeometry::LoadFile(std::string file_path)
 {
-    const aiScene* scene = aiImportFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-    // Si la escena té meshes
+    const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
     if (scene != nullptr && scene->HasMeshes())
     {
-        GameObject* parentGameObject = new GameObject(App->scene->rootGameObject);
-
-        // Set the gameobject the name of the original file
-        parentGameObject->name = std::string(file_path).substr(std::string(file_path).find_last_of(char(92)) + 1);
-        parentGameObject->name = parentGameObject->name.substr(std::string(file_path).find_last_of("/") + 1);
-        
-        // ProcessNode here?
-        for (int i = 0; i < scene->mNumMeshes; i++)
-        {
-            GameObject* childGameObject = new GameObject();
-            parentGameObject->AddThisChild(childGameObject);
-            childGameObject->name = "Mesh_" + std::to_string(i);
-
-            ImportMesh(scene->mMeshes[i], parentGameObject, childGameObject, scene, i);
-
-            /*childGameObject->GetMaterialComponent()->texture_path = file_path;*/
-
-        }
-
         // Use scene->mNumMeshes to iterate on scene->mMeshes array
+
+        GameObject* finalObj = ProcessNode(scene, scene->mRootNode, App->scene->rootGameObject, file_path);
+
         aiReleaseImport(scene);
 
-        return parentGameObject;
+        return finalObj;
     }
-    else
-    {
-        LOG("Error loading scene: %s", file_path);
+    else {
+        LOG("Error loading scene %s", file_path);
     }
 }
 
-void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObject* CgameObject, const aiScene* scene, int index)
+Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 {
+    Mesh* mesh = new Mesh();
+    // copy vertices
+    mesh->num_vertex = aiMesh->mNumVertices;
+    mesh->vertex = new float[mesh->num_vertex * VERTEX_ARGUMENTS];
+    //memcpy(mesh->vertices, scene->mMeshes[i]->mVertices, sizeof(float) * mesh->num_vertices * 3);
 
-    Mesh* ourMesh = new Mesh();
+    for (int k = 0; k < mesh->num_vertex; k++) {
 
-    //TEST
-    ourMesh->num_vertex = aiMesh->mNumVertices;
-    ourMesh->vertex = new float[ourMesh->num_vertex * VERTEX_ARGUMENTS];
-    ourMesh->vertexFaceNormals = new float[ourMesh->num_vertex * 3];
-    memcpy(ourMesh->vertexFaceNormals, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
-    
+        mesh->vertex[k * VERTEX_ARGUMENTS] = aiMesh->mVertices[k].x;
+        mesh->vertex[k * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[k].y;
+        mesh->vertex[k * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[k].z;
 
-    // Pilla les dades del aiMesh i les posa al ourMesh (les x, y i z)
-    // Quan fem UV's, tambe caldra les x i y de les UV
-    for (int v = 0; v < ourMesh->num_vertex; v++) {
-        //vertices
-        ourMesh->vertex[v * VERTEX_ARGUMENTS] = aiMesh->mVertices[v].x;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 1] = aiMesh->mVertices[v].y;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 2] = aiMesh->mVertices[v].z;
+        if (aiMesh->mTextureCoords[0] == nullptr) continue;                 
+        mesh->vertex[k * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][k].x;
+        mesh->vertex[k * VERTEX_ARGUMENTS + 4] = 1 - aiMesh->mTextureCoords[0][k].y;
 
-        //uvs
-        if (aiMesh->mTextureCoords[0] == nullptr) continue;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][v].x;
-        ourMesh->vertex[v * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][v].y;
     }
 
+    LOG("New mesh with %d vertices", mesh->num_vertex);
+
+    // copy faces
     if (aiMesh->HasFaces())
     {
-        ourMesh->num_index = aiMesh->mNumFaces * 3;
-        ourMesh->index = new uint[ourMesh->num_index]; // assume each face is a triangle
+        mesh->num_index = aiMesh->mNumFaces * 3;
+        mesh->index = new uint[mesh->num_index]; // assume each face is a triangle
 
-        for (uint i = 0; i < aiMesh->mNumFaces; ++i)
+        for (uint j = 0; j < aiMesh->mNumFaces; j++)
         {
-            if (aiMesh->mFaces[i].mNumIndices != 3)
-            {
+            if (aiMesh->mFaces[j].mNumIndices != 3) {
                 LOG("WARNING, geometry face with != 3 indices!");
             }
             else
             {
-                memcpy(&ourMesh->index[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
+                memcpy(&mesh->index[j * 3], aiMesh->mFaces[j].mIndices, 3 * sizeof(uint));
             }
+
         }
-        
-        ourMesh->InitAABB();
 
-        BufferMesh(ourMesh);
+        //meshes.push_back(mesh);
+        BufferMesh(mesh);
 
-        C_Mesh* meshComp = new C_Mesh(CgameObject, UUIDGenerator::Generate());
-        ourMesh->owner = CgameObject;
-        meshComp->mesh = ourMesh;
-        CgameObject->AddComponent(meshComp);
-
-        ourMesh->id_texture = App->texture2D->checkerID;
-
-
-
-        if (scene->HasMaterials()) {
-            if (scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-
-                aiString texture_path;
-                scene->mMaterials[scene->mMeshes[index]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
-                aiString new_path;
-                new_path.Set("Assets/Textures/");
-                new_path.Append(texture_path.C_Str());
-
-
-                C_Material* matComp = new C_Material(UUIDGenerator::Generate());
-                matComp->mParent = CgameObject;
-                matComp->SetTexture(new_path.C_Str());
-                CgameObject->AddComponent(matComp);
-            }
-            else
-            {
-                // For primitives only (not empty primitive)
-                C_Material* matComp = new C_Material(UUIDGenerator::Generate());
-                matComp->mParent = CgameObject;
-                CgameObject->AddComponent(matComp);
-            }
-        }
-        ourMesh->texture_height = App->texture2D->textureHeight;
-        ourMesh->texture_width = App->texture2D->textureWidth;
-        
+        return mesh;
     }
-    else
+    else {
+
+        delete mesh;
+
+        return nullptr;
+    }
+}
+
+GameObject* ModuleGeometry::ProcessNode(const aiScene* scene, aiNode* node, GameObject* parent, std::string Path)
+{
+
+    if (node->mNumMeshes == 0 && node->mNumChildren == 0) return nullptr;
+
+    GameObject* gObj = new GameObject(parent);
+
+    gObj->name = node->mName.C_Str();
+
+    aiVector3D scale, position, rotation;
+    aiQuaternion QuatRotation;
+
+    node->mTransformation.Decompose(scale, QuatRotation, position);
+    rotation = QuatRotation.GetEuler();
+
+    gObj->mTransform->getScale() = float3(scale.x, scale.y, scale.z);
+    gObj->mTransform->mPosition = float3(position.x, position.y, position.z);
+    gObj->mTransform->mRotation = float3(rotation.x, rotation.y, rotation.z);
+    gObj->mTransform->calculateMatrix();
+
+    if (node->mNumMeshes != 0) {
+
+        C_Mesh* component = new C_Mesh(gObj, UUIDGenerator::Generate());
+
+
+        std::string texture_path = "";
+
+
+        for (int i = 0; i < node->mNumMeshes; i++)
+        {
+            Mesh* mesh = ImportMesh(scene->mMeshes[node->mMeshes[i]]);
+
+            if (mesh == nullptr) {
+                LOG("Error loading scene %s", Path);
+                continue;
+            }
+
+            mesh->owner = gObj;
+            component->meshes.push_back(mesh);
+
+            if (texture_path == "") texture_path = ImportTexture(scene, node->mMeshes[i], Path);
+
+        }
+
+        gObj->mComponents.push_back(component);
+
+        if (texture_path != "") {
+            C_Material* componentT = new C_Material(gObj, UUIDGenerator::Generate());
+            gObj->mComponents.push_back(componentT);
+            componentT->SetTexture(texture_path.c_str());
+        }
+    }
+
+    for (int i = 0; i < node->mNumChildren; i++) {
+        ProcessNode(scene, node->mChildren[i], gObj, Path);
+    }
+
+    return gObj;
+}
+
+std::string ModuleGeometry::ImportTexture(const aiScene* scene, int index, std::string path)
+{
+
+    if (scene->HasMaterials())
     {
-        delete ourMesh;
+        aiMaterial* MaterialIndex = scene->mMaterials[scene->mMeshes[index]->mMaterialIndex];
+        if (MaterialIndex->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+            aiString TextPath;
+            aiString AssetsPath;
+            AssetsPath.Set("Assets/");
+            MaterialIndex->GetTexture(aiTextureType_DIFFUSE, 0, &TextPath);
+
+            AssetsPath.Append(TextPath.C_Str());
+
+            return AssetsPath.C_Str();
+        }
     }
+
+    return "";
 }
 
 void Mesh::RenderFaceNormals()

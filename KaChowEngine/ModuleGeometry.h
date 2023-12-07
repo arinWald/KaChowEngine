@@ -69,11 +69,14 @@ public:
 	bool Start() override;
 	bool CleanUp() override;
 	void DestroyMesh(Mesh* mesh);
-	GameObject* LoadFile(const char* file_path);
-	void ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObject* CgameObject, const aiScene* scene, int index);
+	GameObject* LoadFile(std::string file_path);
+	Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh);
+	std::string ImportTexture(const aiScene* scene, int index, std::string path);
+
 	void BufferMesh(Mesh* mesh);
 	void RenderScene();
 	void RenderGameScene();
+	GameObject* ProcessNode(const aiScene* scene, aiNode* node, GameObject* parent, std::string Path);
 
 private:
 	GameObject* newGameObject;

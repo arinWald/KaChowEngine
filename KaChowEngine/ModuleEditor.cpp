@@ -653,9 +653,9 @@ update_status ModuleEditor::DrawEditor()
     
 
     ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    return ret;
+return ret;
 }
 
 bool ModuleEditor::CleanUp()
@@ -704,15 +704,6 @@ void ModuleEditor::SceneWindow()
     ImGui::End();
 }
 
-ImVec2 ModuleEditor::NormMousePos(float x, float y, float w, float h, ImVec2 p)
-{
-    ImVec2 normP;
-
-    normP.x = (p.x - x) / w;
-    normP.y = 1.0f - (p.y - y) / h;  // Invert the Y-axis
-    return normP;
-}
-
 void ModuleEditor::MousePicking()
 {
     if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
@@ -752,7 +743,7 @@ void ModuleEditor::MousePicking()
 
         for (size_t i = 0; i < pickedGameObject.size(); i++)
         {
-            Mesh* m = pickedGameObject[i]->GetMeshComponent()->mesh;
+            Mesh* m = pickedGameObject[i]->GetMeshComponent()->meshes[0];
             float4x4 mat = pickedGameObject[i]->mTransform->getGlobalMatrix().Transposed();
 
             for (size_t j = 0; j < m->num_index; j += 3)
@@ -789,6 +780,15 @@ void ModuleEditor::MousePicking()
         if (pickedGameObject.size() == 0) App->scene->SetGameObjectSelected(nullptr);
         pickedGameObject.clear();
     }
+}
+
+ImVec2 ModuleEditor::NormMousePos(float x, float y, float w, float h, ImVec2 p)
+{
+    ImVec2 normP;
+
+    normP.x = (p.x - x) / w;
+    normP.y = 1.0f - (p.y - y) / h;  // Invert the Y-axis
+    return normP;
 }
 
 void ModuleEditor::AddHistogramData(const float aFPS, std::vector<float>& data_vector)

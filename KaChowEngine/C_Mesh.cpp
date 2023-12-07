@@ -5,7 +5,6 @@
 C_Mesh::C_Mesh(std::string uuid) : Component(nullptr, uuid)
 {
 	type = ComponentType::MESH;
-	mesh = nullptr;
     showNormals = false;
     mParent = nullptr;
 }
@@ -13,15 +12,17 @@ C_Mesh::C_Mesh(std::string uuid) : Component(nullptr, uuid)
 C_Mesh::C_Mesh(GameObject* parent, std::string uuid) : Component(parent, uuid)
 {
     type = ComponentType::MESH;
-    mesh = nullptr;
     showNormals = false;
     mParent = parent;
 }
 
 C_Mesh::~C_Mesh()
 {
-	App->geoLoader->DestroyMesh(mesh);
-	mesh = nullptr;
+    for (int i = 0; i < meshes.size(); i++)
+    {
+        App->geoLoader->DestroyMesh(meshes[i]);
+    }
+    meshes.clear();
 }
 
 void C_Mesh::Update()
@@ -31,21 +32,28 @@ void C_Mesh::Update()
 
 void C_Mesh::UpdateBBData()
 {
-    mesh->OBB_box = mesh->AABB_box;
-    mesh->OBB_box.Transform(mesh->owner->mTransform->getGlobalMatrix().Transposed());
-    mesh->Global_AABB_box.SetNegativeInfinity();
-    mesh->Global_AABB_box.Enclose(mesh->OBB_box);
+    for (int i = 0; i < meshes.size(); i++)
+    {
+        meshes[i]->OBB_box = meshes[i]->AABB_box;
+        meshes[i]->OBB_box.Transform(meshes[i]->owner->mTransform->getGlobalMatrix().Transposed());
+        meshes[i]->Global_AABB_box.SetNegativeInfinity();
+        meshes[i]->Global_AABB_box.Enclose(meshes[i]->OBB_box);
+
+    }
 }
 
 void C_Mesh::OnEditor()
 {
     if (ImGui::CollapsingHeader("Mesh"))
     {
-        if (mesh == nullptr) return;
-        ImGui::LabelText("##%f", "Number of vertex:");
-        ImGui::SameLine();
-        ImGui::Text("%d", mesh->num_vertex);
-        ImGui::LabelText("##%f", "Number of index:");
+        if (meshes.empty()) return;
+        for (int i = 0; i < meshes.size(); i++)
+        {
+            ImGui::LabelText("##%f", "Number of vertex:");
+            ImGui::SameLine();
+            ImGui::Text("%d", meshes[i]->num_vertex);
+            ImGui::LabelText("##%f", "Number of index:");
+        }
 
         // Not printing the proper number (should be a third of vertex?)
         //ImGui::SameLine();

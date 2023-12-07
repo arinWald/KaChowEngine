@@ -28,8 +28,8 @@ void C_Material::OnEditor()
 	//Texture component inspector
 	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
 	{
-		int width = mParent->GetMeshComponent()->mesh->texture_width;
-		int height = mParent->GetMeshComponent()->mesh->texture_height;
+		int width = mParent->GetMeshComponent()->meshes[0]->texture_width;
+		int height = mParent->GetMeshComponent()->meshes[0]->texture_height;
 
 		std::string aux = "Size: " + std::to_string(width) + " x " + std::to_string(height);
 		ImGui::TextWrapped(aux.c_str());
@@ -72,18 +72,22 @@ void C_Material::UpdateMeshTexture()
 	if (mParent == nullptr) return;
 
 	C_Mesh* cm = mParent->GetMeshComponent();
-	if (cm == nullptr || cm->mesh == nullptr) return;
+	for (int i = 0; i < mParent->GetMeshComponent()->meshes.size(); i++)
+	{
+		if (cm == nullptr || cm->meshes[i] == nullptr) return;
 
-	//Send selected texture
-	if (currentTexture == TEXTURE) {
-		cm->mesh->id_texture = textureID;
-		return;
+		//Send selected texture
+		if (currentTexture == TEXTURE) {
+			cm->meshes[i]->id_texture = textureID;
+			return;
+		}
+		else if (currentTexture == CHECKERS) {
+			cm->meshes[i]->id_texture = App->texture2D->checkerID;
+			return;
+		}
+		cm->meshes[i]->id_texture = 0;
 	}
-	else if (currentTexture == CHECKERS) {
-		cm->mesh->id_texture = App->texture2D->checkerID;
-		return;
-	}
-	cm->mesh->id_texture = 0;
+	
 }
 
 void C_Material::Enable()

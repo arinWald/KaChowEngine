@@ -117,9 +117,11 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 	// For inspector to print
 	if (App->scene->selectedGameObj != nullptr) {
 		if (App->scene->selectedGameObj->GetMeshComponent() != nullptr) {
-
-			App->scene->selectedGameObj->GetMeshComponent()->mesh->texture_width = imgWidth;
-			App->scene->selectedGameObj->GetMeshComponent()->mesh->texture_height = imgHeight;
+			for (int i = 0; i < App->scene->selectedGameObj->GetMeshComponent()->meshes.size(); i++)
+			{
+				App->scene->selectedGameObj->GetMeshComponent()->meshes[i]->texture_width = imgWidth;
+				App->scene->selectedGameObj->GetMeshComponent()->meshes[i]->texture_height = imgHeight;
+			}
 		}
 		if (App->scene->selectedGameObj->GetMaterialComponent() != nullptr) {
 
