@@ -50,6 +50,9 @@ public:
 	bool deleteGameObject;
 	int componentNum;
 
+	std::string GetUUIDName();
+	std::string uuid;
+
 	ShapeType type;
 
 };

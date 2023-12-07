@@ -19,8 +19,8 @@ enum CurrentTextureType
 class C_Material : public Component
 {
 public:
-	C_Material();
-	C_Material(GameObject* parent);
+	C_Material(std::string uuid);
+	C_Material(GameObject* parent, std::string uuid);
 	~C_Material();
 
 	GLuint textureID;

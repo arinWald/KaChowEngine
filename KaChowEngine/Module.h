@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "UUIDGenerator.h"
 
 class Application;
 struct PhysBody3D;

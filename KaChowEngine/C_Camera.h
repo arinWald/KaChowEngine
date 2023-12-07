@@ -1,13 +1,14 @@
 #pragma once
 #include "Component.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#include <string>
 
 struct Mesh;
 class C_Camera : public Component
 {
 public:
-	C_Camera();
-	C_Camera(GameObject owner);
+	C_Camera(std::string uuid);
+	C_Camera(GameObject owner, std::string uuid);
 	~C_Camera();
 
 	void Update();

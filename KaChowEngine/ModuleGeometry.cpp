@@ -7,6 +7,8 @@
 
 #include "Glew/include/glew.h"
 
+
+
 #include <vector>
 
 ModuleGeometry::ModuleGeometry(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -21,17 +23,19 @@ ModuleGeometry::~ModuleGeometry()
 
 bool ModuleGeometry::Init()
 {
-    return true;
-}
-
-bool ModuleGeometry::Start()
-{
     bool ret = true;
 
     // Stream log messages to Debug window
     struct aiLogStream stream;
     stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
     aiAttachLogStream(&stream);
+
+    return ret;
+}
+
+bool ModuleGeometry::Start()
+{
+    bool ret = true;
 
     return ret;
 }
@@ -120,7 +124,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
 
         BufferMesh(ourMesh);
 
-        C_Mesh* meshComp = new C_Mesh(CgameObject);
+        C_Mesh* meshComp = new C_Mesh(CgameObject, UUIDGenerator::Generate());
         ourMesh->owner = CgameObject;
         meshComp->mesh = ourMesh;
         CgameObject->AddComponent(meshComp);
@@ -139,7 +143,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
                 new_path.Append(texture_path.C_Str());
 
 
-                C_Material* matComp = new C_Material();
+                C_Material* matComp = new C_Material(UUIDGenerator::Generate());
                 matComp->mParent = CgameObject;
                 matComp->SetTexture(new_path.C_Str());
                 CgameObject->AddComponent(matComp);
@@ -147,7 +151,7 @@ void ModuleGeometry::ImportMesh(aiMesh* aiMesh, GameObject* PgameObject, GameObj
             else
             {
                 // For primitives only (not empty primitive)
-                C_Material* matComp = new C_Material();
+                C_Material* matComp = new C_Material(UUIDGenerator::Generate());
                 matComp->mParent = CgameObject;
                 CgameObject->AddComponent(matComp);
             }

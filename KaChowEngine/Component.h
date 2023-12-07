@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <string>
 enum class ComponentType
 {
 	NONE,
@@ -14,7 +14,7 @@ class GameObject;
 class Component
 {
 public:
-	Component(GameObject* parent);
+	Component(GameObject* parent, std::string uuid);
 	virtual ~Component();
 
 	virtual void OnEditor();
@@ -26,6 +26,8 @@ public:
 	bool active;
 	ComponentType type;
 	GameObject* mParent;
+
+	std::string uuid;
 };
 
 

@@ -43,7 +43,6 @@ bool Application::Init()
 	bool ret = true;
 
 	maxFPS = 400;
-	timeSpeed = 1;
 
 	// Call Init() in all modules
 	for (std::vector<Module*>::const_iterator it = list_modules.cbegin(); it != list_modules.cend() && ret; ++it)
@@ -93,9 +92,8 @@ update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	//Time management
-	if (gameState == GameState::PLAY) dtG = dt * timeSpeed;
-	else dtG = 0;
+	if (gameState == GameState::PLAY) dtGame = dt;
+	else dtGame = 0;
 
 	PrepareUpdate();
 	
@@ -138,9 +136,9 @@ void Application::SetDT(float dt)
 	this->dt = dt;
 }
 
-float Application::DTG()
+float Application::DTGame()
 {
-	return dtG;
+	return dtGame;
 }
 
 bool Application::IsRunning()
@@ -181,7 +179,7 @@ float Application::GetGameDT()
 void Application::SetGameDT()
 {
 	game_timer.Start();
-	gamedt = ((float)game_timer.Read() / 1000.0f) * timeSpeed;
+	gamedt = ((float)game_timer.Read() / 1000.0f);
 }
 
 void Application::StopGameDT()
@@ -193,7 +191,7 @@ void Application::StopGameDT()
 void Application::PauseGameDT()
 {
 	if (gamedt == 0)
-		gamedt = ((float)game_timer.Read() / 1000.0f) * timeSpeed;
+		gamedt = ((float)game_timer.Read() / 1000.0f);
 	else
 		gamedt = 0;
 }

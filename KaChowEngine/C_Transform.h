@@ -4,6 +4,7 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "Component.h"
 #include "ImGui/imgui.h"
+#include <string>
 
 class GameObject;
 class Component;
@@ -11,8 +12,8 @@ class Component;
 class C_Transform : public Component
 {
 public:
-	C_Transform();
-	C_Transform(GameObject* parent);
+	C_Transform(std::string uuid);
+	C_Transform(GameObject* parent, std::string uuid);
 	~C_Transform();
 
 	void OnEditor() override;

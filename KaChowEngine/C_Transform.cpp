@@ -1,13 +1,13 @@
 #include "C_Transform.h"
 
-C_Transform::C_Transform() : Component(nullptr)
+C_Transform::C_Transform(std::string uuid) : Component(nullptr, uuid)
 {
 	type = ComponentType::TRANSFORM;
 
 	resetMatrix();
 }
 
-C_Transform::C_Transform(GameObject* parent) : Component(parent)
+C_Transform::C_Transform(GameObject* parent, std::string uuid) : Component(parent, uuid)
 {
 	type = ComponentType::TRANSFORM;
 	this->mParent = parent;

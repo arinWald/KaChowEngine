@@ -3,14 +3,14 @@
 #include "Application.h"
 #include "C_Mesh.h"
 
-C_Material::C_Material() : Component(nullptr)
+C_Material::C_Material(std::string uuid) : Component(nullptr, uuid)
 {
 	type = ComponentType::MATERIAL;
 	currentTexture = TEXTURE;
 	mParent = nullptr;
 }
 
-C_Material::C_Material(GameObject* parent) : Component(parent)
+C_Material::C_Material(GameObject* parent, std::string uuid) : Component(parent, uuid)
 {
 	type = ComponentType::MATERIAL;
 	this->mParent = parent;

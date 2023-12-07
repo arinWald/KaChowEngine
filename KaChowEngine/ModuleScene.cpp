@@ -29,7 +29,7 @@ bool ModuleScene::Start()
 	// Game camera at start
 	currentGameCamera = new GameObject(rootGameObject);
 	currentGameCamera->name = "Game Camera";
-	C_Camera* cameraComponent = new C_Camera();
+	C_Camera* cameraComponent = new C_Camera(UUIDGenerator::Generate());
 	currentGameCamera->AddComponent(cameraComponent);
 
 
@@ -41,7 +41,7 @@ update_status ModuleScene::Update(float dt)
 	bool ret = UPDATE_CONTINUE;
 
 	rootGameObject->Update();
-	currentGameCamera->mTransform->mPosition += {.01f * App->dtG, .01f * App->dtG, .01f * App->dtG};
+	currentGameCamera->mTransform->mPosition += {.01f * App->dtGame, .01f * App->dtGame, .01f * App->dtGame};
 
 	return UPDATE_CONTINUE;
 }

@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "C_Transform.h"
 
-C_Camera::C_Camera() :Component(nullptr)
+C_Camera::C_Camera(std::string uuid) :Component(nullptr, uuid)
 {
 	typeCameraSelected = 0;
 

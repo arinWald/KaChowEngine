@@ -6,6 +6,7 @@
 #include "C_Transform.h"
 #include "C_Camera.h"
 
+
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	camState = CamStates::NORMAL;
@@ -27,7 +28,7 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
-	camera = new C_Camera();
+	camera = new C_Camera(UUIDGenerator::Generate());
 	camera->frustum.pos = float3(0, 0, -10);
 	typeCameraSelected = 0;
 

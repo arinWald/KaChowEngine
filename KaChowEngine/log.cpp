@@ -19,5 +19,4 @@ void log(const char file[], int line, const char* format, ...)
 	{
 		App->LOGToEditor(tmp_string);
 	}
-
 }

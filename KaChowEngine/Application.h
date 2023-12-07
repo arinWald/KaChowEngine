@@ -63,7 +63,7 @@ public:
 	bool CleanUp();
 	float GetDT();
 	void SetDT(float dt);
-	float DTG();
+	float DTGame();
 	bool IsRunning();
 	bool IsPaused();
 	GameState GetState();
@@ -75,9 +75,7 @@ public:
 	void StopGameDT();
 	void PauseGameDT();
 
-	int timeSpeed;
-
-	float	dtG;
+	float	dtGame;
 	GameState gameState = GameState::STOP;
 
 private:

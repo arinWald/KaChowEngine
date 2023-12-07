@@ -1,16 +1,19 @@
 #include "GameObject.h"
 #include "OurPrimitive.h"
+#include "UUIDGenerator.h"
 
 GameObject::GameObject()
 {
 	name = "GameObject";
 	mParent = nullptr;
-	mTransform = new C_Transform(mParent);
+	mTransform = new C_Transform(mParent, UUIDGenerator::Generate());
 	type = ShapeType::NONE;
 	deleteGameObject = false;
 
 	mComponents.push_back(mTransform);
 	componentNum = 0;
+
+	this->uuid = UUIDGenerator::Generate();
 }
 
 GameObject::GameObject(GameObject* parent)
@@ -23,7 +26,7 @@ GameObject::GameObject(GameObject* parent)
 		parent->mChildren.push_back(this);
 	}
 
-	mTransform = new C_Transform(mParent);
+	mTransform = new C_Transform(mParent, UUIDGenerator::Generate());
 
 	type = ShapeType::NONE;
 
@@ -31,6 +34,8 @@ GameObject::GameObject(GameObject* parent)
 
 	mComponents.push_back(mTransform);
 	componentNum = 0;
+
+	this->uuid = UUIDGenerator::Generate();
 }
 
 GameObject::~GameObject()
@@ -116,6 +121,15 @@ C_Material* GameObject::GetMaterialComponent()
 		}
 	}
 	return nullptr;
+}
+
+std::string GameObject::GetUUIDName()
+{
+	std::string toReturn = name;
+	toReturn += "##";
+	toReturn += uuid;
+
+	return toReturn.c_str();
 }
 
 C_Camera* GameObject::GetCameraComponent()
@@ -205,7 +219,7 @@ void GameObject::PrintOnInspector()
 			{
 				//Mesh component
 				if (GetMeshComponent() == nullptr) {
-					C_Mesh* compMesh = new C_Mesh();
+					C_Mesh* compMesh = new C_Mesh(UUIDGenerator::Generate());
 					AddComponent(compMesh);
 				}
 				else {
@@ -216,7 +230,7 @@ void GameObject::PrintOnInspector()
 			case 2:
 			{
 				if (GetMaterialComponent() == nullptr) {
-					C_Material* compMat = new C_Material();
+					C_Material* compMat = new C_Material(UUIDGenerator::Generate());
 					AddComponent(compMat);
 				}
 				else {
@@ -227,7 +241,7 @@ void GameObject::PrintOnInspector()
 			case 3:
 			{
 				if (GetCameraComponent() == nullptr) {
-					C_Camera* compCam = new C_Camera();
+					C_Camera* compCam = new C_Camera(UUIDGenerator::Generate());
 					AddComponent(compCam);
 				}
 				else {

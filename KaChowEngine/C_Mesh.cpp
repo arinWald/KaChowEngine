@@ -2,7 +2,7 @@
 #include "Application.h"
 
 
-C_Mesh::C_Mesh() : Component(nullptr)
+C_Mesh::C_Mesh(std::string uuid) : Component(nullptr, uuid)
 {
 	type = ComponentType::MESH;
 	mesh = nullptr;
@@ -10,7 +10,7 @@ C_Mesh::C_Mesh() : Component(nullptr)
     mParent = nullptr;
 }
 
-C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
+C_Mesh::C_Mesh(GameObject* parent, std::string uuid) : Component(parent, uuid)
 {
     type = ComponentType::MESH;
     mesh = nullptr;
