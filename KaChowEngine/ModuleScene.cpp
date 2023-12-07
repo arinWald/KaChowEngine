@@ -26,6 +26,9 @@ bool ModuleScene::Start()
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 	bakerHouse->name = "BakerHouse";
 
+	//skybox = App->geoLoader->LoadFile("Assets/Models/SphereRevertedNormals.fbx");
+	//skybox->name = "Skybox";
+
 	// Game camera at start
 	currentGameCamera = new GameObject(rootGameObject);
 	currentGameCamera->name = "Game Camera";

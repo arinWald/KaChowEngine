@@ -299,7 +299,22 @@ void ModuleGeometry::RenderScene()
             glColor3f(1.0f, 1.0f, 1.0f);
             meshes[i]->Render();
 
-            if(App->editor->isAABB) meshes[i]->RenderAABB(); //AABBs
+            if (App->editor->isAABB)
+            {
+                meshes[i]->RenderAABB(); //AABBs
+
+                //Raycast line
+                App->renderer3D->DrawLine(App->renderer3D->ls.a, App->renderer3D->ls.b);
+
+                //Frustum debug
+                C_Camera* pilota = App->renderer3D->GetMainCamera();
+                if (pilota != nullptr) {
+                    float3 corners[8];
+                    pilota->frustum.GetCornerPoints(corners);
+                    App->renderer3D->DrawBox(corners, float3(1, .5, .9));
+                }
+
+            }
 
             meshesRendered++;
 
