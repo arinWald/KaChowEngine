@@ -280,12 +280,3 @@ bool GameObject::AddThisChild(GameObject* gameObject)
 	mChildren.push_back(gameObject);
 	return true;
 }
-
-void GameObject::FixRotationYZ() {
-
-	mTransform->mRotation = float3(mTransform->mRotation.x, mTransform->mRotation.z, mTransform->mRotation.y);
-	mTransform->calculateMatrix();
-	for (int i = 0; i < mChildren.size(); i++) {
-		mChildren[i]->FixRotationYZ();
-	}
-}

@@ -51,8 +51,6 @@ GameObject* ModuleGeometry::LoadFile(std::string file_path)
 
         aiReleaseImport(scene);
 
-        finalObj->FixRotationYZ();
-
         return finalObj;
     }
     else {
@@ -99,6 +97,8 @@ Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
             }
 
         }
+
+        mesh->InitAABB();
 
         //meshes.push_back(mesh);
         BufferMesh(mesh);
@@ -180,14 +180,35 @@ std::string ModuleGeometry::ImportTexture(const aiScene* scene, int index, std::
     {
         aiMaterial* MaterialIndex = scene->mMaterials[scene->mMeshes[index]->mMaterialIndex];
         if (MaterialIndex->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+
             aiString TextPath;
-            aiString AssetsPath;
-            AssetsPath.Set("Assets/");
             MaterialIndex->GetTexture(aiTextureType_DIFFUSE, 0, &TextPath);
 
-            AssetsPath.Append(TextPath.C_Str());
+            for (int i = 0; i < path.size(); i++)
+            {
+                if (path[i] == '\\')
+                {
+                    path[i] = '/';
+                }
+            }
 
-            return AssetsPath.C_Str();
+            std::string NormTextPath = TextPath.C_Str();
+
+            for (int i = 0; i < NormTextPath.size(); i++)
+            {
+                if (NormTextPath[i] == '\\')
+                {
+                    NormTextPath[i] = '/';
+                }
+            }
+
+            std::string AssetsPath = path;
+            uint AssetsPos = AssetsPath.find("Assets/");
+
+            AssetsPath = AssetsPath.substr(AssetsPos, AssetsPath.find_last_of("/") - AssetsPos);
+            AssetsPath.append("/").append(TextPath.C_Str());
+
+            return AssetsPath;
         }
     }
 
@@ -351,6 +372,8 @@ void ModuleGeometry::RenderScene()
                 meshes[i]->RenderFaceNormals();
             }
         }
+
+        
     }
 }
 
