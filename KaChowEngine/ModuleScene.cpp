@@ -51,18 +51,21 @@ update_status ModuleScene::Update(float dt)
 
 	rootGameObject->Update();
 
-	//currentGameCamera->mTransform->mPosition += {.01f * App->dtGame, .01f * App->dtGame, .01f * App->dtGame};
+	//currentGameCamera->mTransform->mPosition += {.1f * App->dtGame, .1f * App->dtGame, .1f * App->dtGame};
 
 	rotation = 1;
 	f += App->dtGame;
 
-	if (f > 0.03f) {
-		currentGameCamera->mTransform->mRotation.y += rotation;
-		currentGameCamera->mParent->mTransform->calculateMatrix();
-		if (currentGameCamera->mParent->mTransform->mRotation.y == 360) {
-			currentGameCamera->mParent->mTransform->mRotation.y = 0;
+	if (App->gameState == GameState::PLAY)
+	{
+		if (f > 0.03f) {
+			currentGameCamera->mTransform->mRotation.y += rotation;
+			currentGameCamera->mTransform->calculateMatrix();
+			if (currentGameCamera->mTransform->mRotation.y == 360) {
+				currentGameCamera->mTransform->mRotation.y = 0;
+			}
+			f = 0.0f;
 		}
-		f = 0.0f;
 	}
 
 	return UPDATE_CONTINUE;
