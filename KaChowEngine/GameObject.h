@@ -33,6 +33,8 @@ public:
 	void DeleteChild(GameObject* child);
 	void PrintOnInspector();
 
+	void FixRotationYZ();
+
 
 	C_Mesh* GetMeshComponent();
 	C_Material* GetMaterialComponent();

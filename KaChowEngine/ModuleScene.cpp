@@ -26,6 +26,11 @@ bool ModuleScene::Start()
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 	bakerHouse->name = "BakerHouse";
 
+	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
+	street->name = "Street";
+	street->mTransform->mRotation.x = -90;
+	street->mTransform->calculateMatrix();
+
 
 	// Game camera at start
 	currentGameCamera = new GameObject(rootGameObject);

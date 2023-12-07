@@ -30,7 +30,7 @@ public:
 
 	GameObject* bakerHouse;
 
-	GameObject* skybox;
+	GameObject* street;
 
 	GameObject* currentGameCamera;
 

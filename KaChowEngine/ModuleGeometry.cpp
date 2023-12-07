@@ -51,6 +51,8 @@ GameObject* ModuleGeometry::LoadFile(std::string file_path)
 
         aiReleaseImport(scene);
 
+        finalObj->FixRotationYZ();
+
         return finalObj;
     }
     else {
