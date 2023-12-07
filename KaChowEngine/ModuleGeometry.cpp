@@ -130,7 +130,7 @@ GameObject* ModuleGeometry::ProcessNode(const aiScene* scene, aiNode* node, Game
 
     gObj->mTransform->getScale() = float3(scale.x, scale.y, scale.z);
     gObj->mTransform->mPosition = float3(position.x, position.y, position.z);
-    gObj->mTransform->mRotation = float3(rotation.x, rotation.y, rotation.z);
+    /*gObj->mTransform->mRotation = float3(rotation.x, rotation.y, rotation.z);*/
     gObj->mTransform->calculateMatrix();
 
     if (node->mNumMeshes != 0) {
