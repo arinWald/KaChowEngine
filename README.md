@@ -73,13 +73,18 @@ Implementation of Guizmo that allows the user to transform the position, rotatio
 
 ### Serialization
 
-implementaion of basic serialization that allowas the user to save and load the scene paramenters.
+Implementaion of basic serialization that allowas the user to save and load the scene paramenters.
+- Ctrl + S to save the scene
+- There's also a button on the header menu
 
 ## Windows
 
 ### Configuration
 
 In the 'Configuration' section, you can fine-tune various settings to optimize your development and user experience:
+
+**Save and Load Config**
+- Two buttons that allow to save and load the current engine configuration.
 
 **FPS Histogram:**
 - This option provides a real-time histogram that displays the frames per second (FPS) of your application. Monitoring the FPS is essential for ensuring smooth and responsive gameplay.
