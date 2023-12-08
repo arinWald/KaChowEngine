@@ -34,6 +34,8 @@ public:
 	float3 getScale();
 	void setScale(float3 scale);
 
+	void SetTransformMatrixW(float4x4 matrix);
+
 	//// Pilota
 	//void SetTransfoMatrix(float3 position, Quat rotation, float3 scale);
 

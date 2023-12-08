@@ -11,6 +11,8 @@
 
 #include "Glew/include/glew.h"
 
+#include "ImGuizmo/ImGuizmo.h"
+
 
 class ModuleEditor : public Module
 {
@@ -36,10 +38,17 @@ public:
 
 	void MousePicking();
 
+	void DrawGuizmos();
+
 	std::vector<float> mFPSLog;
 	std::vector<float> mMsLog;
 
 private:
+
+	ImVec2 guizmoSize;
+	ImVec2 guizmoWindowPos;     
+	int guizmoOffset;
+
 	// Game & Scene window
 	ImVec2 gameWindowSize;
 	ImVec2 sceneWindowSize;

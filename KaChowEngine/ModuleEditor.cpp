@@ -94,6 +94,8 @@ update_status ModuleEditor::DrawEditor()
     // ImGui Stuff
 
     ImGui::NewFrame();
+    ImGuizmo::BeginFrame();
+    ImGuizmo::Enable(true);
 
     AddHistogramData(App->GetDT() * 1000.0f, mMsLog);
     AddHistogramData(1 / App->GetDT(), mFPSLog);
@@ -689,6 +691,11 @@ void ModuleEditor::GameWindow()
 void ModuleEditor::SceneWindow()
 {
     ImGui::Begin("Scene");
+
+    App->editor->guizmoWindowPos = ImGui::GetWindowPos();
+    App->editor->guizmoOffset = ImGui::GetFrameHeight() / 2;
+    App->editor->guizmoSize = ImGui::GetContentRegionAvail();
+
     sceneWindowSize = ImGui::GetContentRegionAvail();
 
     ImVec2 newWinSize = sceneWindowSize;
@@ -701,12 +708,14 @@ void ModuleEditor::SceneWindow()
 
     MousePicking();
 
+    DrawGuizmos();
+
     ImGui::End();
 }
 
 void ModuleEditor::MousePicking()
 {
-    if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered())
+    if (ImGui::IsMouseClicked(0) && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT && ImGui::IsWindowHovered() && !ImGuizmo::IsOver())
     {
         std::vector<GameObject*> pickedGameObject;
 
@@ -789,6 +798,35 @@ void ModuleEditor::MousePicking()
         }
         if (pickedGameObject.size() == 0) App->scene->SetGameObjectSelected(nullptr);
         pickedGameObject.clear();
+    }
+}
+
+void ModuleEditor::DrawGuizmos()
+{
+    if (App->scene->selectedGameObj == nullptr) return;
+    C_Transform* transform = App->scene->selectedGameObj->mTransform;
+    if (transform == nullptr) return;
+
+    //ImGuizmo::Enable(true);
+
+
+    ImGuizmo::SetDrawlist();
+
+    float x = ImGui::GetWindowPos().x;
+    float y = ImGui::GetWindowPos().y;
+    float w = sceneWindowSize.x;
+    float h = sceneWindowSize.y;
+    //Guizmo
+
+    float4x4 aux = transform->getGlobalMatrix();
+
+    ImGuizmo::MODE finalMode = (App->camera->operation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : App->camera->mode);
+
+    ImGuizmo::SetRect(x, y, w, h);
+    if (ImGuizmo::Manipulate(App->camera->camera->GetViewMatrix(), App->camera->camera->GetProjetionMatrix(), App->camera->operation, finalMode, &aux.v[0][0]))
+    {
+        aux.Transpose();
+        transform->SetTransformMatrixW(aux);
     }
 }
 

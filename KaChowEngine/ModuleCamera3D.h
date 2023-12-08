@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float4x4.h"
+#include "ImGuizmo/ImGuizmo.h"
 
 class C_Camera;
 
@@ -34,6 +35,8 @@ private:
 
 public:
 
+	ImGuizmo::OPERATION operation;
+	ImGuizmo::MODE mode;
 
 	float3 X, Y, Z, Position, Reference;
 

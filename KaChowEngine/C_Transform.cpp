@@ -106,6 +106,16 @@ void C_Transform::setScale(float3 scale)
 	calculateMatrix();
 }
 
+void C_Transform::SetTransformMatrixW(float4x4 matrix)
+{
+	math::Quat q;
+	matrix.Decompose(mPosition, q, mScale);
+
+	mRotation = q.ToEulerXYZ();
+	mRotation.x = mRotation.x * RADTODEG;
+	mRotation.y = mRotation.y * RADTODEG;
+	mRotation.z = mRotation.z * RADTODEG;
+}
 
 
 //void C_Transform::SetTransfoMatrix(float3 position, Quat rotation, float3 scale)

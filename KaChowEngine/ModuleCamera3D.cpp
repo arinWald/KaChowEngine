@@ -32,6 +32,8 @@ bool ModuleCamera3D::Start()
 	camera->frustum.pos = float3(0, 0, -10);
 	typeCameraSelected = 0;
 
+	operation = ImGuizmo::TRANSLATE;
+
 	return ret;
 }
 
