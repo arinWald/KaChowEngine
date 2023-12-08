@@ -658,11 +658,87 @@ update_status ModuleEditor::DrawEditor()
         ImGui::ShowDemoWindow();
     }
     
+    RefreshRenderSettings();
 
     ImGui::Render();
-ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 return ret;
+}
+
+void ModuleEditor::RefreshRenderSettings()
+{
+    if (lightning)
+    {
+        glEnable(GL_LIGHTING);
+        LOG("Lights On");
+    }
+    else
+    {
+        glDisable(GL_LIGHTING);
+        LOG("Lights Off");
+    }
+
+    if (isCullFace)
+    {
+        glEnable(GL_CULL_FACE);
+        LOG("Cull Face On");
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+        LOG("Cull Face Off");
+    }
+    if (depthTest)
+    {
+        glEnable(GL_DEPTH_TEST);
+        LOG("Depth Test On");
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+        LOG("Depth Test Off");
+    }
+    if (colorMat)
+    {
+        glEnable(GL_COLOR_MATERIAL);
+        LOG("Color Material On");
+    }
+    else
+    {
+        glDisable(GL_COLOR_MATERIAL);
+        LOG("Color Material Off");
+    }
+    if (isWireframe)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        LOG("Wireframe Mode On");
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        LOG("Wireframe Mode Off");
+    }
+    if (texture2D)
+    {
+        glEnable(GL_TEXTURE_2D);
+        LOG("Texture 2D On");
+    }
+    else
+    {
+        glDisable(GL_TEXTURE_2D);
+        LOG("Texture 2D Off");
+    }
+    if (vSync)
+    {
+        SDL_GL_SetSwapInterval(1);
+        LOG("Vsync On");
+    }
+    else
+    {
+        SDL_GL_SetSwapInterval(0);
+        LOG("Vsync Off");
+    }
 }
 
 bool ModuleEditor::CleanUp()

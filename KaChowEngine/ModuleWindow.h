@@ -26,8 +26,8 @@ public:
 	void ChangeWidth();
 	void ChangeHeight();
 
-	bool SaveConfig(JsonParser& node) const override;
-	bool LoadConfig(JsonParser& node) override;
+	bool SaveConfig(JsonParser& node) const;
+	bool LoadConfig(JsonParser& node);
 
 	void SetSize(int width, int height);
 

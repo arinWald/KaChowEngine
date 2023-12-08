@@ -24,6 +24,7 @@ public:
 	bool Init() override;
 	update_status DrawEditor();
 	bool CleanUp() override;
+	void RefreshRenderSettings();
 
 	void GameWindow();
 	void SceneWindow();

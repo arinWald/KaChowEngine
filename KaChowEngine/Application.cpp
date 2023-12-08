@@ -56,6 +56,18 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	JSON_Value* root = jsonFile.FileToValue("config.json");
+
+	if (jsonFile.GetRootValue() == NULL)
+	{
+		LOG("Couldn't load config.json");
+		ret = false;
+	}
+
+	JsonParser application = jsonFile.GetChild(root, "App");
+
+	maxFPS = application.JsonValToNumber("FPS");
+
 	maxFPS = 400;
 
 	// Call Init() in all modules
@@ -65,12 +77,12 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	LOG("-------------- Application Start --------------");
 	for (std::vector<Module*>::const_iterator it = list_modules.cbegin(); it != list_modules.cend() && ret; ++it)
 	{
 		(*it)->Start();
 	}
-	
+
 	ms_timer.Start();
 	return ret;
 }
@@ -99,6 +111,10 @@ void Application::FinishUpdate()
 		lastMsFrame = ms_timer.Read();
 
 	}
+
+	if (loadRequested) LoadConfig();
+	if (saveRequested) SaveConfig();
+
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

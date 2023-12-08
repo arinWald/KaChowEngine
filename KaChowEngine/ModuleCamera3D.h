@@ -5,6 +5,9 @@
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "ImGuizmo/ImGuizmo.h"
 
+#include "JsonParser.h"
+#include "Parser/parson.h"
+
 class C_Camera;
 
 enum class CamStates {
@@ -24,6 +27,9 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
+	bool SaveConfig(JsonParser& node) const;
+	bool LoadConfig(JsonParser& node);
 
 	float3 SelectedObjectPos();
 

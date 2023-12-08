@@ -49,6 +49,55 @@ bool ModuleCamera3D::CleanUp()
 	return true;
 }
 
+bool ModuleCamera3D::SaveConfig(JsonParser& node) const
+{
+
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.x", X.x);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.y", X.y);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.z", X.z);
+
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.x", camera->frustum.up.x);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.y", camera->frustum.up.y);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.z", camera->frustum.up.z);
+
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.x", camera->frustum.front.x);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.y", camera->frustum.front.y);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.z", camera->frustum.front.z);
+
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.x", camera->reference.x);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.y", camera->reference.y);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.z", camera->reference.z);
+
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.x", camera->frustum.pos.x);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.y", camera->frustum.pos.y);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.z", camera->frustum.pos.z);
+
+
+	return true;
+}
+
+
+bool ModuleCamera3D::LoadConfig(JsonParser& node)
+{
+	camera->frustum.up.x = node.JsonValToNumber("Y.x");
+	camera->frustum.up.y = node.JsonValToNumber("Y.y");
+	camera->frustum.up.z = node.JsonValToNumber("Y.z");
+
+	camera->frustum.front.x = node.JsonValToNumber("Z.x");
+	camera->frustum.front.y = node.JsonValToNumber("Z.y");
+	camera->frustum.front.z = node.JsonValToNumber("Z.z");
+
+	camera->frustum.pos.x = node.JsonValToNumber("Position.x");
+	camera->frustum.pos.y = node.JsonValToNumber("Position.y");
+	camera->frustum.pos.z = node.JsonValToNumber("Position.z");
+
+	camera->reference.x = node.JsonValToNumber("Reference.x");
+	camera->reference.y = node.JsonValToNumber("Reference.y");
+	camera->reference.z = node.JsonValToNumber("Reference.z");
+
+	return true;
+}
+
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {

@@ -292,3 +292,33 @@ void ModuleRenderer3D::SetMainCamera(C_Camera* cam)
 	mainGameCam = cam;
 }
 
+bool ModuleRenderer3D::SaveConfig(JsonParser& node) const
+{
+	//Module::SaveConfig(node);
+
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "vsync", App->editor->vSync);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "wireframe", App->editor->isWireframe);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "depthTest", App->editor->depthTest);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "cullFace", App->editor->isCullFace);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "lighting", App->editor->lightning);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "colorMaterial", App->editor->colorMat);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "texture2D", App->editor->texture2D);
+
+	return true;
+}
+
+
+bool ModuleRenderer3D::LoadConfig(JsonParser& node)
+{
+	//Module::LoadConfig(node);
+
+	App->editor->vSync = node.JsonValToBool("vsync");
+	App->editor->isWireframe = node.JsonValToBool("wireframe");
+	App->editor->depthTest = node.JsonValToBool("depthTest");
+	App->editor->isCullFace = node.JsonValToBool("cullFace");
+	App->editor->lightning = node.JsonValToBool("lighting");
+	App->editor->colorMat = node.JsonValToBool("colorMaterial");
+	App->editor->texture2D = node.JsonValToBool("texture2D");
+
+	return true;
+}

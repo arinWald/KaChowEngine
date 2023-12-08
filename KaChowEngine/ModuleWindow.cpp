@@ -144,11 +144,11 @@ bool ModuleWindow::LoadConfig(JsonParser& node)
 
 	App->editor->fullscreen = node.JsonValToBool("fullscreen");
 
-	if (App->editor->fullscreen) SetFullscreen();
+	/*if (App->editor->fullscreen) SetFullscreen();
 	else
 	{
 		SetResizable();
-	}
+	}*/
 	SetSize(e_width, e_height);
 
 	return true;

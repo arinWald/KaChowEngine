@@ -35,6 +35,10 @@ public:
 
 	void SetMainCamera(C_Camera* cam);
 
+	bool SaveConfig(JsonParser& node) const;
+
+	bool LoadConfig(JsonParser& node);
+
 public:
 
 	Light lights[MAX_LIGHTS];
