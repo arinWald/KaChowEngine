@@ -27,8 +27,8 @@ bool ModuleScene::Start()
 	rootGameObject->name = "Scene";
 
 
-	//bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
-	//bakerHouse->name = "BakerHouse";
+	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	bakerHouse->name = "BakerHouse";
 
 	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
 	street->name = "Street";
@@ -41,7 +41,7 @@ bool ModuleScene::Start()
 	currentGameCamera->name = "Game Camera";
 	C_Camera* cameraComponent = new C_Camera(UUIDGenerator::Generate());
 	currentGameCamera->AddComponent(cameraComponent);
-	currentGameCamera->mTransform->setPosition({ 0, 5, 0 });
+	currentGameCamera->mTransform->setPosition({ 0, 5, -10 });
 	//currentGameCamera->mTransform->setRotation({ -50, 35, 0 });
 
 	f = 0;
