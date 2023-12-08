@@ -321,7 +321,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": ""
+                                "Material": "Assets\/Textures\/Building_V01_C.png"
                             }
                         }
                     },
@@ -353,7 +353,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": ""
+                                "Material": "Assets\/Textures\/Building_V01_C.png"
                             }
                         }
                     },
