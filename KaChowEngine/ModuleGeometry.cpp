@@ -75,7 +75,7 @@ Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
         if (aiMesh->mTextureCoords[0] == nullptr) continue;                 
         mesh->vertex[k * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][k].x;
         // -1 to invert uv's
-        mesh->vertex[k * VERTEX_ARGUMENTS + 4] = 1 - aiMesh->mTextureCoords[0][k].y;
+        mesh->vertex[k * VERTEX_ARGUMENTS + 4] = aiMesh->mTextureCoords[0][k].y;
 
     }
 

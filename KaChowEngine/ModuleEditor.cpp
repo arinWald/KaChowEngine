@@ -59,7 +59,7 @@ bool ModuleEditor::Init()
    lightning = false;
    colorMat = false;
    texture2D = false;
-   vSync = false;
+   vSync = true;
    isWireframe = false;
    bright = 0.0f;
    bright_aux = 0.0f;
@@ -412,19 +412,7 @@ update_status ModuleEditor::DrawEditor()
                         }
                     }
 
-                    if (ImGui::Checkbox("Vsync", &vSync))
-                    {
-                        if (vSync)
-                        {
-                            SDL_GL_SetSwapInterval(1);
-                            LOG("Vsync On");
-                        }
-                        else
-                        {
-                            SDL_GL_SetSwapInterval(0);
-                            LOG("Vsync Off");
-                        }
-                    }
+                    
                     ImGui::Text("Brightness");
                     ImGui::Text("Min");
                     ImGui::SameLine();
@@ -587,10 +575,14 @@ update_status ModuleEditor::DrawEditor()
                 if (App->IsRunning()) {
                     App->SetState(GameState::STOP);
                     ImGui::SetWindowFocus("Scene");
+                    App->LoadConfig();
+                    App->scene->LoadSceneRequest();
                 }
                 else {
                     App->SetState(GameState::PLAY);
                     ImGui::SetWindowFocus("Game");
+                    App->SaveConfig();
+                    App->scene->SaveSceneRequest();
                 }
             }
 
@@ -612,6 +604,8 @@ update_status ModuleEditor::DrawEditor()
                 if (App->IsRunning()) {
                     App->SetState(GameState::STOP);
                     ImGui::SetWindowFocus("Scene");
+                    App->LoadConfig();
+                    App->scene->LoadSceneRequest();
                 }
             }
         }
@@ -744,16 +738,6 @@ void ModuleEditor::RefreshRenderSettings()
     {
         glDisable(GL_TEXTURE_2D);
         LOG("Texture 2D Off");
-    }
-    if (vSync)
-    {
-        SDL_GL_SetSwapInterval(1);
-        LOG("Vsync On");
-    }
-    else
-    {
-        SDL_GL_SetSwapInterval(0);
-        LOG("Vsync Off");
     }
 }
 

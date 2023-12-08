@@ -27,8 +27,8 @@ bool ModuleScene::Start()
 	rootGameObject->name = "Scene";
 
 
-	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
-	bakerHouse->name = "BakerHouse";
+	//bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
+	//bakerHouse->name = "BakerHouse";
 
 	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
 	street->name = "Street";
