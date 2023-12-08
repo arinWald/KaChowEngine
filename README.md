@@ -83,6 +83,9 @@ Implementaion of basic serialization that allowas the user to save and load the 
 
 In the 'Configuration' section, you can fine-tune various settings to optimize your development and user experience:
 
+**Save and Load Config**
+- Two buttons that allow to save and load the current engine configuration.
+
 **FPS Histogram:**
 - This option provides a real-time histogram that displays the frames per second (FPS) of your application. Monitoring the FPS is essential for ensuring smooth and responsive gameplay.
 
