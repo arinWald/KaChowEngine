@@ -178,7 +178,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		//Bind game camera framebuffer
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf(mainGameCam->GetProjetionMatrix());
 
@@ -188,7 +187,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glBindFramebuffer(GL_FRAMEBUFFER, mainGameCam->frameBuffer);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		// Finish game camera frame buffer binding
 
 		if (App->editor->isAABB)
 		{
