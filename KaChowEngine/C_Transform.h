@@ -33,7 +33,6 @@ public:
 	void setRotation(float3 rotation);
 	float3 getScale();
 	void setScale(float3 scale);
-
 	void SetTransformMatrixW(float4x4 matrix);
 
 	//// Pilota

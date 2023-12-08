@@ -67,7 +67,13 @@ update_status ModuleScene::Update(float dt)
 			f = 0.0f;
 		}
 	}
+	else
+	{
+		currentGameCamera->mTransform->mRotation.y = 0;
+		currentGameCamera->mTransform->calculateMatrix();
+	}
 
+	// Gizmos controls
 	if (App->input->GetKey(SDL_SCANCODE_W)) App->camera->operation = ImGuizmo::OPERATION::TRANSLATE;
 	else if (App->input->GetKey(SDL_SCANCODE_E)) App->camera->operation = ImGuizmo::OPERATION::ROTATE;
 	else if (App->input->GetKey(SDL_SCANCODE_R)) App->camera->operation = ImGuizmo::OPERATION::SCALE;

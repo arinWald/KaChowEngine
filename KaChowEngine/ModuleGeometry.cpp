@@ -74,6 +74,7 @@ Mesh* ModuleGeometry::ImportMesh(aiMesh* aiMesh)
 
         if (aiMesh->mTextureCoords[0] == nullptr) continue;                 
         mesh->vertex[k * VERTEX_ARGUMENTS + 3] = aiMesh->mTextureCoords[0][k].x;
+        // -1 to invert uv's
         mesh->vertex[k * VERTEX_ARGUMENTS + 4] = 1 - aiMesh->mTextureCoords[0][k].y;
 
     }
@@ -206,7 +207,8 @@ std::string ModuleGeometry::ImportTexture(const aiScene* scene, int index, std::
             uint AssetsPos = AssetsPath.find("Assets/");
 
             AssetsPath = AssetsPath.substr(AssetsPos, AssetsPath.find_last_of("/") - AssetsPos);
-            AssetsPath.append("/").append(TextPath.C_Str());
+            AssetsPath = AssetsPath.substr(AssetsPos, AssetsPath.find_last_of("/") - AssetsPos);
+            AssetsPath.append("/Textures/").append(TextPath.C_Str());
 
             return AssetsPath;
         }
