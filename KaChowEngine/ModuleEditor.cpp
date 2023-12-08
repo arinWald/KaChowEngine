@@ -132,8 +132,13 @@ update_status ModuleEditor::DrawEditor()
     {
         if (ImGui::BeginMenu("File"))
         {
+            if (ImGui::Button("Save"))App->SaveConfigRequest();
+            ImGui::SameLine();
+            if (ImGui::Button("Load"))App->LoadConfigRequest();
+
             if (ImGui::MenuItem("Quit", "ESC"))
                 ret = UPDATE_STOP;
+
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Assets"))
@@ -187,10 +192,6 @@ update_status ModuleEditor::DrawEditor()
             ImGuiIO& io = ImGui::GetIO();
 
             static int volumeLevel = 0;
-
-            if (ImGui::Button("Save"))App->SaveConfigRequest();
-            ImGui::SameLine();
-            if (ImGui::Button("Load"))App->LoadConfigRequest();
 
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
