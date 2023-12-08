@@ -50,6 +50,7 @@ KaChow Engine supports various components to enhance your 3D objects and assets:
 - **Component Transform:** Modify the rotation, position, and scale of the selected GameObject.
 - **Component Mesh:** Provides detailed information about different meshes and their vertices for the selected object.
 - **Component Materials:** Allows you to view and manage textures and materials applied to your GameObjects.
+- **Component Camera:** Edit camera of gameobjects (FOV, Near Distance and Far Distance) and shows number of render objects.
 
 ### Drag & Drop
 
@@ -57,6 +58,22 @@ KaChow Engine simplifies asset management through its Drag & Drop functionality:
 
 - The engine allows users to drag and drop FBX files from anywhere on the hard drive.
 - Users can also drag and drop files to assign textures to GameObjects.
+
+### Mouse Picking
+
+Allows the user to select an object by clicking on them in the scene that will be marked in the hierarchy.
+
+### Frustrum Culling
+
+The engine only prints in the scene, the objects that are visibles by the game camera.
+
+### Guizmo
+
+Implementation of Guizmo that allows the user to transform the position, rotation and scale of an object.
+
+### Serialization
+
+implementaion of basic serialization that allowas the user to save and load the scene paramenters.
 
 ## Windows
 
@@ -80,6 +97,9 @@ In the 'Configuration' section, you can fine-tune various settings to optimize y
 **View:**
 - The 'View' section allows you to activate and deactivate various windows within the engine.
 
+**Camera:**
+- Change frustum configuration and shows number of render objects.
+
 ### Rendering
 
 The rendering capabilities of KaChow Engine allow you to create visually stunning 3D scenes. You can control various rendering options in the 'Render' section:
@@ -92,6 +112,7 @@ The rendering capabilities of KaChow Engine allow you to create visually stunnin
 - **Textures 2D:** Manage and apply textures to your objects.
 - **VSync:** Enable or disable vertical synchronization for smoother rendering.
 - **Brightness Slider:** Adjust the brightness of the scene.
+- **Bounding Boxes:** Now you can enable or disable the bounding boxes of the game objects.
 
 ### Input
 
@@ -112,6 +133,10 @@ Create and manipulate objects within your scenes with ease, including primitives
 ### Console
 
 The 'Console' provides a central location for important logs and messages, making it easy to debug and monitor.
+
+### Viewports
+
+Now you can visualize the Scene Window and the Game Window. Also, full implementation and functionality of Play, Pause and Stop buttons with a cool camera animation.
 
 ### External Libraries
 
