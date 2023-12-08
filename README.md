@@ -73,7 +73,9 @@ Implementation of Guizmo that allows the user to transform the position, rotatio
 
 ### Serialization
 
-implementaion of basic serialization that allowas the user to save and load the scene paramenters.
+Implementaion of basic serialization that allowas the user to save and load the scene paramenters.
+- Ctrl + S to save the scene
+- There's also a button on the header menu
 
 ## Windows
 
