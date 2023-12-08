@@ -54,7 +54,7 @@ private:
 	ImVec2 sceneWindowSize;
 
 
-
+public:
 	int cvCounter;
 
 	// Config window 
@@ -72,7 +72,6 @@ private:
 	float bright;
 	float bright_aux;
 
-public:
 	bool isAABB;
 private:
 	bool isActivatedInspector;

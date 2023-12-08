@@ -9,6 +9,8 @@
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Camera3D";
+
 	camState = CamStates::NORMAL;
 
 	X = float3(1.0f, 0.0f, 0.0f);
@@ -180,58 +182,3 @@ float3 ModuleCamera3D::SelectedObjectPos()
 	}
 	return SelectedObject;
 }
-
-//
-//
-//bool ModuleCamera3D::SaveConfig(JsonParser& node) const
-//{
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.x", X.x);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.y", X.y);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.z", X.z);
-//
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.x", Y.x);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.y", Y.y);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.z", Y.z);
-//
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.x", Z.x);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.y", Z.y);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.z", Z.z);
-//
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.x", Reference.x);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.y", Reference.y);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.z", Reference.z);
-//
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.x", Position.x);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.y", Position.y);
-//	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.z", Position.z);
-//
-//	return true;
-//}
-
-//bool ModuleCamera3D::LoadConfig(JsonParser& node)
-//{
-//
-//	X.x = node.JsonValToNumber("X.x");
-//	X.y = node.JsonValToNumber("X.y");
-//	X.z = node.JsonValToNumber("X.z");
-//
-//	Y.x = node.JsonValToNumber("Y.x");
-//	Y.y = node.JsonValToNumber("Y.y");
-//	Y.z = node.JsonValToNumber("Y.z");
-//
-//	Z.x = node.JsonValToNumber("Z.x");
-//	Z.y = node.JsonValToNumber("Z.y");
-//	Z.z = node.JsonValToNumber("Z.z");
-//
-//	Position.x = node.JsonValToNumber("Position.x");
-//	Position.y = node.JsonValToNumber("Position.y");
-//	Position.z = node.JsonValToNumber("Position.z");
-//
-//	Reference.x = node.JsonValToNumber("Reference.x");
-//	Reference.y = node.JsonValToNumber("Reference.y");
-//	Reference.z = node.JsonValToNumber("Reference.z");
-//
-//	/*LookAt(Reference);*/
-//
-//	return true;
-//}

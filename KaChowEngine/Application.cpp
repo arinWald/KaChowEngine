@@ -27,6 +27,9 @@ Application::Application()
 	// Renderer last!
 	AddModule(renderer3D);
 	AddModule(editor);
+
+	loadRequested = true;
+	saveRequested = false;
 }
 
 Application::~Application()
@@ -36,6 +39,17 @@ Application::~Application()
 		delete (*it);
 		(*it) = nullptr;
 	}
+
+	JSON_Value* root = jsonFile.FileToValue("config.json");
+
+	if (jsonFile.GetRootValue() == NULL)
+	{
+		LOG("Couldn't load config.json");
+	}
+
+	JsonParser application = jsonFile.GetChild(root, "App");
+	
+	maxFPS = application.JsonValToNumber("FPS");
 }
 
 bool Application::Init()
@@ -194,4 +208,48 @@ void Application::PauseGameDT()
 		gamedt = ((float)game_timer.Read() / 1000.0f);
 	else
 		gamedt = 0;
+}
+
+void Application::SaveConfig()
+{
+	LOG("Saving configuration");
+
+	JSON_Value* root = jsonFile.GetRootValue();
+
+	JsonParser application = jsonFile.SetChild(root, "App");
+
+	application.SetNewJsonNumber(application.ValueToObject(application.GetRootValue()), "FPS", maxFPS);
+
+
+	// Call SaveConfig() in all modules
+	std::vector<Module*>::iterator item;
+
+	for (item = list_modules.begin(); item != list_modules.end(); ++item)
+	{
+		(*item)->SaveConfig(jsonFile.SetChild(root, (*item)->name));
+	}
+
+	jsonFile.SerializeFile(root, "config.json");
+	saveRequested = false;
+}
+
+void Application::LoadConfig()
+{
+	LOG("Loading configurations");
+
+	JSON_Value* root = jsonFile.GetRootValue();
+
+	JsonParser application = jsonFile.GetChild(root, "App");
+
+	maxFPS = application.JsonValToNumber("FPS");
+
+
+	std::vector<Module*>::iterator item;
+
+	for (item = list_modules.begin(); item != list_modules.end(); ++item)
+	{
+		(*item)->LoadConfig(jsonFile.GetChild(root, (*item)->name));
+	}
+
+	loadRequested = false;
 }

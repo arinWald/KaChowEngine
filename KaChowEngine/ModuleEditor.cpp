@@ -12,6 +12,7 @@
 ModuleEditor::ModuleEditor(Application * app, bool start_enabled) : Module(app, start_enabled)
 {
     logVector = new std::vector<std::string>();
+    name = "Editor";
 }
 
 ModuleEditor::~ModuleEditor()
@@ -186,6 +187,10 @@ update_status ModuleEditor::DrawEditor()
             ImGuiIO& io = ImGui::GetIO();
 
             static int volumeLevel = 0;
+
+            if (ImGui::Button("Save"))App->SaveConfigRequest();
+            ImGui::SameLine();
+            if (ImGui::Button("Load"))App->LoadConfigRequest();
 
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {

@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
+#include "JsonParser.h"
+#include "Parser/parson.h"
 
 class Application;
 
@@ -23,6 +25,11 @@ public:
 	void SetResizable();
 	void ChangeWidth();
 	void ChangeHeight();
+
+	bool SaveConfig(JsonParser& node) const override;
+	bool LoadConfig(JsonParser& node) override;
+
+	void SetSize(int width, int height);
 
 public:
 	//The window we'll be rendering to

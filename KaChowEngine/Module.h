@@ -1,6 +1,6 @@
 #pragma once
-
-#include "Globals.h"
+#include"Globals.h"
+#include"JsonParser.h"
 #include "UUIDGenerator.h"
 
 class Application;
@@ -8,48 +8,59 @@ struct PhysBody3D;
 
 class Module
 {
-private :
-	bool enabled;
+private:
+    bool enabled;
 
 public:
-	Application* App;
+    Application* App;
 
-	Module(Application* parent, bool start_enabled = true) : App(parent)
-	{}
+    const char* name;
 
-	virtual ~Module()
-	{}
+    Module(Application* parent, bool start_enabled = true) : App(parent), enabled(start_enabled), name("notNamed")
+    {}
 
-	virtual bool Init() 
-	{
-		return true; 
-	}
+    virtual ~Module()
+    {}
 
-	virtual bool Start()
-	{
-		return true;
-	}
+    virtual bool Init()
+    {
+        return true;
+    }
 
-	virtual update_status PreUpdate(float dt)
-	{
-		return UPDATE_CONTINUE;
-	}
+    virtual bool Start()
+    {
+        return true;
+    }
 
-	virtual update_status Update(float dt)
-	{
-		return UPDATE_CONTINUE;
-	}
+    virtual update_status PreUpdate(float dt)
+    {
+        return UPDATE_CONTINUE;
+    }
 
-	virtual update_status PostUpdate(float dt)
-	{
-		return UPDATE_CONTINUE;
-	}
+    virtual update_status Update(float dt)
+    {
+        return UPDATE_CONTINUE;
+    }
 
-	virtual bool CleanUp() 
-	{ 
-		return true; 
-	}
+    virtual update_status PostUpdate(float dt)
+    {
+        return UPDATE_CONTINUE;
+    }
 
-	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-	{}
+    virtual bool CleanUp()
+    {
+        return true;
+    }
+
+    virtual bool LoadConfig(JsonParser& node)
+    {
+        return true;
+    }
+
+    virtual bool SaveConfig(JsonParser& node) const
+    {
+        return true;
+    }
+
+
 };

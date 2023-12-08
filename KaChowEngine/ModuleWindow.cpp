@@ -6,6 +6,7 @@ ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, s
 {
 	window = NULL;
 	screen_surface = NULL;
+	name = "Window";
 }
 
 // Destructor
@@ -122,4 +123,41 @@ void ModuleWindow::ChangeHeight()
 {
 	SDL_SetWindowSize(window, e_width, e_height);
 	App->renderer3D->OnResize(e_width, e_height);
+}
+
+bool ModuleWindow::SaveConfig(JsonParser& node) const
+{
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "width", e_width);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "height", e_height);
+	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "brightness", App->editor->bright);
+
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "fullscreen", App->editor->fullscreen);
+
+	return true;
+}
+
+bool ModuleWindow::LoadConfig(JsonParser& node)
+{
+	e_width = (int)node.JsonValToNumber("width") * SCREEN_SIZE;
+	e_height = (int)node.JsonValToNumber("height") * SCREEN_SIZE;
+	App->editor->bright = (float)node.JsonValToNumber("brightness");
+
+	App->editor->fullscreen = node.JsonValToBool("fullscreen");
+
+	if (App->editor->fullscreen) SetFullscreen();
+	else
+	{
+		SetResizable();
+	}
+	SetSize(e_width, e_height);
+
+	return true;
+}
+
+void ModuleWindow::SetSize(int width, int height)
+{
+	this->e_height = height;
+	this->e_width = width;
+
+	SDL_SetWindowSize(window, width, height);
 }

@@ -11,6 +11,7 @@
 #include "ModuleGeometry.h"
 #include "ModuleTextures.h"
 #include "ModuleScene.h"
+#include "JsonParser.h"
 
 #include<vector>
 
@@ -77,6 +78,17 @@ public:
 
 	float	dtGame;
 	GameState gameState = GameState::STOP;
+
+	JsonParser jsonFile;
+
+	bool saveRequested;
+	bool loadRequested;
+
+	void SaveConfigRequest() { saveRequested = true; };
+	void LoadConfigRequest() { loadRequested = false; }
+
+	void SaveConfig();
+	void LoadConfig();
 
 private:
 

@@ -27,8 +27,6 @@ public:
 
 	float3 SelectedObjectPos();
 
-	//bool SaveConfig(JsonParser& node) const;
-	//bool LoadConfig(JsonParser& node);
 private:
 
 	void MouseRotation(float dx, float dy, float sensitivity);

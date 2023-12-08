@@ -9,6 +9,7 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	selectedGameObj = nullptr;
 	draggedGameObject = nullptr;
 	hoveredGameObj = nullptr;
+	name = "Scene";
 }
 
 bool ModuleScene::Init()
