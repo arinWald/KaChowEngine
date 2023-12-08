@@ -136,3 +136,8 @@ void C_Transform::calculateMatrix()
 	q = Quat::FromEulerXYZ(rx, ry, rz);
 	mLocalMatrix = float4x4::FromTRS(mPosition, q, mScale).Transposed();
 }
+
+void C_Transform::SetLocalMatrix(float4x4 localMatrix)
+{
+	mLocalMatrix = localMatrix;
+}

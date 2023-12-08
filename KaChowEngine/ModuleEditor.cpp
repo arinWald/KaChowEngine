@@ -132,9 +132,15 @@ update_status ModuleEditor::DrawEditor()
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::Button("Save"))App->SaveConfigRequest();
-            ImGui::SameLine();
-            if (ImGui::Button("Load"))App->LoadConfigRequest();
+            if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+            {
+                App->scene->SaveSceneRequest();
+            }
+
+            if (ImGui::MenuItem("Load Scene"))
+            {
+                App->scene->LoadSceneRequest();
+            }
 
             if (ImGui::MenuItem("Quit", "ESC"))
                 ret = UPDATE_STOP;
@@ -192,6 +198,10 @@ update_status ModuleEditor::DrawEditor()
             ImGuiIO& io = ImGui::GetIO();
 
             static int volumeLevel = 0;
+
+            if (ImGui::Button("Save"))App->SaveConfigRequest();
+            ImGui::SameLine();
+            if (ImGui::Button("Load"))App->LoadConfigRequest();
 
             if (ImGui::CollapsingHeader("FPS Histogram"))
             {
@@ -664,7 +674,12 @@ update_status ModuleEditor::DrawEditor()
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-return ret;
+    if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+    {
+        App->scene->SaveSceneRequest();
+    }
+
+    return ret;
 }
 
 void ModuleEditor::RefreshRenderSettings()

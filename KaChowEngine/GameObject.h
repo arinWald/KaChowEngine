@@ -32,6 +32,7 @@ public:
 	bool IsChildOf(GameObject* parent);
 	void DeleteChild(GameObject* child);
 	void PrintOnInspector();
+	void SetDeletion(bool deleteGO) { deleteGameObject = deleteGO; };
 
 
 	C_Mesh* GetMeshComponent();

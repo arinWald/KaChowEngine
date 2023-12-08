@@ -1,0 +1,73 @@
+{
+    "GameObjects": {
+        "Scene": {
+            "name": "Scene",
+            "Deleting": false,
+            "components": {
+                "Component 0": {
+                    "Type": 1,
+                    "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                }
+            },
+            "Child 0": {
+                "name": "BakerHouse",
+                "Deleting": false,
+                "components": {
+                    "Component 0": {
+                        "Type": 1,
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                    }
+                },
+                "Child 0": {
+                    "name": "Chimney",
+                    "Deleting": false,
+                    "components": {
+                        "Component 0": {
+                            "Type": 1,
+                            "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                        },
+                        "Component 1": {
+                            "Type": 2,
+                            "Mesh": "Chimney"
+                        },
+                        "Component 2": {
+                            "Type": 3,
+                            "Material": "Assets\/Textures\/Baker_house.png"
+                        }
+                    }
+                },
+                "Child 1": {
+                    "name": "Baker_house",
+                    "Deleting": false,
+                    "components": {
+                        "Component 0": {
+                            "Type": 1,
+                            "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                        },
+                        "Component 1": {
+                            "Type": 2,
+                            "Mesh": "Baker_house"
+                        },
+                        "Component 2": {
+                            "Type": 3,
+                            "Material": "Assets\/Textures\/Baker_house.png"
+                        }
+                    }
+                }
+            },
+            "Child 1": {
+                "name": "Game Camera",
+                "Deleting": false,
+                "components": {
+                    "Component 0": {
+                        "Type": 1,
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,5.000000,0.000000,1.000000,"
+                    },
+                    "Component 1": {
+                        "Type": 4
+                    }
+                }
+            }
+        }
+    }
+}

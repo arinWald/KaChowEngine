@@ -23,6 +23,31 @@ public:
 
 	GameObject* CreateGameObject(GameObject* parent);
 
+	void SaveSceneRequest() { saveSceneRequest = true; };
+	void LoadSceneRequest() { loadSceneRequest = true; };
+
+private:
+	void UpdateGameObjects();
+	bool SaveScene();
+	void SaveGameObjects(GameObject* parent, JsonParser& rootFile);
+	bool LoadScene();
+
+	JsonParser jsonFile;
+	JSON_Value* rootFile;
+
+	GameObject* LoadGameObject(JsonParser parent, GameObject* father = nullptr);
+
+	float4x4 strMatrixToF4x4(const char* convert);
+	
+	const char* FormatComponentType(GameObject* parentGO, const size_t& i);
+	void LoadComponents(JsonParser& parent, std::string num, GameObject* gamObj);
+
+	JsonParser rootGO;
+
+	bool saveSceneRequest = false;
+	bool loadSceneRequest = true;
+
+public:
 	GameObject* rootGameObject;
 	GameObject* selectedGameObj;
 	GameObject* hoveredGameObj;

@@ -2,6 +2,8 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
+#include "C_Transform.h"
+#include "C_Material.h"
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -14,6 +16,7 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 
 bool ModuleScene::Init()
 {
+	jsonFile.FileToValue("scene.json");
 	return false;
 }
 
@@ -78,6 +81,8 @@ update_status ModuleScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_W)) App->camera->operation = ImGuizmo::OPERATION::TRANSLATE;
 	else if (App->input->GetKey(SDL_SCANCODE_E)) App->camera->operation = ImGuizmo::OPERATION::ROTATE;
 	else if (App->input->GetKey(SDL_SCANCODE_R)) App->camera->operation = ImGuizmo::OPERATION::SCALE;
+
+	UpdateGameObjects();
 
 	return UPDATE_CONTINUE;
 }
@@ -184,4 +189,244 @@ GameObject* ModuleScene::CreateGameObject(GameObject* parent)
 {
 	GameObject* newGameObject = new GameObject(parent);
 	return newGameObject;
+}
+
+bool ModuleScene::SaveScene()
+{
+	LOG("Saving scene");
+
+	rootFile = jsonFile.GetRootValue();
+
+	JsonParser scene = jsonFile.SetChild(rootFile, "GameObjects");
+
+	SaveGameObjects(rootGameObject, scene.SetChild(scene.GetRootValue(), rootGameObject->name.c_str()));
+
+	jsonFile.SerializeFile(rootFile, "scene.json");
+	saveSceneRequest = false;
+	return true;
+}
+
+void ModuleScene::SaveGameObjects(GameObject* parentGO, JsonParser& node) 
+{
+	std::string num;
+	JsonParser& child = node;
+	C_Transform* transform;
+	float4x4 localTransform;
+
+	node.SetNewJsonString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "Deleting", parentGO->deleteGameObject);
+
+
+	JsonParser components = node.SetChild(node.GetRootValue(), "components");
+	JsonParser tmp = node;
+	for (size_t i = 0; i < parentGO->mComponents.size(); i++)
+	{
+		// Create Child of component
+		num = "Component " + std::to_string(i);
+		//num += FormatComponentType(parentGO, i);
+
+
+
+		tmp = components.SetChild(components.GetRootValue(), num.c_str());
+
+		tmp.SetNewJsonNumber(tmp.ValueToObject(tmp.GetRootValue()), "Type", (int)parentGO->mComponents.at(i)->type);
+
+		switch ((ComponentType)parentGO->mComponents.at(i)->type)
+		{
+		case ComponentType::TRANSFORM:
+			num = "";
+			transform = (C_Transform*)(parentGO->mComponents.at(i));
+			localTransform = transform->getLocalMatrix();
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					/* if (i == 0 && j == 0)num += std::to_string(localTransform.At(i, j));
+					 else num += "," + std::to_string(localTransform.At(i, j));*/
+
+					num += std::to_string(localTransform.At(i, j));
+					num += ",";
+				}
+			}
+
+			tmp.SetNewJsonString(tmp.ValueToObject(tmp.GetRootValue()), "LocalTransform", num.c_str());
+
+			break;
+
+		case ComponentType::MESH:
+
+			tmp.SetNewJsonString(tmp.ValueToObject(tmp.GetRootValue()), "Mesh", parentGO->name.c_str());
+
+			break;
+
+		case ComponentType::MATERIAL:
+
+			C_Material* componentMaterial;
+			componentMaterial = (C_Material*)(parentGO->mComponents.at(i));
+
+			tmp.SetNewJsonString(tmp.ValueToObject(tmp.GetRootValue()), "Material", componentMaterial->texture_path.c_str());
+
+
+			break;
+
+		default:
+			break;
+
+		}
+		parentGO->mComponents.at(i)->type;
+	}
+
+	for (size_t i = 0; i <= parentGO->mChildren.size(); i++)
+	{
+
+		num = "Child " + std::to_string(i);
+
+		if (parentGO->mChildren.size() > i) {
+			SaveGameObjects(parentGO->mChildren[i], child.SetChild(child.GetRootValue(), num.c_str()));
+		}
+	}
+}
+
+bool ModuleScene::LoadScene()
+{
+	LOG("Loading configurations");
+
+
+	rootFile = jsonFile.GetRootValue();
+
+	rootGO = jsonFile.GetChild(rootFile, "GameObjects");
+
+	LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Scene"));
+
+	loadSceneRequest = false;
+
+	return false;
+}
+
+void ModuleScene::LoadComponents(JsonParser& parent, std::string num, GameObject* gamObj)
+{
+
+	C_Transform* transform;
+	C_Mesh* meshRender;
+	Mesh* mesh;
+	C_Material* material;
+	float3 size = float3::one;
+	LOG("Loading Components \n");
+	std::string debugPath;
+	std::string debugUID;
+
+	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
+	JsonParser tmp = components;
+
+	std::string pos;
+
+	for (int i = 0; i < 4; i++)
+	{
+		num = "Component " + std::to_string(i);
+		LOG((std::string("Loading ") + num).c_str());
+
+		if (components.ExistChild(components.GetRootValue(), num.c_str()))
+		{
+			tmp = components.GetChild(components.GetRootValue(), num.c_str());
+			switch ((ComponentType)(int)tmp.JsonValToNumber("Type"))
+			{
+			case ComponentType::TRANSFORM:
+				gamObj->mTransform->mLocalMatrix = strMatrixToF4x4(tmp.ValueToString("LocalTransform"));
+
+				LOG(gamObj->mTransform->getLocalMatrix().ToString().c_str());
+				break;
+			case ComponentType::MESH:
+
+				break;
+			case ComponentType::MATERIAL:
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+GameObject* ModuleScene::LoadGameObject(JsonParser parent, GameObject* father)
+{
+	std::string num;
+	std::string convert;
+
+	std::string name = parent.ValueToString("name");
+	GameObject* gamObj = new GameObject();
+	gamObj->name = name;
+	gamObj->SetDeletion(parent.JsonValToBool("isTimeToDelete"));
+	
+	LoadComponents(parent, num, gamObj);
+	int count = 0;
+	num = "Child " + std::to_string(count);
+	while (parent.ExistChild(parent.GetRootValue(), num.c_str()))
+	{
+		gamObj->SetNewParent(LoadGameObject(parent.GetChild(parent.GetRootValue(), num.c_str()), gamObj));
+		++count;
+		num = "Child " + std::to_string(count);
+	}
+
+
+	return gamObj;
+}
+
+void ModuleScene::UpdateGameObjects()
+{
+	if (saveSceneRequest)SaveScene();
+	if (loadSceneRequest)LoadScene();
+}
+
+const char* ModuleScene::FormatComponentType(GameObject* parentGO, const size_t& i)
+{
+	switch ((ComponentType)parentGO->mComponents.at(i)->type)
+	{
+	case ComponentType::TRANSFORM:
+
+		return " Transform";
+		break;
+
+	case ComponentType::MESH:
+
+		return " Mesh";
+		break;
+
+	case ComponentType::MATERIAL:
+
+		return " Material";
+		break;
+
+	default:
+		break;
+
+	}
+}
+
+float4x4 ModuleScene::strMatrixToF4x4(const char* convert)
+{
+	std::string text = convert;
+	std::string delimiter = ",";
+	std::vector<float> floatArray{};
+
+	size_t pos = 0;
+	while ((pos = text.find(delimiter)) != std::string::npos) {
+		floatArray.push_back(stof(text.substr(0, pos)));
+		text.erase(0, pos + delimiter.length());
+	}
+
+
+	float4x4 matrix;
+	int count = 0;
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+		{
+
+			matrix.At(i, j) = floatArray.at(count);
+			++count;
+		}
+
+	return matrix;
 }

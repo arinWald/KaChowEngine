@@ -206,8 +206,6 @@ void GameObject::PrintOnInspector()
 
 		ImGui::Separator();
 		ImGui::Text("");
-		ImGui::Text("");
-		ImGui::Text("");
 
 		ImGui::Text("");
 		ImGui::SameLine(ImGui::GetWindowWidth() / 6);
