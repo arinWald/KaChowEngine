@@ -70,6 +70,7 @@ The engine only prints in the scene, the objects that are visibles by the game c
 ### Guizmo
 
 Implementation of Guizmo that allows the user to transform the position, rotation and scale of an object.
+IMPORTANT: If the parent's transform of a gameobject is touched, the child will not move properly with gizmo. Use transform on inspector instead.
 
 ### Serialization
 
