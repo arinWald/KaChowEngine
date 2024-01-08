@@ -78,19 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileHelpersBase.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackage.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFileHelpers.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIOBlocking.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIODeferred.h" />
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\stdafx.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -194,14 +181,6 @@
     <ClInclude Include="UUIDGenerator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.cpp" />
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\stdafx.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -274,7 +253,6 @@
     <ClCompile Include="UUIDGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.inl" />
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

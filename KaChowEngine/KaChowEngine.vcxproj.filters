@@ -211,30 +211,6 @@
     <ClCompile Include="JsonParser.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\stdafx.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp">
-      <Filter>External\Wwise</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -540,45 +516,6 @@
     <ClInclude Include="JsonParser.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFileHelpers.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIOBlocking.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIODeferred.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Win32\stdafx.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileHelpersBase.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackage.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h">
-      <Filter>External\Wwise</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">
@@ -598,9 +535,6 @@
     </None>
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>External\Others</Filter>
-    </None>
-    <None Include="..\..\..\..\DescàrreguesHDD\UNI\GinuhEngine-main\Engine\ExternalLibraries\Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.inl">
-      <Filter>External\Wwise</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -642,9 +576,6 @@
     </Filter>
     <Filter Include="External\ImGuizmo">
       <UniqueIdentifier>{fe0c095e-995e-4deb-8b1b-33a183aac6e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\Wwise">
-      <UniqueIdentifier>{5d59c7b0-9a05-421d-ad0f-497cd9f573fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
