@@ -5,7 +5,6 @@
 #include "Globals.h"
 
 //#include <AK/SoundEngine/Common/AkMemoryMgr.h>         // Memory Manager
-
 #include <AK/SoundEngine/Common/AkModule.h>            // Default memory and stream managers  
 
 #include <AK/SoundEngine/Common/AkStreamMgrModule.h>   // Streaming Manager
@@ -46,20 +45,23 @@ public:
 
 	// Listeners 
 	void SetDefaultListener(const AkGameObjectID id);
-	void RemoveDefaultListener(const AkGameObjectID id);
 	void AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id);
 	void SetListenerPos(GameObject* listener, unsigned int id);
 
-	void SetSourcePos(GameObject* source, unsigned int id);
-
 	// Events
-	AkPlayingID PostEvent(const char* eventName, unsigned int source_id);
-	void StopEvent(const char* eventName, unsigned int id);
-	void PauseEvent(const char* eventName, unsigned int id);
-	void ResumeEvent(const char* eventName, unsigned int id);
+	void PostEvent(AudioEvent* event, unsigned int id);
+	void StopEvent(const AudioEvent* event, unsigned int id);
+
+	// SoundBanks
+	bool IsSoundBankInit();
+	void InitSoundBank();
+
+	//bool IsSoundBank(string& file);
+
+	//unsigned int GetBnkInfo(string soundbank_path);
 
 	//vector<string> events;
-	//vector<string> soundBanks;
+	/*vector<string> soundBanks;*/
 
 private:
 
@@ -88,6 +90,12 @@ private:
 	bool TermSoundEngine();
 	bool TermStreamingManager();
 	bool TermMemoryManager();
+
+	//SoundBank
+	bool initSoundBank = false;
+
+	//vector<SoundBank*> soundBankList;
+	//SoundBank* initSoundBnk = nullptr;
 
 	void GetAudioID();
 

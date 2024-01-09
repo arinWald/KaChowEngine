@@ -12,6 +12,7 @@
 #include "ModuleTextures.h"
 #include "ModuleScene.h"
 #include "JsonParser.h"
+#include "ModuleAudio.h"
 
 #include<vector>
 
@@ -31,6 +32,7 @@ class ModuleEditor;
 class ModuleGeometry;
 class ModuleTextures;
 class ModuleScene;
+class ModuleAudio;
 
 class Application
 {
@@ -43,6 +45,7 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 	ModuleScene* scene;
+	ModuleAudio* audio;
 
 private:
 

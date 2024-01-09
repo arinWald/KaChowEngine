@@ -38,11 +38,6 @@ bool ModuleAudio::Init()
 		return false;
 	}
 
-	if (AK::SoundEngine::LoadBank(L"Demo.bnk", bankID) != AK_Success)
-	{
-		//App->menus->info.AddConsoleLog("Couldn't find the bank: Init.bnk");
-		return false;
-	}
 	bool ret = true;
 
 	return ret;
@@ -288,21 +283,21 @@ bool ModuleAudio::TermMemoryManager()
 
 //void ModuleAudio::GetAudioID()
 //{
-//	std::ifstream filePath("Assets/Wwise/Wwise_IDs.h");
+//	std::ifstream file("Assets/Wwise/Wwise_IDs.h");
 //
-//	string line;
+//	std::string line;
 //
-//	while (std::getline(filePath, line))
+//	while (std::getline(file, line))
 //	{
-//		if (line.find("EVENTS") != string::npos)
+//		if (line.find("EVENTS") != std::string::npos)
 //		{
-//			while (std::getline(filePath, line))
+//			while (std::getline(file, line))
 //			{
 //				if (line.find("}") != std::string::npos)
 //				{
 //					break;
 //				}
-//				else if (line.find("AkUniqueID") != string::npos)
+//				else if (line.find("AkUniqueID") != std::string::npos)
 //				{
 //					line = line.substr(0, line.find("=") - 1);
 //					line = line.substr(line.find_last_of(" ") + 1, line.length());
@@ -311,15 +306,15 @@ bool ModuleAudio::TermMemoryManager()
 //				}
 //			}
 //		}
-//		else if (line.find("BANKS") != string::npos)
+//		else if (line.find("BANKS") != std::string::npos)
 //		{
-//			while (std::getline(filePath, line))
+//			while (std::getline(file, line))
 //			{
-//				if (line.find("}") != string::npos)
+//				if (line.find("}") != std::string::npos)
 //				{
 //					break;
 //				}
-//				else if (line.find("AkUniqueID") != string::npos)
+//				else if (line.find("AkUniqueID") != std::string::npos)
 //				{
 //					line = line.substr(0, line.find("=") - 1);
 //					line = line.substr(line.find_last_of(" ") + 1, line.length());
@@ -330,88 +325,143 @@ bool ModuleAudio::TermMemoryManager()
 //		}
 //	}
 //}
-
-void ModuleAudio::RegisterGameObject(unsigned int id)
-{
-	AK::SoundEngine::RegisterGameObj(id);
-
-}
-
-void ModuleAudio::UnregisterGameObject(unsigned int id)
-{
-	AK::SoundEngine::UnregisterGameObj(id);
-
-}
-
-void ModuleAudio::SetDefaultListener(const AkGameObjectID id)
-{
-	AK::SpatialAudio::RegisterListener(id);
-	AK::SoundEngine::SetDefaultListeners(&id, MAX_LISTENERS);
-
-
-}
-
-void ModuleAudio::RemoveDefaultListener(const AkGameObjectID id)
-{
-	AK::SpatialAudio::UnregisterListener(id);
-	AK::SoundEngine::RemoveDefaultListener(id);
-
-}
-
-void ModuleAudio::AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id)
-{
-	AK::SoundEngine::SetListeners(emitter_id, &listener_id, MAX_LISTENERS);
-
-}
+//
+//void ModuleAudio::RegisterGameObject(unsigned int id)
+//{
+//	AK::SoundEngine::RegisterGameObj(id);
+//
+//}
+//
+//void ModuleAudio::UnregisterGameObject(unsigned int id)
+//{
+//	AK::SoundEngine::UnregisterGameObj(id);
+//
+//}
+//
+//void ModuleAudio::SetDefaultListener(const AkGameObjectID id)
+//{
+//	AK::SoundEngine::SetDefaultListeners(&id, MAX_LISTENERS);
+//}
+//
+//void ModuleAudio::AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id)
+//{
+//	AK::SoundEngine::SetListeners(emitter_id, &listener_id, MAX_LISTENERS);
+//
+//}
 //
 //void ModuleAudio::SetListenerPos(GameObject* listener, unsigned int id)
 //{
+//	// Orientation of the listener
+//	AkVector front;
+//	front.X = listener->transform->GetFrontVec().x;
+//	front.Y = listener->transform->GetFrontVec().y;
+//	front.Z = listener->transform->GetFrontVec().z;
+//
+//	// Top orientation of the listener
+//	AkVector top;
+//	top.X = listener->transform->GetTopVec().x;
+//	top.Y = listener->transform->GetTopVec().y;
+//	top.Z = listener->transform->GetTopVec().z;
+//
 //	// Position of the listener
-//	//float3 pos = listener->transform->transform.position;
+//	AkVector pos;
+//	pos.X = listener->transform->transform.position.x;
+//	pos.Y = listener->transform->transform.position.y;
+//	pos.Z = listener->transform->transform.position.z;
+//
+//	/*AkTransform listenerTransform;
+//	listenerTransform.Set(pos, front, top);*/
 //
 //	// Bc we only want to know pos and orientation, we use "AkSoundPosition". "AkTransform" is more 'complex' (scale..., etc)
 //	AkSoundPosition listenerPosition;
-//	listenerPosition.SetOrientation({ 0,0,-1 }, { 0,1,0 });
-//	listenerPosition.SetPosition(pos.x, pos.y, pos.z);
+//	listenerPosition.Set(pos, front, top);
 //
 //	AK::SoundEngine::SetPosition(id, listenerPosition);
 //}
 //
-//void ModuleAudio::SetSourcePos(GameObject* source, unsigned int id)
+//void ModuleAudio::PostEvent(AudioEvent* event, unsigned int id)
 //{
-//	// Position of the listener
-//	//float3 pos = source->transform->transform.position;
-//
-//	// Bc we only want to know pos and orientation, we use "AkSoundPosition". "AkTransform" is more 'complex' (scale..., etc)
-//	AkSoundPosition sourcePosition;
-//	sourcePosition.SetOrientation({ 0,0,-1 }, { 0,1,0 });
-//	sourcePosition.SetPosition(pos.x, pos.y, pos.z);
-//
-//	AK::SoundEngine::SetPosition(id, sourcePosition);
-//}
-//
-//AkPlayingID ModuleAudio::PostEvent(const char* eventName, unsigned int source_id)
-//{
-//	AkPlayingID playingID = AK::SoundEngine::PostEvent(eventName, source_id);
-//	if (playingID == AK_INVALID_PLAYING_ID)
+//	if (event != nullptr)
 //	{
-//		//App->menus->info.AddConsoleLog("Post event %s failed", eventName);
-//		return -1;
+//		event->event_id = AK::SoundEngine::PostEvent(event->name.c_str(), id);
 //	}
-//	return playingID;
+//}
+//
+//void ModuleAudio::StopEvent(const AudioEvent* event, unsigned int id)
+//{
+//	if (event != nullptr)
+//	{
+//		AK::SoundEngine::ExecuteActionOnEvent(event->name.c_str(), AK::SoundEngine::AkActionOnEventType_Stop, id);
+//
+//	}
+//}
+//
+//bool ModuleAudio::IsSoundBankInit()
+//{
+//	return initSoundBank;
+//}
+//
+//void ModuleAudio::InitSoundBank()
+//{
+//	initSoundBank = true;
+//}
+//
+//bool ModuleAudio::IsSoundBank(string& file)
+//{
+//	size_t extension = file.find_last_of('.');
+//	if (extension != string::npos && file.substr(extension + 1).compare("bnk") == 0)
+//		return true;
+//
+//	return false;
 //}
 
-void ModuleAudio::StopEvent(const char* eventName, unsigned int id)
-{
-	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Stop, id);
-}
-
-void ModuleAudio::PauseEvent(const char* eventName, unsigned int id)
-{
-	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Pause, id);
-}
-
-void ModuleAudio::ResumeEvent(const char* eventName, unsigned int id)
-{
-	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Resume, id);
-}
+//unsigned int ModuleAudio::GetBnkInfo(string soundbank_path)
+//{
+//	char* buf;
+//	AkUInt32 ret = 0;
+//
+//	string json_file = soundbank_path.substr(0, soundbank_path.find_last_of('.')) + ".json"; // Changing .bnk with .json
+//	if (App->files_manager->LoadFile(json_file.c_str(), &buf))
+//	{
+//		Data general_info(buf);
+//		Data sb_info = general_info.GetJObject("SoundBanksInfo").GetArray("SoundBanks", 0);
+//
+//		// Soundbank Information
+//		SoundBank* soundbank = new SoundBank();
+//		soundBankList.push_back(soundbank);
+//
+//		ret = soundbank->id = stoul(sb_info.GetString("Id"));
+//		soundbank->name = sb_info.GetString("ShortName");
+//		soundbank->path = soundbank_path;
+//
+//		// Is Init Soundbank?
+//		if (soundbank->name.compare("Init") == 0)
+//			initSoundBnk = soundbank;
+//
+//		// Events Information
+//		uint num_events = sb_info.GetArraySize("IncludedEvents");
+//		for (uint i = 0; i < num_events; ++i)
+//		{
+//			Data events_info = sb_info.GetArray("IncludedEvents", i);
+//
+//			AudioEvent* a_event = new AudioEvent();
+//			soundbank->events.push_back(a_event);
+//			a_event->soundBnk = soundbank;
+//
+//			a_event->id = stoul(events_info.GetString("Id"));
+//			a_event->name = events_info.GetString("Name");
+//
+//			const char* attenuation = events_info.GetString("MaxAttenuation");
+//			if (attenuation != nullptr)
+//			{
+//				a_event->maxAttenuation = stof(attenuation);
+//				if (a_event->maxAttenuation != 0.0f)
+//					a_event->isSound3D = true;
+//			}
+//		}
+//
+//		delete buf; // Freeing memory
+//	}
+//
+//	return ret;
+//}
