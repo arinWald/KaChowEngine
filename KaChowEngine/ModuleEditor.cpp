@@ -495,34 +495,34 @@ update_status ModuleEditor::DrawEditor()
             ImGui::Text("By Arnau Gonzalez & Pau Argiz");
             if (ImGui::Button("Github Repository"))
             {
-                ShellExecute(0, 0, "https://github.com/arinWald/KaChowEngine", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://github.com/arinWald/KaChowEngine", 0, 0, SW_SHOW);
             }
 
             ImGui::SeparatorText("3rd Party Libraries used");
 
             if (ImGui::Button("SDL"))
             {
-                ShellExecute(0, 0, "https://libsdl.org/index.php", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://libsdl.org/index.php", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version: %s", SDLVersion.c_str());
             if (ImGui::Button("OpenGL"))
             {
-                ShellExecute(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version: %s", glGetString(GL_VERSION));
 
             if (ImGui::Button("Glew"))
             {
-                ShellExecute(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://www.opengl.org/", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version: %s", glewGetString(GLEW_VERSION));
 
             if (ImGui::Button("ImGui"))
             {
-                ShellExecute(0, 0, "https://github.com/ocornut/imgui/", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://github.com/ocornut/imgui/", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version: ");
@@ -531,14 +531,14 @@ update_status ModuleEditor::DrawEditor()
 
             if (ImGui::Button("MathGeoLib"))
             {
-                ShellExecute(0, 0, "https://github.com/juj/MathGeoLib", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "https://github.com/juj/MathGeoLib", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::Text("Version 1.5");
 
             if (ImGui::Button("DevIL"))
             {
-                ShellExecute(0, 0, "http://openil.sourceforge.net/", 0, 0, SW_SHOW);
+                ShellExecuteA(0, 0, "http://openil.sourceforge.net/", 0, 0, SW_SHOW);
             }
             ImGui::SameLine();
             ImGui::SameLine();

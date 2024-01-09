@@ -86,7 +86,7 @@ uint ModuleTextures::LoadTexture(const char* file_path)
 	ilGenImages(1, &devilImageId);
 	ilBindImage(devilImageId);
 
-	bool success = ilLoadImage(file_path);
+	bool success = ilLoadImage((wchar_t*)file_path);
 
 	success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
