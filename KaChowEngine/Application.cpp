@@ -10,6 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
 	scene = new ModuleScene(this);
+	audio = new ModuleAudio(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update() in this order
@@ -22,6 +23,9 @@ Application::Application()
 	AddModule(texture2D);
 
 	AddModule(geoLoader);
+
+	//Audio (Wwise)
+	AddModule(audio);
 
 	AddModule(scene);
 	// Renderer last!

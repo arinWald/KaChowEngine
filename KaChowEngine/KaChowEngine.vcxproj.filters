@@ -211,6 +211,33 @@
     <ClCompile Include="JsonParser.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.cpp">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.cpp">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Win32\stdafx.cpp">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>External\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp">
+      <Filter>External\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp">
+      <Filter>External\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp">
+      <Filter>External\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp">
+      <Filter>External\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -516,6 +543,48 @@
     <ClInclude Include="JsonParser.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookBlocking.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\AkDefaultIOHookDeferred.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\AkFileHelpers.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIOBlocking.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\AkFilePackageLowLevelIODeferred.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Win32\stdafx.h">
+      <Filter>External\Wwise\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkFileHelpersBase.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkFilePackage.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="Wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h">
+      <Filter>External\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">
@@ -535,6 +604,9 @@
     </None>
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>External\Others</Filter>
+    </None>
+    <None Include="Wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.inl">
+      <Filter>External\Wwise</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -576,6 +648,12 @@
     </Filter>
     <Filter Include="External\ImGuizmo">
       <UniqueIdentifier>{fe0c095e-995e-4deb-8b1b-33a183aac6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Wwise">
+      <UniqueIdentifier>{741f4ec7-70d1-4c4d-aa78-f5e92ee66120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Wwise\Win32">
+      <UniqueIdentifier>{a94038c7-9a47-40a1-8e6d-3fc8e1b394b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
