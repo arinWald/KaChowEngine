@@ -173,7 +173,7 @@ void GameObject::DeleteChild(GameObject* child)
 
 void GameObject::PrintOnInspector()
 {
-	char* compList[]{ "Add Component", "Mesh Component", "Material Component", "Camera Component" };
+	char* compList[]{ "Add Component", "Mesh Component", "Material Component", "Camera Component", "Audio Listener"};
 
 	char aux[255] = { ' ' };
 
@@ -246,6 +246,14 @@ void GameObject::PrintOnInspector()
 					LOG("Camera Component already added, can't duplicate.")
 				}
 			}
+			case 4:
+				if (GetCameraComponent() == nullptr) {
+					C_AudioListener* compCam = new C_AudioListener(UUIDGenerator::Generate());
+					AddComponent(compCam);
+				}
+				else {
+					LOG("Camera Component already added, can't duplicate.")
+				}
 			break;
 			}
 			componentNum = 0;

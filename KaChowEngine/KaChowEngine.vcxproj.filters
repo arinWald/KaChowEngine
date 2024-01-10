@@ -238,6 +238,9 @@
     <ClCompile Include="ModuleAudio.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="C_AudioListener.cpp">
+      <Filter>Sources\Gameobject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -584,6 +587,9 @@
     </ClInclude>
     <ClInclude Include="ModuleAudio.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="C_AudioListener.h">
+      <Filter>Sources\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

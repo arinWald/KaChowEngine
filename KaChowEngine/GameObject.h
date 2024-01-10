@@ -9,6 +9,7 @@
 #include "Application.h"
 #include "OurPrimitive.h"
 #include "C_Camera.h"
+#include "C_AudioListener.h"
 
 enum class ComponentType;
 class Component;
@@ -16,6 +17,7 @@ class C_Transform;
 class C_Mesh;
 class C_Material;
 class C_Camera;
+class C_AudioListener;
 class GameObject
 {
 public:
