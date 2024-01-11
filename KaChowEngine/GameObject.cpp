@@ -144,6 +144,30 @@ C_Camera* GameObject::GetCameraComponent()
 	return nullptr;
 }
 
+C_AudioListener* GameObject::GetAudioListenerComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::AUDIOLISTENER)
+		{
+			return (C_AudioListener*)mComponents[i];
+		}
+	}
+	return nullptr;
+}
+
+C_AudioSource* GameObject::GetAudioSourceComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::AUDIOSOURCE)
+		{
+			return (C_AudioSource*)mComponents[i];
+		}
+	}
+	return nullptr;
+}
+
 bool GameObject::IsChildOf(GameObject* gameObject)
 {
 	if (gameObject == this)
@@ -173,7 +197,8 @@ void GameObject::DeleteChild(GameObject* child)
 
 void GameObject::PrintOnInspector()
 {
-	char* compList[]{ "Add Component", "Mesh Component", "Material Component", "Camera Component", "Audio Listener"};
+	char* compList[]{ "Add Component", "Mesh Component", "Material Component", 
+		"Camera Component", "Audio Listener", "Audio Source"};
 
 	char aux[255] = { ' ' };
 
@@ -247,14 +272,23 @@ void GameObject::PrintOnInspector()
 				}
 			}
 			case 4:
-				if (GetCameraComponent() == nullptr) {
-					C_AudioListener* compCam = new C_AudioListener(UUIDGenerator::Generate());
-					AddComponent(compCam);
+				if (GetAudioListenerComponent() == nullptr) {
+					C_AudioListener* compListener = new C_AudioListener(this, UUIDGenerator::Generate());
+					AddComponent(compListener);
 				}
 				else {
-					LOG("Camera Component already added, can't duplicate.")
+					LOG("Audio listener Component already added, can't duplicate.")
 				}
 			break;
+			case 5:
+				if (GetAudioSourceComponent() == nullptr) {
+					C_AudioSource* compAudioSource = new C_AudioSource(UUIDGenerator::Generate());
+					AddComponent(compAudioSource);
+				}
+				else {
+					LOG("Audio source Component already added, can't duplicate.")
+				}
+				break;
 			}
 			componentNum = 0;
 		}

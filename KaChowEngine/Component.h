@@ -8,6 +8,7 @@ enum class ComponentType
 	MESH,
 	MATERIAL,
 	AUDIOLISTENER,
+	AUDIOSOURCE,
 	CAMERA,
 };
 
@@ -16,6 +17,7 @@ class Component
 {
 public:
 	Component(GameObject* parent, std::string uuid);
+	Component(GameObject* parent, std::string uuid, int audioId);
 	virtual ~Component();
 
 	virtual void OnEditor();
@@ -29,6 +31,7 @@ public:
 	GameObject* mParent;
 
 	std::string uuid;
+	int audioId;
 };
 
 

@@ -1,5 +1,7 @@
 #include "Component.h"
 
+int audioIdCounter = 0;
+
 Component::Component(GameObject* parent, std::string uuid)
 {
 	type = ComponentType::NONE;
@@ -7,6 +9,18 @@ Component::Component(GameObject* parent, std::string uuid)
 	this->mParent = parent;
 
 	this->uuid = uuid;
+}
+
+Component::Component(GameObject* parent, std::string uuid, int audioId)
+{
+	type = ComponentType::NONE;
+	active = true;
+	this->mParent = parent;
+
+	this->uuid = uuid;
+	audioId = audioIdCounter;
+	this->audioId = audioId;
+	audioIdCounter++;
 }
 
 Component::~Component()

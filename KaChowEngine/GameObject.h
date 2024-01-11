@@ -10,6 +10,7 @@
 #include "OurPrimitive.h"
 #include "C_Camera.h"
 #include "C_AudioListener.h"
+#include "C_AudioSource.h"
 
 enum class ComponentType;
 class Component;
@@ -18,6 +19,7 @@ class C_Mesh;
 class C_Material;
 class C_Camera;
 class C_AudioListener;
+class C_AudioSource;
 class GameObject
 {
 public:
@@ -40,7 +42,8 @@ public:
 	C_Mesh* GetMeshComponent();
 	C_Material* GetMaterialComponent();
 	C_Camera* GetCameraComponent();
-
+	C_AudioSource* GetAudioSourceComponent();
+	C_AudioListener* GetAudioListenerComponent();
 
 	std::string name;
 
@@ -55,6 +58,8 @@ public:
 
 	std::string GetUUIDName();
 	std::string uuid;
+
+	int audioId;
 
 	ShapeType type;
 

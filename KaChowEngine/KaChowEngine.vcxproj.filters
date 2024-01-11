@@ -241,6 +241,9 @@
     <ClCompile Include="C_AudioListener.cpp">
       <Filter>Sources\Gameobject</Filter>
     </ClCompile>
+    <ClCompile Include="C_AudioSource.cpp">
+      <Filter>Sources\Gameobject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -589,6 +592,9 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="C_AudioListener.h">
+      <Filter>Sources\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="C_AudioSource.h">
       <Filter>Sources\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>

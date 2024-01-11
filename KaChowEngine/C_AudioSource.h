@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "ModuleAudio.h"
 
 #include <iostream>
 #include <string>
@@ -11,16 +10,15 @@
 
 using namespace std;
 
-class C_AudioListener : public Component
+class C_AudioSource : public Component
 {
 public:
-	C_AudioListener(GameObject* owner, std::string uuid);
-	~C_AudioListener();
+	C_AudioSource(std::string uuid);
+	C_AudioSource(GameObject* gameObject, std::string uuid);
+	~C_AudioSource();
 
 	void Update() override;
 
 	void OnEditor() override;
-
-	GameObject* listenerGameObject;
 
 };
