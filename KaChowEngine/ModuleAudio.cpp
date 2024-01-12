@@ -117,6 +117,17 @@ void ModuleAudio::ProcessAudio()
     AK::SoundEngine::RenderAudio();
 }
 
+void ModuleAudio::RegisterGameObject(unsigned int id)
+{
+    AK::SoundEngine::RegisterGameObj(id);
+
+}
+
+void ModuleAudio::UnregisterGameObject(unsigned int id)
+{
+    AK::SoundEngine::UnregisterGameObj(id);
+}
+
 void ModuleAudio::TermSoundEngine()
 {
     AK::SoundEngine::Term();;

@@ -30,6 +30,9 @@ public:
 	void ProcessAudio();
 	void TermSoundEngine();
 
+	void RegisterGameObject(unsigned int id);
+	void UnregisterGameObject(unsigned int id);
+
 private:
 	
 	CAkFilePackageLowLevelIODeferred g_lowLevelIO;
