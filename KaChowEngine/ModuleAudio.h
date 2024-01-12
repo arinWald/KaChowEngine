@@ -2,41 +2,16 @@
 
 #include "Module.h"
 #include "Globals.h"
-//#include "AudioEvent.h"
 
-
-#include <AK/SoundEngine/Common/AkMemoryMgr.h>
-#include <AK/SoundEngine/Common/AkModule.h>
-
-#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>  
-
-#include <AK/SoundEngine/Common/AkSoundEngine.h>
-
-//#include <AK/MusicEngine/Common/AkMusicEngine.h>
-#include <AK/SpatialAudio/Common/AkSpatialAudio.h>
-
-#include <AK/SoundEngine/Common/IAkPlugin.h>
-//#include <AK/Plugin/AkRoomVerbFXFactory.h>
-
-#include <AK/SoundEngine/Win32/AkFilePackageLowLevelIOBlocking.h>
-
-#ifndef AK_OPTIMIZED
-#include <AK/Comm/AkCommunication.h>
-#endif
-
-
-
-#define MAX_LISTENERS 1
-
-class AudioEvent;
-
-
-struct WwiseData
-{
-	/*std::vector<std::string> events;
-	std::vector<std::string> banks;*/
-};
+// Wwise includes
+#include <AK/SoundEngine/Common/AkMemoryMgr.h>                  // Memory Manager interface
+#include <AK/SoundEngine/Common/AkModule.h>                     // Default memory manager
+#include <AK/SoundEngine/Common/IAkStreamMgr.h>                 // Streaming Manager
+#include <AK/Tools/Common/AkPlatformFuncs.h>                    // Thread defines
+#include <AK/SoundEngine/Win32/AkFilePackageLowLevelIODeferred.h>// Sample low-level I/O implementation
+#include <AK/SoundEngine/Common/AkSoundEngine.h>                // Sound engine
+#include <AK/MusicEngine/Common/AkMusicEngine.h>                // Music Engine
+#include <AK/SpatialAudio/Common/AkSpatialAudio.h>              // Spatial Audio
 
 class ModuleAudio : public Module
 {
@@ -47,36 +22,14 @@ public:
 
 	bool Init();
 	bool Start();
+	bool InitSoundEngine();
 	update_status PreUpdate(float dt) override;
 	update_status Update(float dt) override;
 	bool CleanUp();
 
-	bool InitSoundEngine();
-
-	void ProcessAudio();
-
-	void RegisterGameObject(unsigned int id);
-	void UnregisterGameObject(unsigned int id);
-
-
-	void PostEvent(const char* event, unsigned int id);
-	void StopEvent(const char* event, unsigned int id);
-	void PauseEvent(const char* event, unsigned int id);
-	void ResumeEvent(const char* event, unsigned int id);
-
-	void SetRTPCValue(const char* event, float volume, uint id);
-
-	void SetDefaultListener(const AkGameObjectID id);
-	void RemoveDefaultListener(const AkGameObjectID id);
-	void AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id);
-	void SetListenerPos(GameObject* listener, unsigned int id);
-
-	void GetAudioInfo();
-
-	WwiseData wwiseData;
-
 private:
-	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+	
+	CAkFilePackageLowLevelIODeferred g_lowLevelIO;
 
 };
 
