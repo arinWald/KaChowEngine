@@ -29,7 +29,15 @@ void C_AudioSource::OnEditor()
 	{
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), "Enabled: ");
 		ImGui::SameLine();
-		//ImGui::Checkbox("##audioSourceEnabled", &enabled);
+		ImGui::Checkbox("##audioSourceEnabled", &active);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (active)
+			ImGui::TextColored(ImVec4(0, 255, 0, 255), "'%s' is now a SOURCE", mParent->name.c_str());
+		else
+			ImGui::TextColored(ImVec4(255, 0, 0, 255), "'%s' is NOT a SOURCE", mParent->name.c_str());
 
 		ImGui::Spacing();
 		ImGui::Spacing();
