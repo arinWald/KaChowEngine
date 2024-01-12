@@ -27,6 +27,9 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp();
 
+	void ProcessAudio();
+	void TermSoundEngine();
+
 private:
 	
 	CAkFilePackageLowLevelIODeferred g_lowLevelIO;

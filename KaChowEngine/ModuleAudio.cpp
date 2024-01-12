@@ -44,20 +44,9 @@ bool ModuleAudio::InitSoundEngine()
         LOG("Couldn't create the Memory Manager");
         return false;
     }
-    //
-
-    // Create and initialize an instance of the default streaming manager. Note
-
-    // that you can override the default streaming manager with your own. 
-
-    //
-
 
     AkStreamMgrSettings stmSettings;
     AK::StreamMgr::GetDefaultSettings(stmSettings);
-
-    // Customize the Stream Manager settings here.
-
 
     if (!AK::StreamMgr::Create(stmSettings))
     {
@@ -65,38 +54,14 @@ bool ModuleAudio::InitSoundEngine()
         return false;
     }
 
-    //
-
-    // Create a streaming device.
-
-    // Note that you can override the default low-level I/O module with your own. 
-
-    //
-
     AkDeviceSettings deviceSettings;
     AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
-
-    // Customize the streaming device settings here.
-
-
-    // CAkFilePackageLowLevelIODeferred::Init() creates a streaming device
-
-    // in the Stream Manager, and registers itself as the File Location Resolver.
 
     if (g_lowLevelIO.Init(deviceSettings) != AK_Success)
     {
         assert(!"Could not create the streaming device and Low-Level I/O system");
         return false;
     }
-
-    //
-
-    // Create the Sound Engine
-
-    // Using default initialization parameters
-
-    //
-
 
     AkInitSettings          initSettings;
     AkPlatformInitSettings  platformInitSettings;
@@ -111,15 +76,6 @@ bool ModuleAudio::InitSoundEngine()
         return false;
     }
 
-    //
-
-    // Initialize the music engine
-
-    // Using default initialization parameters
-
-    //
-
-
     AkMusicSettings musicInit;
     AK::MusicEngine::GetDefaultInitSettings(musicInit);
 
@@ -129,16 +85,7 @@ bool ModuleAudio::InitSoundEngine()
         return false;
     }
 
-    //
-
-    // Initialize Spatial Audio
-
-    // Using default initialization parameters
-
-    //
-
-
-    AkSpatialAudioInitSettings settings; // The constructor fills AkSpatialAudioInitSettings with the recommended default settings. 
+    AkSpatialAudioInitSettings settings;
 
     if (AK::SpatialAudio::Init(settings) != AK_Success)
     {
@@ -146,7 +93,36 @@ bool ModuleAudio::InitSoundEngine()
         return false;
     }
 
+    g_lowLevelIO.SetBasePath(AKTEXT("Assets/Wwise/"));
+
+    AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
+
+    AkBankID bankID;
+    if (AK::SoundEngine::LoadBank(L"Init.bnk", bankID) != AK_Success)
+    {
+        LOG("Couldn't find the bank: Init.bnk");
+        return false;
+    }
+    if (AK::SoundEngine::LoadBank(L"Main.bnk", bankID) != AK_Success)
+    {
+        LOG("Couldn't find the bank: Main.bnk");
+        return false;
+    }
+
     return true;
+}
+
+void ModuleAudio::ProcessAudio()
+{
+    AK::SoundEngine::RenderAudio();
+}
+
+void ModuleAudio::TermSoundEngine()
+{
+    AK::SoundEngine::Term();;
+
+    if (AK::IAkStreamMgr::Get())
+        AK::IAkStreamMgr::Get()->Destroy();
 }
 
 update_status ModuleAudio::PreUpdate(float dt)
@@ -164,6 +140,6 @@ update_status ModuleAudio::Update(float dt)
 
 bool ModuleAudio::CleanUp()
 {
-
+    //TermSoundEngine();
 	return true;
 }
