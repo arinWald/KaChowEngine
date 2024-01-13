@@ -12,15 +12,23 @@ C_AudioListener::C_AudioListener(GameObject* owner, std::string uuid) : Componen
 	listenerId = audioId;
 	LOG("Audio Listener ID:  %d", audioId);
 
+	App->audio->RegisterGameObject(listenerId);
+	App->audio->SetDefaultListener(listenerId);
+
 }
 
 C_AudioListener::~C_AudioListener()
 {
+	App->audio->RemoveDefaultListener(listenerId);
 
+	App->audio->UnregisterGameObject(listenerId);
+
+	LOG("Destroying AudioListener");
 }
 
 void C_AudioListener::Update()
 {
+	App->audio->SetListenerPos(listenerGameObject, listenerId);
 }
 
 void C_AudioListener::OnEditor()
@@ -53,7 +61,7 @@ void C_AudioListener::OnEditor()
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		/*if (ImGui::Button("Remove Component ##listener", ImVec2(ImGui::GetWindowSize().x, 20.0f)))
-			mParento->RemoveComponent(this);*/
+			mParent->RemoveComponent(this);*/
 
 		ImGui::PopStyleColor(3);
 
