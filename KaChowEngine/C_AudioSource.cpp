@@ -12,6 +12,7 @@ C_AudioSource::C_AudioSource(GameObject* owner, std::string uuid) : Component(nu
 	this->sourceID = audioId;
 	//LOG("Audio Source ID:  %d", this->audioId);
 	App->audio->RegisterGameObject(sourceID);
+	volume = 100.0f; // Default volume level
 }
 
 C_AudioSource::~C_AudioSource()
@@ -61,6 +62,7 @@ void C_AudioSource::OnEditor()
 void C_AudioSource::PlayEvent()
 {
 	playID = App->audio->PostEvent(audio.c_str(), sourceID);
+	App->audio->SetRTPCValue("Volume", volume, sourceID);
 
 }
 
@@ -73,7 +75,7 @@ void C_AudioSource::StopEvent() const
 void C_AudioSource::ResumeEvent() const
 {
 	App->audio->ResumeEvent(audio.c_str(), sourceID);
-
+	App->audio->SetRTPCValue("Volume", volume, sourceID);
 }
 
 void C_AudioSource::PauseEvent() const
@@ -137,4 +139,11 @@ void C_AudioSource::PrintAudioList()
 
 	ImGui::Spacing();
 	ImGui::Separator();
+
+	if (ImGui::SliderFloat("Volume", &volume, 0.0f, 100.0f))
+	{
+		// Update the volume using Wwise API
+		App->audio->SetRTPCValue("Volume", (AkRtpcValue)volume, sourceID);
+	}
+
 }

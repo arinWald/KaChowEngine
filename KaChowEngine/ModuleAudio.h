@@ -49,7 +49,7 @@ public:
 	void PauseEvent(const char* event, unsigned int id);
 	void ResumeEvent(const char* event, unsigned int id);
 
-	void SetRTPCValue(const char* event, float volume, uint id);
+	void SetRTPCValue(const char* event, AkRtpcValue volume, uint id);
 
 	void SetDefaultListener(const AkGameObjectID id);
 	void RemoveDefaultListener(const AkGameObjectID id);

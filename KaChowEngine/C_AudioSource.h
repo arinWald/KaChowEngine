@@ -31,7 +31,7 @@ public:
 	unsigned toPlayEventId = 0;
 
 	unsigned int playID;
-	float volume;
+	AkRtpcValue volume;
 	bool playOnAwake;
 	bool isPlaying = false;
 

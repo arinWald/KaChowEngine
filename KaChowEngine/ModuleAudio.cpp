@@ -164,10 +164,25 @@ void ModuleAudio::AddListeners(unsigned int emitter_id, const AkGameObjectID lis
 	AK::SoundEngine::SetListeners(emitter_id, &listener_id, MAX_LISTENERS);
 }
 
-void ModuleAudio::SetRTPCValue(const char* event, float volume, uint id)
+void ModuleAudio::SetRTPCValue(const char* event, AkRtpcValue volume, uint id)
 {
-	AK::SoundEngine::SetRTPCValue("Volume", volume, id);
+	// Assuming "Volume" is the RTPC name in Wwise
+	AKRESULT result = AK::SoundEngine::SetRTPCValue(event, volume, id);
+	if (result != AK_Success)
+	{
+		LOG("SetRTPCValue failed with error code: %d", result);
+	}
+	else if( result == AK_InvalidFloatValue)
+	{
+		LOG("AK_InvalidFloatValue error");
+	}
+	else if(result == AK_InvalidID)
+	{
+		LOG("AK_InvalidID error");
+	}
 }
+
+
 
 void ModuleAudio::SetListenerPos(GameObject* listener, unsigned int id)
 {
