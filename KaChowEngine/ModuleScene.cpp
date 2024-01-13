@@ -26,15 +26,20 @@ bool ModuleScene::Start()
 	rootGameObject = new GameObject(nullptr);
 	rootGameObject->name = "Scene";
 
+	backgroundAudioSource = new GameObject(rootGameObject);
+	backgroundAudioSource->name = "Background Music Source";
+	C_AudioSource* bgAudioSource = new C_AudioSource(backgroundAudioSource, UUIDGenerator::Generate());
+	backgroundAudioSource->AddComponent(bgAudioSource);
 
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
 	bakerHouse->name = "BakerHouse";
+	C_AudioListener* audioListenerComponent = new C_AudioListener(bakerHouse, UUIDGenerator::Generate());
+	bakerHouse->AddComponent(audioListenerComponent);
 
 	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
 	street->name = "Street";
 	street->mTransform->mRotation.x = -90;
 	street->mTransform->calculateMatrix();
-
 
 	// Game camera at start
 	currentGameCamera = new GameObject(rootGameObject);
