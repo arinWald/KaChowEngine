@@ -10,7 +10,7 @@ C_AudioSource::C_AudioSource(GameObject* owner, std::string uuid) : Component(nu
 	type = ComponentType::AUDIOSOURCE;
 	sourceGameObject = owner;
 	this->sourceID = audioId;
-	LOG("Audio Source ID:  %d", this->audioId);
+	//LOG("Audio Source ID:  %d", this->audioId);
 	App->audio->RegisterGameObject(sourceID);
 }
 

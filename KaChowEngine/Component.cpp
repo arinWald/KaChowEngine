@@ -14,7 +14,7 @@ Component::Component(GameObject* parent, std::string uuid)
 
 	audioId = audioIdCounter;
 	audioIdCounter++;
-	LOG("Component ID:  %d", audioIdCounter);
+	//LOG("Component ID:  %d", audioIdCounter);
 }
 
 Component::~Component()

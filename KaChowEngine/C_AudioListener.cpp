@@ -10,7 +10,7 @@ C_AudioListener::C_AudioListener(GameObject* owner, std::string uuid) : Componen
 	type = ComponentType::AUDIOLISTENER;
 	listenerGameObject = owner;
 	listenerId = audioId;
-	LOG("Audio Listener ID:  %d", audioId);
+	//LOG("Audio Listener ID:  %d", audioId);
 
 	App->audio->RegisterGameObject(listenerId);
 	App->audio->SetDefaultListener(listenerId);
