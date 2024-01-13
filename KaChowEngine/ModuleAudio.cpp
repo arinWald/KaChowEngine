@@ -110,7 +110,7 @@ bool ModuleAudio::InitSoundEngine()
 	}
 
 
-	GetAudioInfo();
+	GetAudioID();
 
 	g_lowLevelIO.SetBasePath(AKTEXT("Assets/Wwise/"));
 
@@ -180,86 +180,84 @@ void ModuleAudio::SetListenerPos(GameObject* listener, unsigned int id)
 	AK::SoundEngine::SetPosition(id, listenerPosition);
 }
 
-void ModuleAudio::PostEvent(const char* event, unsigned int id)
+AkPlayingID ModuleAudio::PostEvent(const char* eventName, unsigned int source_id)
 {
-	AkPlayingID playingID;
-	if (event != nullptr)
+	AkPlayingID playingID = AK::SoundEngine::PostEvent(eventName, source_id);
+	if (playingID == AK_INVALID_PLAYING_ID)
 	{
-		playingID = AK::SoundEngine::PostEvent(event, id);
-		if (playingID == AK_INVALID_PLAYING_ID)
-		{
-			LOG("Post Event Failed")
-		}
+		LOG("Post event %s failed", eventName);
+		return -1;
 	}
+	return playingID;
 }
 
-void ModuleAudio::StopEvent(const char* event, unsigned int id)
+void ModuleAudio::SetSourcePos(GameObject* source, unsigned int id)
 {
-	if (event != nullptr)
-	{
-		AK::SoundEngine::ExecuteActionOnEvent(event, AK::SoundEngine::AkActionOnEventType_Stop, id);
+	// Position of the listener
+	float3 pos = source->mTransform->mPosition;
 
-	}
+	// Bc we only want to know pos and orientation, we use "AkSoundPosition". "AkTransform" is more 'complex' (scale..., etc)
+	AkSoundPosition sourcePosition;
+	sourcePosition.SetOrientation({ 0,0,-1 }, { 0,1,0 });
+	sourcePosition.SetPosition(pos.x, pos.y, pos.z);
+
+	AK::SoundEngine::SetPosition(id, sourcePosition);
 }
 
-void ModuleAudio::PauseEvent(const char* event, unsigned int id)
+void ModuleAudio::StopEvent(const char* eventName, unsigned int id)
 {
-	if (event != nullptr)
-	{
-		AK::SoundEngine::ExecuteActionOnEvent(event, AK::SoundEngine::AkActionOnEventType_Pause, id);
-
-	}
+	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Stop, id);
 }
 
-
-void ModuleAudio::ResumeEvent(const char* event, unsigned int id)
+void ModuleAudio::PauseEvent(const char* eventName, unsigned int id)
 {
-	if (event != nullptr)
-	{
-		AK::SoundEngine::ExecuteActionOnEvent(event, AK::SoundEngine::AkActionOnEventType_Resume, id);
-
-	}
+	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Pause, id);
 }
 
-void ModuleAudio::GetAudioInfo()
+void ModuleAudio::ResumeEvent(const char* eventName, unsigned int id)
 {
-	std::ifstream file("Assets/Wwise/Wwise_IDs.h");
+	AK::SoundEngine::ExecuteActionOnEvent(eventName, AK::SoundEngine::AkActionOnEventType_Resume, id);
+}
+
+void ModuleAudio::GetAudioID()
+{
+	std::ifstream filePath("Assets/Wwise/Wwise_IDs.h");
 
 	std::string line;
 
-	while (std::getline(file, line))
+	while (std::getline(filePath, line))
 	{
-		if (line.find("EVENTS") != std::string::npos)
+		if (line.find("EVENTS") != string::npos)
 		{
-			while (std::getline(file, line))
+			while (std::getline(filePath, line))
 			{
 				if (line.find("}") != std::string::npos)
 				{
 					break;
 				}
-				else if (line.find("AkUniqueID") != std::string::npos)
+				else if (line.find("AkUniqueID") != string::npos)
 				{
 					line = line.substr(0, line.find("=") - 1);
 					line = line.substr(line.find_last_of(" ") + 1, line.length());
 
-					wwiseData.events.push_back(line);
+					events.push_back(line);
 				}
 			}
 		}
-		else if (line.find("BANKS") != std::string::npos)
+		else if (line.find("BANKS") != string::npos)
 		{
-			while (std::getline(file, line))
+			while (std::getline(filePath, line))
 			{
-				if (line.find("}") != std::string::npos)
+				if (line.find("}") != string::npos)
 				{
 					break;
 				}
-				else if (line.find("AkUniqueID") != std::string::npos)
+				else if (line.find("AkUniqueID") != string::npos)
 				{
 					line = line.substr(0, line.find("=") - 1);
 					line = line.substr(line.find_last_of(" ") + 1, line.length());
 
-					wwiseData.banks.push_back(line);
+					soundBanks.push_back(line);
 				}
 			}
 		}

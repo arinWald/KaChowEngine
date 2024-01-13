@@ -26,4 +26,6 @@ public:
 
 	int listenerId;
 
+	bool activeListener;
+
 };

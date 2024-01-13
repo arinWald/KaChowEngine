@@ -75,6 +75,7 @@ GameObject::~GameObject()
 
 void GameObject::AddComponent(Component* component)
 {
+	componentNum++;
 	mComponents.push_back(component);
 	component->mParent = this;
 }
@@ -238,55 +239,60 @@ void GameObject::PrintOnInspector()
 		if (ImGui::Combo("##AddComponent", &componentNum, compList, IM_ARRAYSIZE(compList)))
 		{
 			switch (componentNum) {
-			case 1:
-			{
-				//Mesh component
-				if (GetMeshComponent() == nullptr) {
-					C_Mesh* compMesh = new C_Mesh(UUIDGenerator::Generate());
-					AddComponent(compMesh);
+				case 1:
+				{
+					//Mesh component
+					if (GetMeshComponent() == nullptr) {
+						C_Mesh* compMesh = new C_Mesh(UUIDGenerator::Generate());
+						AddComponent(compMesh);
+					}
+					else {
+						LOG("Mesh Component already added, can't duplicate.")
+					}
 				}
-				else {
-					LOG("Mesh Component already added, can't duplicate.")
+				break;
+				case 2:
+				{
+					if (GetMaterialComponent() == nullptr) {
+						C_Material* compMat = new C_Material(UUIDGenerator::Generate());
+						AddComponent(compMat);
+					}
+					else {
+						LOG("Texture Component already added, can't duplicate.")
+					}
 				}
-			}
-			break;
-			case 2:
-			{
-				if (GetMaterialComponent() == nullptr) {
-					C_Material* compMat = new C_Material(UUIDGenerator::Generate());
-					AddComponent(compMat);
+				break;
+				case 3:
+				{
+					if (GetCameraComponent() == nullptr) {
+						C_Camera* compCam = new C_Camera(UUIDGenerator::Generate());
+						AddComponent(compCam);
+					}
+					else {
+						LOG("Camera Component already added, can't duplicate.")
+					}
 				}
-				else {
-					LOG("Texture Component already added, can't duplicate.")
+				break;
+				case 4:
+				{
+					if (GetAudioListenerComponent() == nullptr) {
+						C_AudioListener* compListener = new C_AudioListener(this, UUIDGenerator::Generate());
+						AddComponent(compListener);
+					}
+					else {
+						LOG("Audio listener Component already added, can't duplicate.")
+					}
 				}
-			}
-			break;
-			case 3:
-			{
-				if (GetCameraComponent() == nullptr) {
-					C_Camera* compCam = new C_Camera(UUIDGenerator::Generate());
-					AddComponent(compCam);
-				}
-				else {
-					LOG("Camera Component already added, can't duplicate.")
-				}
-			}
-			case 4:
-				if (GetAudioListenerComponent() == nullptr) {
-					C_AudioListener* compListener = new C_AudioListener(this, UUIDGenerator::Generate());
-					AddComponent(compListener);
-				}
-				else {
-					LOG("Audio listener Component already added, can't duplicate.")
-				}
-			break;
-			case 5:
-				if (GetAudioSourceComponent() == nullptr) {
-					C_AudioSource* compAudioSource = new C_AudioSource(this, UUIDGenerator::Generate());
-					AddComponent(compAudioSource);
-				}
-				else {
-					LOG("Audio source Component already added, can't duplicate.")
+				break;
+				case 5:
+				{
+					if (GetAudioSourceComponent() == nullptr) {
+						C_AudioSource* compAudioSource = new C_AudioSource(this, UUIDGenerator::Generate());
+						AddComponent(compAudioSource);
+					}
+					else {
+						LOG("Audio source Component already added, can't duplicate.")
+					}
 				}
 				break;
 			}

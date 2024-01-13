@@ -23,14 +23,6 @@
 #define MAX_LISTENERS 1
 
 class AudioEvent;
-
-
-struct WwiseData
-{
-	std::vector<std::string> events;
-	std::vector<std::string> banks;
-};
-
 class ModuleAudio : public Module
 {
 public:
@@ -52,7 +44,7 @@ public:
 	void UnregisterGameObject(unsigned int id);
 
 
-	void PostEvent(const char* event, unsigned int id);
+	AkPlayingID PostEvent(const char* eventName, unsigned int source_id);
 	void StopEvent(const char* event, unsigned int id);
 	void PauseEvent(const char* event, unsigned int id);
 	void ResumeEvent(const char* event, unsigned int id);
@@ -63,10 +55,12 @@ public:
 	void RemoveDefaultListener(const AkGameObjectID id);
 	void AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id);
 	void SetListenerPos(GameObject* listener, unsigned int id);
+	void SetSourcePos(GameObject* source, unsigned int id);
 
-	void GetAudioInfo();
+	void GetAudioID();
 
-	WwiseData wwiseData;
+	std::vector<std::string> events;
+	std::vector<std::string> soundBanks;
 
 private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
