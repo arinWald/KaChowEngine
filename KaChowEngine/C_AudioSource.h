@@ -40,4 +40,6 @@ public:
 
 	std::string audio;
 
+	AkSoundPosition soundPos;
+
 };

@@ -122,9 +122,9 @@ bool ModuleAudio::InitSoundEngine()
 		LOG("Couldn't find the bank: Init.bnk");
 		return false;
 	}
-	if (AK::SoundEngine::LoadBank(L"Main.bnk", bankID) != AK_Success)
+	if (AK::SoundEngine::LoadBank(L"ragnarEngine.bnk", bankID) != AK_Success)
 	{
-		LOG("Couldn't find the bank: Main.bnk");
+		LOG("Couldn't find the bank: ragnarEngine.bnk");
 		return false;
 	}
 
@@ -183,7 +183,6 @@ void ModuleAudio::SetRTPCValue(const char* event, AkRtpcValue volume, uint id)
 }
 
 
-
 void ModuleAudio::SetListenerPos(GameObject* listener, unsigned int id)
 {
 	float3 position = listener->mTransform->mPosition;
@@ -208,10 +207,8 @@ AkPlayingID ModuleAudio::PostEvent(const char* eventName, unsigned int source_id
 
 void ModuleAudio::SetSourcePos(GameObject* source, unsigned int id)
 {
-	// Position of the listener
 	float3 pos = source->mTransform->mPosition;
 
-	// Bc we only want to know pos and orientation, we use "AkSoundPosition". "AkTransform" is more 'complex' (scale..., etc)
 	AkSoundPosition sourcePosition;
 	sourcePosition.SetOrientation({ 0,0,-1 }, { 0,1,0 });
 	sourcePosition.SetPosition(pos.x, pos.y, pos.z);

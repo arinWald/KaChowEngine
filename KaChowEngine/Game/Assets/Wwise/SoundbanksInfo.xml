@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>C:\Users\zapin\Documents\WwiseProjects\Proyecto1\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\zapin\Documents\WwiseProjects\Proyecto1\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\zapin\Documents\WwiseProjects\Proyecto1\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\Uri\Documents\WwiseProjects\RagnarEngineSound\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Uri\Documents\WwiseProjects\RagnarEngineSound\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Uri\Documents\WwiseProjects\RagnarEngineSound\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\zapin\Documents\WwiseProjects\Proyecto1\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\Uri\Documents\WwiseProjects\RagnarEngineSound\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="3413456938">
-			<ObjectPath>Init</ObjectPath>
-			<ShortName>Init</ShortName>
-			<Path>Init.bnk</Path>
-		</SoundBank>
-		<SoundBank Id="3161908922" GUID="{90517D60-3595-4557-B2A3-C38B43B447EE}" Language="SFX" Hash="2417232357">
-			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
-			<ShortName>Main</ShortName>
-			<Path>Main.bnk</Path>
+		<SoundBank Id="87917746" Language="SFX" Hash="1385756100">
+			<ObjectPath>\SoundBanks\Default Work Unit\ragnarEngine</ObjectPath>
+			<ShortName>ragnarEngine</ShortName>
+			<Path>ragnarEngine.bnk</Path>
 			<IncludedEvents>
-				<Event Id="3650723969" Name="Background" ObjectPath="\Events\Default Work Unit\Background" GUID="{24811D9E-9DA8-46CD-8051-66FD7FF53F9D}" DurationType="OneShot" DurationMin="32.664001" DurationMax="32.664001">
+				<Event Id="799949012" Name="ActivateBgMusic" ObjectPath="\Events\Default Work Unit\ActivateBgMusic">
 					<IncludedMemoryFiles>
-						<File Id="141014001" Language="SFX">
-							<ShortName>guitar_piano.wav</ShortName>
-							<Path>SFX\guitar_piano_E0DA7CF5.wem</Path>
+						<File Id="192247659" Language="SFX">
+							<ShortName>oriol.wav</ShortName>
+							<Path>SFX\oriol_10C4C929.wem</Path>
 						</File>
-						<File Id="894172613" Language="SFX">
-							<ShortName>rock.wav</ShortName>
-							<Path>SFX\rock_96D980F5.wem</Path>
+						<File Id="919001556" Language="SFX">
+							<ShortName>lucas.wav</ShortName>
+							<Path>SFX\lucas_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 			</IncludedEvents>
+			<GameParameters>
+				<GameParameter Id="1908158473" Name="Pitch" ObjectPath="\Game Parameters\Default Work Unit\Pitch"/>
+				<GameParameter Id="2415836739" Name="Volume" ObjectPath="\Game Parameters\Default Work Unit\Volume"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="1355168291" Language="SFX" Hash="3218428019">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<IncludedAuxBusses>
+				<AuxBus Id="1632408463" Name="ReverbZone" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\ReverbZone"/>
+			</IncludedAuxBusses>
 		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

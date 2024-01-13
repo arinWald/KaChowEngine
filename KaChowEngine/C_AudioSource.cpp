@@ -26,8 +26,24 @@ C_AudioSource::~C_AudioSource()
 
 void C_AudioSource::Update()
 {
+	//// Set source position
+	//soundPos.SetPosition(sourceGameObject->mTransform->mPosition.x,
+	//	sourceGameObject->mTransform->mPosition.y,
+	//	sourceGameObject->mTransform->mPosition.z);
+
+	//// Calculate forward and up vectors from mRotation (float3)
+	//float3 forward = sourceGameObject->mTransform->mRotation.Normalized(); // Assuming mRotation represents the forward vector
+	//float3 up = Cross(float3(0.0f, 1.0f, 0.0f), forward).Normalized(); // Calculate the up vector
+
+	//// Set source orientation
+	////soundPos.SetOrientation({ forward.x, forward.y, forward.z }, { up.x, up.y, up.z });
+
+	//// Update Source Transform
+	//AK::SoundEngine::SetPosition(sourceID, soundPos);
+
 	App->audio->SetSourcePos(sourceGameObject, sourceID);
 }
+
 
 void C_AudioSource::OnEditor()
 {
