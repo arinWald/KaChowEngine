@@ -34,7 +34,7 @@ C_ReverbZone::~C_ReverbZone()
 void C_ReverbZone::ResizeReverbZone()
 {
 	reverbBoxZone.SetNegativeInfinity();
-	reverbBoxZone.SetFromCenterAndSize(transform->GetPosition(), float3(5.0f, 5.0f, 5.0f));
+	reverbBoxZone.SetFromCenterAndSize(reverbZoneObject->mTransform->getPosition(), float3(5.0f, 5.0f, 5.0f));
 
 }
 

@@ -44,6 +44,7 @@ public:
 	C_Camera* GetCameraComponent();
 	C_AudioSource* GetAudioSourceComponent();
 	C_AudioListener* GetAudioListenerComponent();
+	C_ReverbZone* GetReverbZoneComponent();
 
 	std::string name;
 

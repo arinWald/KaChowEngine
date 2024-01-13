@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleAudio.h"
-#include "GameObject.h"
 #include "C_Camera.h"
 
 #include <string>
@@ -149,9 +148,10 @@ void ModuleAudio::UnregisterGameObject(unsigned int id)
 	AK::SoundEngine::UnregisterGameObj(id);
 }
 
-void ModuleAudio::SetDefaultListener(const AkGameObjectID id)
+void ModuleAudio::SetDefaultListener(const AkGameObjectID id, C_Transform* listenerPosition)
 {
 	AK::SoundEngine::SetDefaultListeners(&id, MAX_LISTENERS);
+	currentListenerPosition = listenerPosition;
 }
 
 void ModuleAudio::RemoveDefaultListener(const AkGameObjectID id)
@@ -182,7 +182,35 @@ void ModuleAudio::DeleteReverbZone(C_ReverbZone* reverbZone)
 		}
 	}
 }
+void ModuleAudio::CheckReverbGameObject(unsigned int UUID)
+{
+	AkAuxSendValue aEnvs;
+	for (int i = 0; i < reverbZones.size(); ++i)
+	{
+		if (reverbZones[i]->GetReverbZoneAABB().Contains(currentListenerPosition->getPosition()))
+		{
+			aEnvs.listenerID = AK_INVALID_GAME_OBJECT;
+			aEnvs.auxBusID = AK::SoundEngine::GetIDFromString(reverbZones[i]->GetReverbBusName().c_str());
+			aEnvs.fControlValue = 1.5f;
 
+			if (AK::SoundEngine::SetGameObjectAuxSendValues(UUID, &aEnvs, 1) != AK_Success)
+			{
+				LOG("Couldnt set aux send values");
+			}
+		}
+		else
+		{
+			aEnvs.listenerID = AK_INVALID_GAME_OBJECT;
+			aEnvs.auxBusID = AK::SoundEngine::GetIDFromString(L"Master Audio Bus");
+			aEnvs.fControlValue = 1.0f;
+
+			if (AK::SoundEngine::SetGameObjectAuxSendValues(UUID, &aEnvs, 1) != AK_Success)
+			{
+				LOG("Couldnt set aux send values");
+			}
+		}
+	}
+}
 
 void ModuleAudio::SetRTPCValue(const char* event, AkRtpcValue volume, uint id)
 {

@@ -169,6 +169,18 @@ C_AudioSource* GameObject::GetAudioSourceComponent()
 	return nullptr;
 }
 
+C_ReverbZone* GameObject::GetReverbZoneComponent()
+{
+	for (size_t i = 0; i < mComponents.size(); i++)
+	{
+		if (mComponents[i]->type == ComponentType::REVERBZONE)
+		{
+			return (C_ReverbZone*)mComponents[i];
+		}
+	}
+	return nullptr;
+}
+
 bool GameObject::IsChildOf(GameObject* gameObject)
 {
 	if (gameObject == this)
@@ -292,6 +304,17 @@ void GameObject::PrintOnInspector()
 					}
 					else {
 						LOG("Audio source Component already added, can't duplicate.")
+					}
+				}
+				break;
+				case 6:
+				{
+					if (GetReverbZoneComponent() == nullptr) {
+						C_ReverbZone* compReverbZone = new C_ReverbZone(this, UUIDGenerator::Generate());
+						AddComponent(compReverbZone);
+					}
+					else {
+						LOG("Reverb zone Component already added, can't duplicate.")
 					}
 				}
 				break;

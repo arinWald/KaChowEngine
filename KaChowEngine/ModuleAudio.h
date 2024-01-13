@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "C_ReverbZone.h"
+#include "GameObject.h"
 //#include "AudioEvent.h"
 
 
@@ -52,12 +53,13 @@ public:
 
 	void SetRTPCValue(const char* event, AkRtpcValue volume, uint id);
 
-	void SetDefaultListener(const AkGameObjectID id);
+	void SetDefaultListener(const AkGameObjectID id, C_Transform* listenerPosition);
 	void RemoveDefaultListener(const AkGameObjectID id);
 	void AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id);
 
 	void AddReverbZone(C_ReverbZone* reverbZone);
 	void DeleteReverbZone(C_ReverbZone* reverbZone);
+	void CheckReverbGameObject(unsigned int UUID);
 
 	void SetListenerPos(GameObject* listener, unsigned int id);
 	void SetSourcePos(GameObject* source, unsigned int id);
@@ -71,6 +73,7 @@ private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 	vector<C_ReverbZone*> reverbZones;
+	C_Transform* currentListenerPosition;
 
 };
 
