@@ -42,6 +42,8 @@ void C_AudioSource::Update()
 	//AK::SoundEngine::SetPosition(sourceID, soundPos);
 
 	App->audio->SetSourcePos(sourceGameObject, sourceID);
+	//pilota
+	//App->audio->CheckReverbGameObject(mParen->mTransform->mPosition);
 }
 
 
