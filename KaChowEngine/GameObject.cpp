@@ -282,7 +282,7 @@ void GameObject::PrintOnInspector()
 			break;
 			case 5:
 				if (GetAudioSourceComponent() == nullptr) {
-					C_AudioSource* compAudioSource = new C_AudioSource(UUIDGenerator::Generate());
+					C_AudioSource* compAudioSource = new C_AudioSource(this, UUIDGenerator::Generate());
 					AddComponent(compAudioSource);
 				}
 				else {

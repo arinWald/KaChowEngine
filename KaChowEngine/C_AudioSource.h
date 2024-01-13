@@ -13,12 +13,14 @@ using namespace std;
 class C_AudioSource : public Component
 {
 public:
-	C_AudioSource(std::string uuid);
 	C_AudioSource(GameObject* gameObject, std::string uuid);
 	~C_AudioSource();
 
 	void Update() override;
 
 	void OnEditor() override;
+
+	GameObject* sourceGameObject;
+	uint sourceID;
 
 };

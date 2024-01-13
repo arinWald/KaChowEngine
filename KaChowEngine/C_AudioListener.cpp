@@ -5,10 +5,11 @@
 #include "Component.h"
 #include "C_AudioListener.h"
 
-C_AudioListener::C_AudioListener(GameObject* owner, std::string uuid) : Component(nullptr, uuid, audioId)
+C_AudioListener::C_AudioListener(GameObject* owner, std::string uuid) : Component(nullptr, uuid)
 {
 	listenerGameObject = owner;
-
+	listenerId = audioId;
+	LOG("Audio Listener ID:  %d", audioId);
 
 }
 
@@ -32,10 +33,13 @@ void C_AudioListener::OnEditor()
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		if (active)
-			ImGui::TextColored(ImVec4(0, 255, 0, 255), "'%s' is now a LISTENER", mParent->name.c_str());
-		else
-			ImGui::TextColored(ImVec4(255, 0, 0, 255), "'%s' is NOT a LISTENER", mParent->name.c_str());
+		if (mParent != nullptr)
+		{
+			if (active)
+				ImGui::TextColored(ImVec4(0, 255, 0, 255), "'%s' is now a LISTENER", mParent->name.c_str());
+			else
+				ImGui::TextColored(ImVec4(255, 0, 0, 255), "'%s' is NOT a LISTENER", mParent->name.c_str());
+		}
 
 		ImGui::Spacing();
 		ImGui::Spacing();

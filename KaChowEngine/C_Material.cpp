@@ -23,28 +23,28 @@ C_Material::~C_Material()
 
 void C_Material::OnEditor()
 {
-	const char* textureList[]{ "Texture", "None", "Checker" };
+	//const char* textureList[]{ "Texture", "None", "Checker" };
 
-	//Texture component inspector
-	if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
-	{
-		int width = mParent->GetMeshComponent()->meshes[0]->texture_width;
-		int height = mParent->GetMeshComponent()->meshes[0]->texture_height;
+	////Texture component inspector
+	//if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth))
+	//{
+	//	int width = mParent->GetMeshComponent()->meshes[0]->texture_width;
+	//	int height = mParent->GetMeshComponent()->meshes[0]->texture_height;
 
-		std::string aux = "Size: " + std::to_string(width) + " x " + std::to_string(height);
-		ImGui::TextWrapped(aux.c_str());
+	//	std::string aux = "Size: " + std::to_string(width) + " x " + std::to_string(height);
+	//	ImGui::TextWrapped(aux.c_str());
 
-		std::string pathaux = "Path: " + std::string(texture_path);
-		ImGui::TextWrapped(pathaux.c_str());
+	//	std::string pathaux = "Path: " + std::string(texture_path);
+	//	ImGui::TextWrapped(pathaux.c_str());
 
-		ImGui::Text("Change Texture: ");
-		int txtType = currentTexture;
-		ImGui::Combo("##Choose Texture", &txtType, textureList, IM_ARRAYSIZE(textureList));
-		currentTexture = (CurrentTextureType)txtType;
+	//	ImGui::Text("Change Texture: ");
+	//	int txtType = currentTexture;
+	//	ImGui::Combo("##Choose Texture", &txtType, textureList, IM_ARRAYSIZE(textureList));
+	//	currentTexture = (CurrentTextureType)txtType;
 
-	}
+	//}
 
-	UpdateMeshTexture();
+	//UpdateMeshTexture();
 }
 
 void C_Material::SetTexture(const char* file_path)

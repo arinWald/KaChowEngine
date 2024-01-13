@@ -1,4 +1,5 @@
 #include "Component.h"
+#include "Globals.h"
 
 int audioIdCounter = 0;
 
@@ -9,18 +10,11 @@ Component::Component(GameObject* parent, std::string uuid)
 	this->mParent = parent;
 
 	this->uuid = uuid;
-}
 
-Component::Component(GameObject* parent, std::string uuid, int audioId)
-{
-	type = ComponentType::NONE;
-	active = true;
-	this->mParent = parent;
 
-	this->uuid = uuid;
 	audioId = audioIdCounter;
-	this->audioId = audioId;
 	audioIdCounter++;
+	LOG("Component ID:  %d", audioIdCounter);
 }
 
 Component::~Component()

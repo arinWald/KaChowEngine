@@ -5,14 +5,11 @@
 #include "Component.h"
 #include "C_AudioSource.h"
 
-C_AudioSource::C_AudioSource(std::string uuid) : Component(nullptr, uuid)
-{
-
-}
-
 C_AudioSource::C_AudioSource(GameObject* owner, std::string uuid) : Component(nullptr, uuid)
 {
-
+	sourceGameObject = owner;
+	this->sourceID = audioId;
+	LOG("Audio Source ID:  %d", this->audioId);
 }
 
 C_AudioSource::~C_AudioSource()
@@ -25,19 +22,22 @@ void C_AudioSource::Update()
 
 void C_AudioSource::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Audio Soruce", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("Audio Source", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), "Enabled: ");
 		ImGui::SameLine();
-		ImGui::Checkbox("##audioSoruceEnabled", &active);
+		ImGui::Checkbox("##audioSourceEnabled", &active);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		if (active)
-			ImGui::TextColored(ImVec4(0, 255, 0, 255), "'%s' is now a SOURCE", mParent->name.c_str());
-		else
-			ImGui::TextColored(ImVec4(255, 0, 0, 255), "'%s' is NOT a SOURCE", mParent->name.c_str());
+		if (mParent != nullptr)
+		{
+			if (active)
+				ImGui::TextColored(ImVec4(0, 255, 0, 255), "'%s' is now a SOURCE", mParent->name.c_str());
+			else
+				ImGui::TextColored(ImVec4(255, 0, 0, 255), "'%s' is NOT a SOURCE", mParent->name.c_str());
+		}
 
 		ImGui::Spacing();
 		ImGui::Spacing();

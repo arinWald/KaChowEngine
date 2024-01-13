@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+//#include "Globals.h"
 enum class ComponentType
 {
 	NONE,
@@ -32,6 +33,7 @@ public:
 
 	std::string uuid;
 	int audioId;
+
 };
 
 

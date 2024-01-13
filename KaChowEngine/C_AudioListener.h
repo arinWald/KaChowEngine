@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "ModuleAudio.h"
+#include "Globals.h"
 
 #include <iostream>
 #include <string>
@@ -22,5 +23,7 @@ public:
 	void OnEditor() override;
 
 	GameObject* listenerGameObject;
+
+	int listenerId;
 
 };
