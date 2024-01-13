@@ -244,6 +244,9 @@
     <ClCompile Include="C_AudioSource.cpp">
       <Filter>Sources\Gameobject</Filter>
     </ClCompile>
+    <ClCompile Include="C_ReverbZone.cpp">
+      <Filter>Sources\Gameobject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -595,6 +598,9 @@
       <Filter>Sources\Gameobject</Filter>
     </ClInclude>
     <ClInclude Include="C_AudioSource.h">
+      <Filter>Sources\Gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="C_ReverbZone.h">
       <Filter>Sources\Gameobject</Filter>
     </ClInclude>
   </ItemGroup>

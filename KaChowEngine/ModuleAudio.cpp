@@ -164,6 +164,26 @@ void ModuleAudio::AddListeners(unsigned int emitter_id, const AkGameObjectID lis
 	AK::SoundEngine::SetListeners(emitter_id, &listener_id, MAX_LISTENERS);
 }
 
+void ModuleAudio::AddReverbZone(C_ReverbZone* reverbZone)
+{
+	reverbZones.push_back(reverbZone);
+}
+
+void ModuleAudio::DeleteReverbZone(C_ReverbZone* reverbZone)
+{
+	vector<C_ReverbZone*>::iterator iterator = reverbZones.begin();
+
+	for (; iterator != reverbZones.end(); ++iterator)
+	{
+		if (*iterator == reverbZone)
+		{
+			reverbZones.erase(iterator);
+			break;
+		}
+	}
+}
+
+
 void ModuleAudio::SetRTPCValue(const char* event, AkRtpcValue volume, uint id)
 {
 	// Assuming "Volume" is the RTPC name in Wwise

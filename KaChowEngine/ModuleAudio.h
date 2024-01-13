@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "C_ReverbZone.h"
 //#include "AudioEvent.h"
 
 
@@ -54,6 +55,10 @@ public:
 	void SetDefaultListener(const AkGameObjectID id);
 	void RemoveDefaultListener(const AkGameObjectID id);
 	void AddListeners(unsigned int emitter_id, const AkGameObjectID listener_id);
+
+	void AddReverbZone(C_ReverbZone* reverbZone);
+	void DeleteReverbZone(C_ReverbZone* reverbZone);
+
 	void SetListenerPos(GameObject* listener, unsigned int id);
 	void SetSourcePos(GameObject* source, unsigned int id);
 
@@ -64,6 +69,8 @@ public:
 
 private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+
+	vector<C_ReverbZone*> reverbZones;
 
 };
 

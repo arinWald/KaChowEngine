@@ -10,6 +10,7 @@ enum class ComponentType
 	MATERIAL,
 	AUDIOLISTENER,
 	AUDIOSOURCE,
+	REVERBZONE,
 	CAMERA,
 };
 

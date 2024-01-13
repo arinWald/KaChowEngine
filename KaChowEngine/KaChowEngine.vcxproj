@@ -98,6 +98,7 @@
     <ClInclude Include="C_Camera.h" />
     <ClInclude Include="C_Material.h" />
     <ClInclude Include="C_Mesh.h" />
+    <ClInclude Include="C_ReverbZone.h" />
     <ClInclude Include="C_Transform.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="C_Camera.cpp" />
     <ClCompile Include="C_Material.cpp" />
     <ClCompile Include="C_Mesh.cpp" />
+    <ClCompile Include="C_ReverbZone.cpp" />
     <ClCompile Include="C_Transform.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
