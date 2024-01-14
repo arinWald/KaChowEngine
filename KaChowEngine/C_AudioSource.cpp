@@ -13,7 +13,6 @@ C_AudioSource::C_AudioSource(GameObject* owner, std::string uuid) : Component(nu
 	//LOG("Audio Source ID:  %d", this->audioId);
 	App->audio->RegisterGameObject(sourceID);
 
-	App->audio->events = App->audio->events;
 	audio = App->audio->events[0];
 	App->audio->PostEvent(audio.c_str(), sourceID);
 	volume = 100.0f; // Default volume level
