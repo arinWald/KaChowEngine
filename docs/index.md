@@ -8,7 +8,7 @@ The purpose of this project is to create a friendly-user, well optimized Game En
 
 ### Arnau González
 
-![](https://github.com/arinWald/KaChowEngine/blob/NewMain/docs/media/arnau.jpeg)
+https://github.com/arinWald/KaChowEngine/blob/NewMain/docs/media/arnau.jpeg
 
 Arnau González is one of the team members, he worked on configuration screen, console, camera settings, serialization, drag and drop, memory leaks, game objects logic, viewports and audio integration. We mainly worked all together.
 
