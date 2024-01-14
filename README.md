@@ -78,6 +78,19 @@ Implementaion of basic serialization that allowas the user to save and load the 
 - Ctrl + S to save the scene
 - There's also a button on the header menu
 
+### Audio engine and Wwise
+
+- Audio Listener Component
+- Audio Source Component
+  - Spatial audio feature
+- User can import SoundBanks to play its events:
+  - Play
+  - Stop
+  - Pause
+  - Resume
+
+
+
 ## Windows
 
 ### Configuration
