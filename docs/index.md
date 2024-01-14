@@ -1,4 +1,4 @@
-# KaChowEngine
+# KaChow Engine
 
 KaChow Engine is a Video Game Engine created by Arnau González and Pau Argiz. Two students from CITM of Universitat Politècnica de Catalunya (UPC).
 
