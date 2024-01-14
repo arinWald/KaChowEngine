@@ -132,8 +132,12 @@ We had to implement the Audio core subsystem using WWise. It was useful for lear
 ### Two background music that could blend between each other in a loop:
 We did this by basically controlling both the music options in WWise. WWise has many functionalities, including one that lets you create playlist for your sounds, so it’s as easy as creating a sequence and telling Wwise how to play them and in which order. When you do this, as soon as you play the music in the engine, the functions from Wwise have the information on how to play them and in which order.
 
+![87e0aeb976375d098a16106a243e0844](https://github.com/arinWald/KaChowEngine/assets/99820809/ad7ef6e8-99d8-42fe-a80e-e814d22bad81)
+
 ### Spatial audio
 Be able to listen the sound effects/music depending on the listener´s position. This is also done easily by the WWise SDK, but you have to do some code aswell. In the WWise application, you have to go to the “Positioning” tab and check the 3D Spatialization aswell as the Attenuation. With this options, WWise generates the soundbanks ready for 3D audio. But this is not it, you have to go to the source code and implement a position and orientation for the listener, so WWise knows how to calculate the distance. We did this with a simple function that asks for 2 parameters: the ID from the gameobject and it´s position. Once you call the function correctly, WWise will register the gameobject’s position and will know how to treat it.
+
+![58ccce0e350b8671b06730baa0deb0ca](https://github.com/arinWald/KaChowEngine/assets/99820809/3adca154-8713-4892-ad68-3cab87af7289)
 
 ### Extra funcionalities
 - Sound options: Change volume and activate/desactivate components (mute). This options control the audio so you don’t have to do it via code, volume ranges from 0 to 100.
