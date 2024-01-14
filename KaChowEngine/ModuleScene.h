@@ -60,6 +60,7 @@ public:
 	GameObject* currentGameCamera;
 
 	GameObject* backgroundAudioSource;
+	GameObject* spatialAudioSource;
 
 	float rotation;
 	float f;

@@ -31,15 +31,16 @@ bool ModuleScene::Start()
 	C_AudioSource* bgAudioSource = new C_AudioSource(backgroundAudioSource, UUIDGenerator::Generate());
 	backgroundAudioSource->AddComponent(bgAudioSource);
 
+	spatialAudioSource = App->geoLoader->LoadFile("Assets/Models/cube.fbx");
+	spatialAudioSource->name = "Spatial Audio Source";
+	C_AudioSource* spaAudioSource = new C_AudioSource(spatialAudioSource, UUIDGenerator::Generate());
+	spatialAudioSource->AddComponent(spaAudioSource);
+	spatialAudioSource->mTransform->setPosition({ 0, 0, 10 });
+
 	bakerHouse = App->geoLoader->LoadFile("Assets/Models/BakerHouse.fbx");
-	bakerHouse->name = "BakerHouse";
+	bakerHouse->name = "BakerHouse (Listener)";
 	C_AudioListener* audioListenerComponent = new C_AudioListener(bakerHouse, UUIDGenerator::Generate());
 	bakerHouse->AddComponent(audioListenerComponent);
-
-	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
-	street->name = "Street";
-	street->mTransform->mRotation.x = -90;
-	street->mTransform->calculateMatrix();
 
 	// Game camera at start
 	currentGameCamera = new GameObject(rootGameObject);
@@ -48,6 +49,15 @@ bool ModuleScene::Start()
 	currentGameCamera->AddComponent(cameraComponent);
 	currentGameCamera->mTransform->setPosition({ 0, 5, -10 });
 	//currentGameCamera->mTransform->setRotation({ -50, 35, 0 });
+
+	street = App->geoLoader->LoadFile("Assets/Models/scene.DAE");
+	street->name = "Street";
+	street->mTransform->mRotation.x = -90;
+	street->mTransform->calculateMatrix();
+	
+	// Set Play on engine start
+	// Last chapuza 
+	App->gameState = GameState::PLAY;
 
 	f = 0;
 
@@ -67,20 +77,20 @@ update_status ModuleScene::Update(float dt)
 
 	if (App->gameState == GameState::PLAY)
 	{
+		// Spatial Audio Cube Movement
 		if (f > 0.03f) {
-			currentGameCamera->mTransform->mRotation.y += rotation;
-			currentGameCamera->mTransform->calculateMatrix();
-			if (currentGameCamera->mTransform->mRotation.y == 360) {
-				currentGameCamera->mTransform->mRotation.y = 0;
+			spatialAudioSource->mTransform->mPosition.x += 0.1f;
+
+			if (spatialAudioSource->mTransform->mPosition.x > 10.0f) {
+				spatialAudioSource->mTransform->mPosition.x = -10.0f;
 			}
+
+			spatialAudioSource->mTransform->calculateMatrix();
+
 			f = 0.0f;
 		}
 	}
-	else
-	{
-		currentGameCamera->mTransform->mRotation.y = 0;
-		currentGameCamera->mTransform->calculateMatrix();
-	}
+
 
 	// Gizmos controls
 	if (App->input->GetKey(SDL_SCANCODE_W)) App->camera->operation = ImGuizmo::OPERATION::TRANSLATE;

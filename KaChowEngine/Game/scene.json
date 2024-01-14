@@ -10,6 +10,68 @@
                 }
             },
             "Child 0": {
+                "name": "BakerHouse (Audio Listener)",
+                "Deleting": false,
+                "components": {
+                    "Component 0": {
+                        "Type": 1,
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                    },
+                    "Component 1": {
+                        "Type": 4
+                    }
+                },
+                "Child 0": {
+                    "name": "Chimney",
+                    "Deleting": false,
+                    "components": {
+                        "Component 0": {
+                            "Type": 1,
+                            "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                        },
+                        "Component 1": {
+                            "Type": 2,
+                            "Mesh": "Chimney"
+                        },
+                        "Component 2": {
+                            "Type": 3,
+                            "Material": "Assets\/Textures\/Baker_house.png"
+                        }
+                    }
+                },
+                "Child 1": {
+                    "name": "Baker_house",
+                    "Deleting": false,
+                    "components": {
+                        "Component 0": {
+                            "Type": 1,
+                            "LocalTransform": "1.000000,0.000000,-0.000000,0.000000,-0.000000,0.864096,-0.503327,0.000000,0.000000,0.503327,0.864096,0.000000,2.175137,0.000000,0.000000,1.000000,"
+                        },
+                        "Component 1": {
+                            "Type": 2,
+                            "Mesh": "Baker_house"
+                        },
+                        "Component 2": {
+                            "Type": 3,
+                            "Material": "Assets\/Textures\/Baker_house.png"
+                        }
+                    }
+                }
+            },
+            "Child 1": {
+                "name": "Game Camera",
+                "Deleting": false,
+                "components": {
+                    "Component 0": {
+                        "Type": 1,
+                        "LocalTransform": "0.999674,0.000000,0.025523,0.000000,-0.000000,1.000000,0.000000,0.000000,-0.025523,-0.000000,0.999674,0.000000,2.011690,5.000000,-9.947398,1.000000,"
+                    },
+                    "Component 1": {
+                        "Type": 6
+                    }
+                }
+            },
+            "Child 2": {
                 "name": "Street",
                 "Deleting": false,
                 "components": {
@@ -59,7 +121,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/Building_V02_C.png"
+                                "Material": ""
                             }
                         }
                     },
@@ -141,7 +203,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building 01_c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -159,7 +221,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building_016_c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -195,7 +257,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building03_c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -213,7 +275,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building 01_c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -231,7 +293,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building 01_c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -249,7 +311,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building05 _c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -425,7 +487,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building05 _c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -443,7 +505,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/Building_V01_C.png"
+                                "Material": ""
                             }
                         }
                     },
@@ -461,7 +523,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building 06_ c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -479,7 +541,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building05 _c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -497,7 +559,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/building05 _c.tga"
+                                "Material": ""
                             }
                         }
                     },
@@ -515,7 +577,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/Building_V01_C.png"
+                                "Material": ""
                             }
                         }
                     },
@@ -533,7 +595,7 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/Building_V01_C.png"
+                                "Material": ""
                             }
                         }
                     },
@@ -551,22 +613,36 @@
                             },
                             "Component 2": {
                                 "Type": 3,
-                                "Material": "Assets\/Textures\/Building_V02_C.png"
+                                "Material": ""
                             }
                         }
                     }
                 }
             },
-            "Child 1": {
-                "name": "Game Camera",
+            "Child 3": {
+                "name": "Cube (Audio Source)",
                 "Deleting": false,
                 "components": {
                     "Component 0": {
                         "Type": 1,
-                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,5.000000,0.000000,1.000000,"
+                        "LocalTransform": "3.000000,0.000000,0.000000,0.000000,0.000000,3.000000,0.000000,0.000000,0.000000,0.000000,3.000000,0.000000,0.000000,1.977113,8.371934,1.000000,"
                     },
                     "Component 1": {
-                        "Type": 4
+                        "Type": 5
+                    }
+                },
+                "Child 0": {
+                    "name": "Cube",
+                    "Deleting": false,
+                    "components": {
+                        "Component 0": {
+                            "Type": 1,
+                            "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                        },
+                        "Component 1": {
+                            "Type": 2,
+                            "Mesh": "Cube"
+                        }
                     }
                 }
             }
