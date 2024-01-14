@@ -168,3 +168,4 @@ Our engine relies on various external libraries to power its functionality:
 - [MathGeoLib](https://github.com/juj/MathGeoLib): A C++ library for linear algebra and geometry.
 - [DevIL](http://openil.sourceforge.net/): The Developer's Image Library for image file handling.
 - [PhysFS](https://github.com/kahowell/physfs-cpp): PhysFS++ is a C++ wrapper for the excellent [PhysicsFS library](http://icculus.org/physfs) by Ryan C. Gordon and others.
+- [Wwise](https://www.audiokinetic.com/en/products/wwise/): Audio library.
