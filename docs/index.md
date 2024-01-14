@@ -1,170 +1,51 @@
 # KaChowEngine
 
-This project is a 3D Game Engine made by students of CITM for the assigment of Videogame Engine Development of 2023.
+KaChow Engine is a Video Game Engine created by Arnau González and Pau Argiz. Two students from CITM of Universitat Politècnica de Catalunya (UPC).
 
-It has been made by: Arnau Gonzalez and Pau Argiz
+The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject “VideoGame Engines” from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc… Also we implemented the Audio sub-system.
 
-### Our GitHubs:
-* [Arnau Gonzalez](https://github.com/arinWald)
-* [Pau Argiz](https://github.com/PauM4)
+## Team Members:
 
-[Link](https://github.com/arinWald/KaChowEngine) to our project
+### Arnau González
 
-## How to use KaChow Engine?
-
-### Download the engine
-
-1. Download the last release [here]([https://github.com/arinWald/KaChowEngine](https://github.com/arinWald/KaChowEngine/releases/tag/0.5)).
-2. Extract files from the .zip
-3. Execute .exe
-
-## The engine
-
-### Camera
-
-The camera in KaChow Engine offers various controls for navigating your 3D scene:
-
-- **Right Click:** Enables FPS (First-Person Shooter) free rotation, allowing you to look around in your virtual world with ease.
-- **Mouse Wheel UP/DOWN:** Zooms the camera in and out, adjusting the view of your scene.
-- **Left Alt + Left Click:** Orbits the camera around the selected object, providing a different perspective.
-
-While right-clicking, the following controls are available to navigate the scene:
-
-- (Holding Shift, movement speed boost)
-- **W:** Move forward
-- **A:** Move Left
-- **S:** Move backward
-- **D:** Move Right
-- **Q:** Move Up
-- **E:** Move Down
-- **F:** Focus on the selected object, centering it in the view.
-
-### Inspector
-
-The 'Inspector' displays all the different components and their properties of the selected GameObjects.
-
-### Components
-
-KaChow Engine supports various components to enhance your 3D objects and assets:
-
-- **Component Transform:** Modify the rotation, position, and scale of the selected GameObject.
-- **Component Mesh:** Provides detailed information about different meshes and their vertices for the selected object.
-- **Component Materials:** Allows you to view and manage textures and materials applied to your GameObjects.
-- **Component Camera:** Edit camera of gameobjects (FOV, Near Distance and Far Distance) and shows number of render objects.
-
-### Drag & Drop
-
-KaChow Engine simplifies asset management through its Drag & Drop functionality:
-
-- The engine allows users to drag and drop FBX files from anywhere on the hard drive.
-- Users can also drag and drop files to assign textures to GameObjects.
-
-### Mouse Picking
-
-Allows the user to select an object by clicking on them in the scene that will be marked in the hierarchy.
-
-### Frustrum Culling
-
-The engine only prints in the scene, the objects that are visibles by the game camera.
-
-### Guizmo
-
-Implementation of Guizmo that allows the user to transform the position, rotation and scale of an object.
-IMPORTANT: If the parent's transform of a gameobject is touched, the child will not move properly with gizmo. Use transform on inspector instead.
-
-### Serialization
-
-Implementaion of basic serialization that allowas the user to save and load the scene paramenters.
-- Ctrl + S to save the scene
-- There's also a button on the header menu
-
-### Audio engine and Wwise
-
-- Audio Listener Component
-- Audio Source Component
-  - Spatial 3D audio feature
-- User can import SoundBanks to play its events:
-  - Play
-  - Stop
-  - Pause
-  - Resume
+* [GitHub Profile](https://github.com/arinWald)
+* [Linkdedin Profile](https://www.linkedin.com/in/arnau-gonzalez/)
 
 
+### Pau Argiz
 
-## Windows
 
-### Configuration
+* [GitHub Profile](https://github.com/PauM4)
+* [Linkedin Profile](https://www.linkedin.com/in/pau-argiz/)
 
-In the 'Configuration' section, you can fine-tune various settings to optimize your development and user experience:
+## Audio sub-system
 
-**Save and Load Config**
-- Two buttons that allow to save and load the current engine configuration.
+We had to implement the Audio core subsystem with WWise. The main objective was to be able to play sounds/musics, etc… in our game engine, aswell as creating some reverb zone and some audio settings, like pitch, volume… Also, another objective from this subsystem was to properly learn how WWise API works.
 
-**FPS Histogram:**
-- This option provides a real-time histogram that displays the frames per second (FPS) of your application. Monitoring the FPS is essential for ensuring smooth and responsive gameplay.
+### Two background music that could blend between each other in a loop:
 
-**MS Histogram:**
-- The MS Histogram shows a histogram of the frame time or DeltaTime. It's a valuable tool for identifying performance bottlenecks and ensuring consistent frame pacing.
+We did this by basically controlling both the music options in WWise. WWise has many functionalities, including one that lets you create playlist for your sounds, so it’s as easy as creating a sequence and telling Wwise how to play them and in which order. When you do this, as soon as you play the music in the engine, the functions from Wwise have the information on how to play them and in which order.
 
-**Window:**
-- In the 'Window' section, you can manage the display settings:
+### Spatial audio
 
-  - **Window Resolution:** Display the resolution of the window
-  - **Display Window Resolution:** View the current window resolution and use two sliders to change it interactively.
-  - **Fullscreen Option:** Toggle between windowed and fullscreen display modes
+The main goal of this objective was to be able to listen the sound effects/music depending on the listener´s position. This is also done easily by the WWise API, but you have to do some code aswell. In the WWise API you have to go to the “Positioning” tab and check the 3D Spatialization aswell as the Attenuation. With this options, WWise knows how to play the music depending on the listener´s position. But this is not it, you have to go to the source code and implement a position and orientation for the listener, so WWise knows how to calculate the distance. We did this with a simple function that asks for 2 parameters: the UUID from the gameobject and it´s position. Once you call the function correctly, WWise will register the gameobject’s position and will know how to treat it.
 
-**View:**
-- The 'View' section allows you to activate and deactivate various windows within the engine.
+### Extra funcionalities
 
-**Camera:**
-- Change frustum configuration and shows number of render objects.
+- Sound options: Volume, mute and pitch. This options control the audio so you don’t have to do it via code, volume ranges from 0 to 100. Pitch ranges from -2400 to 2400 and mute just mutes the volume (Mute option does not pause the music!).
 
-### Rendering
+## Video demo
 
-The rendering capabilities of KaChow Engine allow you to create visually stunning 3D scenes. You can control various rendering options in the 'Render' section:
+This video demonstrates how the Audio System works, and it’s utilities.
 
-- **Lighting:** Enable or disable lighting for your scene.
-- **Cullface:** Control face culling to optimize rendering.
-- **Depth Test:** Toggle depth testing for proper layering.
-- **Color Material:** Customize material colors for objects.
-- **Wireframe:** Visualize objects in wireframe mode.
-- **Textures 2D:** Manage and apply textures to your objects.
-- **VSync:** Enable or disable vertical synchronization for smoother rendering.
-- **Brightness Slider:** Adjust the brightness of the scene.
-- **Bounding Boxes:** Now you can enable or disable the bounding boxes of the game objects.
+## License
 
-### Input
+MIT License
 
-- **Mouse and Keyboard Inputs:** Display the current input from the mouse and keyboard, making it easy to understand and manage user interactions.
+Copyright (c) 2024 Arnau González Acosta and Pau Argiz Gutiérrez
 
-### Audio
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-- **Volume Slider:** Adjust the volume to create the desired auditory experience.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### Objects
-
-Create and manipulate objects within your scenes with ease, including primitives and empty GameObjects.
-
-- **Hierarchy:** View and interact with a list of all GameObjects in your scene, making it simple to select and manipulate them.
-
-- **Inspector:** Customize GameObjects by changing their names, viewing mesh information, adjusting materials, and applying textures.
-
-### Console
-
-The 'Console' provides a central location for important logs and messages, making it easy to debug and monitor.
-
-### Viewports
-
-Now you can visualize the Scene Window and the Game Window. Also, full implementation and functionality of Play, Pause and Stop buttons with a cool camera animation.
-
-### External Libraries
-
-Our engine relies on various external libraries to power its functionality:
-
-- [SDL](https://www.libsdl.org/): Simple DirectMedia Layer for cross-platform development.
-- [ImGui](https://github.com/ocornut/imgui): The Dear ImGui library for creating user interfaces.
-- [Assimp](https://www.assimp.org/): The Open Asset Import Library for 3D model loading.
-- [Glew](http://glew.sourceforge.net/): The OpenGL Extension Wrangler Library for OpenGL extensions.
-- [MathGeoLib](https://github.com/juj/MathGeoLib): A C++ library for linear algebra and geometry.
-- [DevIL](http://openil.sourceforge.net/): The Developer's Image Library for image file handling.
-- [PhysFS](https://github.com/kahowell/physfs-cpp): PhysFS++ is a C++ wrapper for the excellent [PhysicsFS library](http://icculus.org/physfs) by Ryan C. Gordon and others.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
