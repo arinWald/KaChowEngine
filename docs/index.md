@@ -8,19 +8,22 @@ The purpose of this project is to create a friendly-user, well optimized Game En
 
 ### Arnau González
 
+* [](https://github.com/arinWald/KaChowEngine/blob/NewMain/docs/media/arnauPic.jpeg)
 * [GitHub Profile](https://github.com/arinWald)
-* [Linkdedin Profile](https://www.linkedin.com/in/arnau-gonzalez/)
+* [Linkedin Profile](https://www.linkedin.com/in/arnau-gonzalez/)
 
 
 ### Pau Argiz
 
 
+* [](https://github.com/arinWald/KaChowEngine/blob/NewMain/docs/media/pauPic.png)
 * [GitHub Profile](https://github.com/PauM4)
 * [Linkedin Profile](https://www.linkedin.com/in/pau-argiz/)
 
 ## Audio sub-system
 
-We had to implement the Audio core subsystem with WWise. The main objective was to be able to play sounds/musics, etc… in our game engine, aswell as creating some reverb zone and some audio settings, like pitch, volume… Also, another objective from this subsystem was to properly learn how WWise API works.
+We had to implement the Audio core subsystem with WWise. The main objective was to be able to play sounds/musics, etc… in our game engine.
+Also, another objective from this subsystem was to properly learn how WWise API works.
 
 ### Two background music that could blend between each other in a loop:
 
@@ -32,7 +35,7 @@ The main goal of this objective was to be able to listen the sound effects/music
 
 ### Extra funcionalities
 
-- Sound options: Volume, mute and pitch. This options control the audio so you don’t have to do it via code, volume ranges from 0 to 100. Pitch ranges from -2400 to 2400 and mute just mutes the volume (Mute option does not pause the music!).
+- Sound options: Volume adn activate/desactivate components. This options control the audio so you don’t have to do it via code, volume ranges from 0 to 100.
 
 ## Video demo
 
