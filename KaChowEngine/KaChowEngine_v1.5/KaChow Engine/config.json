@@ -1,0 +1,43 @@
+{
+    "App": {
+        "FPS": 0
+    },
+    "Window": {
+        "width": 0,
+        "height": 0,
+        "brightness": 0,
+        "fullscreen": true
+    },
+    "Camera3D": {
+        "X.x": 1,
+        "X.y": 0,
+        "X.z": 0,
+        "Y.x": -0.16550549864768982,
+        "Y.y": 0.84126746654510498,
+        "Y.z": -0.51466202735900879,
+        "Z.x": -0.25751277804374695,
+        "Z.y": -0.5406191349029541,
+        "Z.z": -0.80088585615158081,
+        "Reference.x": 0,
+        "Reference.y": 0,
+        "Reference.z": 0,
+        "Position.x": 4.777280330657959,
+        "Position.y": 11.99932861328125,
+        "Position.z": 24.956418991088867
+    },
+    "Input": {},
+    "Textures2D": {},
+    "Geometry": {},
+    "Scene": {},
+    "Render3D": {
+        "vsync": false,
+        "wireframe": false,
+        "depthTest": true,
+        "cullFace": false,
+        "lighting": true,
+        "colorMaterial": true,
+        "texture2D": false
+    },
+    "Editor": {},
+    "notNamed": {}
+}

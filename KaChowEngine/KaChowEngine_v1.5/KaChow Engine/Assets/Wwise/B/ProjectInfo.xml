@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo>
+	<Project Name="KaChowAudios" GUID="{C3ED7B8D-19A4-411F-9FE8-63615F37B622}" Generator="2023.1.0.8367"/>
+	<CacheRoot>../.cache</CacheRoot>
+	<Platforms>
+		<Platform Name="Windows" GUID="{289D08A6-E568-4E03-BBB0-499EFBA80692}" BasePlatform="Windows" BasePlatformGUID="{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}" Path="Windows"/>
+	</Platforms>
+	<Languages>
+		<Language Name="English(US)" Id="684519430" GUID="{74290FFF-356B-40E1-A166-689CF301D645}" Default="true" UseAsStandIn="true"/>
+	</Languages>
+	<FileHash>{F5ADE157-7F0D-6CBF-AFD8-9A18BF1C976A}</FileHash>
+</ProjectInfo>

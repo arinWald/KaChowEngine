@@ -77,17 +77,20 @@ update_status ModuleScene::Update(float dt)
 
 	if (App->gameState == GameState::PLAY)
 	{
-		// Spatial Audio Cube Movement
-		if (f > 0.03f) {
-			spatialAudioSource->mTransform->mPosition.x += 0.1f;
+		if (spatialAudioSource->mTransform != nullptr)
+		{
+			// Spatial Audio Cube Movement
+			if (f > 0.03f) {
+				spatialAudioSource->mTransform->mPosition.x += 3*dt;
 
-			if (spatialAudioSource->mTransform->mPosition.x > 10.0f) {
-				spatialAudioSource->mTransform->mPosition.x = -10.0f;
+				if (spatialAudioSource->mTransform->mPosition.x > 10.0f) {
+					spatialAudioSource->mTransform->mPosition.x = -10.0f;
+				}
+
+				spatialAudioSource->mTransform->calculateMatrix();
+
+				f = 0.0f;
 			}
-
-			spatialAudioSource->mTransform->calculateMatrix();
-
-			f = 0.0f;
 		}
 	}
 

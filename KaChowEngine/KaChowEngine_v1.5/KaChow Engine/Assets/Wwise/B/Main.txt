@@ -1,0 +1,11 @@
+Event	ID	Name			Wwise Object Path	Notes
+	868345494	BackgroundMusic1_Event			\Default Work Unit\BackgroundMusic1_Event	
+	3559410441	BackgroundMusic2_Event			\Default Work Unit\BackgroundMusic2_Event	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	2415836739	Volume			\Default Work Unit\Volume	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	771798353	Toothless	D:\DescàrreguesHDD\UNI\Wwise KaChow AUDIOS DEF\KaChowAudios\.cache\Windows\SFX\Toothless Dancing Meme [NEW VARIATIONS]_818F3B66.wem		\Actor-Mixer Hierarchy\Default Work Unit\Toothless		7056096
+	947812908	Chipi	D:\DescàrreguesHDD\UNI\Wwise KaChow AUDIOS DEF\KaChowAudios\.cache\Windows\SFX\CHIPI CHIPI CHAPA CHAPA (XPLOSN DUBSTEP REMIX)_818F3B66.wem		\Actor-Mixer Hierarchy\Default Work Unit\Chipi		7056096
+
