@@ -82,7 +82,7 @@ Implementaion of basic serialization that allowas the user to save and load the 
 
 - Audio Listener Component
 - Audio Source Component
-  - Spatial audio feature
+  - Spatial 3D audio feature
 - User can import SoundBanks to play its events:
   - Play
   - Stop
