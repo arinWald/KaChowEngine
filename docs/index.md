@@ -146,11 +146,11 @@ Be able to listen the sound effects/music depending on the listener´s position.
 
 This video demonstrates how the Audio System works, and the whole engine too.
 
-[KaChow Engine Video Demo](https://youtu.be/67ncJesMa70)
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=67ncJesMa70" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Download the release here:
 
-<iframe width="560" height="315" src="https://github.com/arinWald/KaChowEngine/releases/tag/1.5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[Download](https://github.com/arinWald/KaChowEngine/releases/tag/1.5)
 
 ## License
 
